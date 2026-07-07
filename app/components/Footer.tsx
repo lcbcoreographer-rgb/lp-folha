@@ -17,13 +17,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center gap-2.5">
-              <span className="relative h-11 w-11 flex-shrink-0 rounded-full bg-white/95 p-1.5">
+              <span className="relative h-11 w-11 flex-shrink-0">
                 <Image
                   src="/logo.png"
                   alt="Folha Soluções Ambientais"
                   fill
                   sizes="44px"
-                  className="object-contain p-1"
+                  className="object-contain"
                   unoptimized
                 />
               </span>

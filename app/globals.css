@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --color-forest-950: #233503;
-  --color-forest-900: #324d05;
-  --color-forest-800: #456907;
-  --color-forest-700: #5b8b09;
-  --color-forest-600: #74b10b;
-  --color-forest-100: #f1fddd;
-  --color-forest-50: #f8feee;
+  --color-forest-950: #2c3c10;
+  --color-forest-900: #3e5516;
+  --color-forest-800: #55751f;
+  --color-forest-700: #739d2a;
+  --color-forest-600: #8dc133;
+  --color-forest-100: #f2f9e7;
+  --color-forest-50: #f9fcf3;
 
   --color-amber-600: #d4611e;
   --color-amber-500: #e8722c;
