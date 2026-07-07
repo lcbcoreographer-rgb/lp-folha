@@ -99,26 +99,7 @@ const INITIAL_DATA: FormData = {
   comoConheceu: "",
 };
 
-function buildWhatsAppMessage(data: FormData) {
-  const lines = [
-    "Olá! Gostaria de um atendimento especializado. Segue um resumo:",
-    "",
-    `*Nome:* ${data.nome}`,
-    `*Empresa:* ${data.empresa}`,
-    data.cargo && `*Cargo:* ${data.cargo}`,
-    `*E-mail:* ${data.email}`,
-    `*Telefone:* ${data.telefone}`,
-    (data.cidade || data.estado) && `*Local:* ${[data.cidade, data.estado].filter(Boolean).join(" - ")}`,
-    data.segmento && `*Segmento:* ${data.segmento}`,
-    data.faturamento && `*Faturamento:* ${data.faturamento}`,
-    data.servicos.length > 0 && `*Serviços de interesse:* ${data.servicos.join(", ")}`,
-    data.necessidade && `*Necessidade:* ${data.necessidade}`,
-    data.urgencia && `*Prazo:* ${data.urgencia}`,
-    data.possuiLicenca && `*Já possui licença?* ${data.possuiLicenca}${data.qualLicenca ? ` (${data.qualLicenca})` : ""}`,
-    data.comoConheceu && `*Como conheceu a Folha:* ${data.comoConheceu}`,
-  ].filter(Boolean);
-  return lines.join("\n");
-}
+const WHATSAPP_MESSAGE = "Olá, vim pelo formulário, quero mais informações";
 
 function StepPane({ animKey, children }: { animKey: number; children: React.ReactNode }) {
   const [visible, setVisible] = useState(false);
@@ -253,7 +234,7 @@ export default function FormModal({
   }
 
   function openWhatsApp() {
-    const text = encodeURIComponent(buildWhatsAppMessage(data));
+    const text = encodeURIComponent(WHATSAPP_MESSAGE);
     window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${text}`, "_blank");
   }
 
