@@ -17,9 +17,9 @@ const SEGMENTOS = [
   "Agronegócio",
   "Construção Civil",
   "Comércio",
-  "Transporte",
-  "Energia",
-  "Prestação de Serviços",
+  "Transporte / Logística",
+  "Postos de Combustíveis",
+  "Portuário",
   "Outro",
 ];
 
@@ -28,7 +28,6 @@ const FATURAMENTOS = [
   "R$ 360 mil a R$ 4,8 milhões/ano (Pequena empresa)",
   "R$ 4,8 milhões a R$ 300 milhões/ano (Média empresa)",
   "Acima de R$ 300 milhões/ano (Grande empresa)",
-  "Prefiro não informar",
 ];
 
 const SERVICOS = [
@@ -38,7 +37,7 @@ const SERVICOS = [
   "Outorga de Uso da Água",
   "Cadastro Ambiental Rural (CAR)",
   "Plano de Gerenciamento de Resíduos (PGRS)",
-  "Gestão de Resíduos",
+  "PRAD (Plano de Recuperação de Áreas Degradadas)",
   "Consultoria Ambiental",
   "Estudos Ambientais",
   "Laudos Técnicos",
