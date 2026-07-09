@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { Sora, Manrope } from "next/font/google";
-import SmoothScrollProvider from "./components/SmoothScrollProvider";
-import ScrollProgressBar from "./components/ScrollProgressBar";
-import { FormModalProvider } from "./components/FormModalContext";
 import "./globals.css";
 
 const sora = Sora({
@@ -30,12 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`${sora.variable} ${manrope.variable}`}>
-      <body className="antialiased">
-        <SmoothScrollProvider>
-          <ScrollProgressBar />
-          <FormModalProvider>{children}</FormModalProvider>
-        </SmoothScrollProvider>
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

@@ -9,6 +9,7 @@ import {
   Clock,
   Loader2,
 } from "lucide-react";
+import type { LeadData } from "../lib/leadTypes";
 
 const WHATSAPP_PHONE = "5541984662106";
 
@@ -62,23 +63,7 @@ const ESTADOS = [
 
 const STEP_LABELS = ["Contato", "Empresa", "Necessidade", "Prazo", "Situação"];
 
-interface FormData {
-  nome: string;
-  empresa: string;
-  cargo: string;
-  email: string;
-  telefone: string;
-  cidade: string;
-  estado: string;
-  segmento: string;
-  faturamento: string;
-  servicos: string[];
-  necessidade: string;
-  urgencia: string;
-  possuiLicenca: "" | "sim" | "nao" | "nao-sei";
-  qualLicenca: string;
-  comoConheceu: string;
-}
+type FormData = LeadData;
 
 const INITIAL_DATA: FormData = {
   nome: "",
