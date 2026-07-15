@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
 
 const WHATSAPP_URL =
-  "https://api.whatsapp.com/send?phone=5541984662106&text=" +
+  "https://api.whatsapp.com/send?phone=5541987970472&text=" +
   encodeURIComponent("Olá, vim pelo formulário, quero mais informações");
 
 export default function WhatsAppFloat() {

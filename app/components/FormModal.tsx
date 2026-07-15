@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import type { LeadData } from "../lib/leadTypes";
 
-const WHATSAPP_PHONE = "5541984662106";
+const WHATSAPP_PHONE = "5541987970472";
 
 const SEGMENTOS = [
   "Indústria",
