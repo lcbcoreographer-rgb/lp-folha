@@ -67,7 +67,10 @@ export default function Header() {
           </nav>
 
           <div className="hidden md:block">
-            <FormTriggerButton className="inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/25 hover:-translate-y-0.5">
+            <FormTriggerButton
+              eventLabel="header_orcamento"
+              className="inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/25 hover:-translate-y-0.5"
+            >
               Solicitar Orçamento
             </FormTriggerButton>
           </div>
@@ -98,7 +101,10 @@ export default function Header() {
               {item.name}
             </a>
           ))}
-          <FormTriggerButton className="mt-2 inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white">
+          <FormTriggerButton
+            eventLabel="header_mobile_orcamento"
+            className="mt-2 inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white"
+          >
             Solicitar Orçamento
           </FormTriggerButton>
         </nav>

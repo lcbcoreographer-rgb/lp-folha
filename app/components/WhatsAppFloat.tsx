@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
+import { trackEvent } from "../lib/gtag";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5541987970472&text=" +
@@ -22,6 +23,7 @@ export default function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar no WhatsApp"
+      onClick={() => trackEvent("click_button", { button_label: "whatsapp_float" })}
       className={`fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/20 transition-all duration-400 hover:scale-110 hover:shadow-xl ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
       }`}

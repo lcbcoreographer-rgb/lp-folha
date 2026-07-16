@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Sora, Manrope } from "next/font/google";
+import Script from "next/script";
+import { GTAG_ID } from "./lib/gtag";
 import "./globals.css";
 
 const sora = Sora({
@@ -27,7 +29,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`${sora.variable} ${manrope.variable}`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GTAG_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GTAG_ID}');
+          `}
+        </Script>
+      </body>
     </html>
   );
 }
