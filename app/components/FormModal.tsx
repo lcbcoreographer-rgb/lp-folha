@@ -10,6 +10,7 @@ import {
   Loader2,
 } from "lucide-react";
 import type { LeadData } from "../lib/leadTypes";
+import { trackConversion } from "../lib/gtag";
 
 const WHATSAPP_PHONE = "5541987970472";
 
@@ -214,6 +215,7 @@ export default function FormModal({
     } finally {
       setSubmitting(false);
       setSuccess(true);
+      trackConversion();
     }
   }
 
