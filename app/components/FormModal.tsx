@@ -25,13 +25,6 @@ const SEGMENTOS = [
   "Outro",
 ];
 
-const FATURAMENTOS = [
-  "Até R$ 360 mil/ano (MEI)",
-  "R$ 360 mil a R$ 4,8 milhões/ano (Pequena empresa)",
-  "R$ 4,8 milhões a R$ 300 milhões/ano (Média empresa)",
-  "Acima de R$ 300 milhões/ano (Grande empresa)",
-];
-
 const SERVICOS = [
   "Licenciamento Ambiental",
   "Renovação de Licença Ambiental",
@@ -47,14 +40,6 @@ const SERVICOS = [
   "Outro",
 ];
 
-const URGENCIAS = [
-  "Muito urgente (até 7 dias)",
-  "Urgente (até 15 dias)",
-  "Em até 30 dias",
-  "Nos próximos 3 meses",
-  "Apenas buscando informações",
-];
-
 const CANAIS = ["Google", "Instagram", "Facebook", "Indicação", "Cliente", "Outro"];
 
 const ESTADOS = [
@@ -62,7 +47,7 @@ const ESTADOS = [
   "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO",
 ];
 
-const STEP_LABELS = ["Contato", "Empresa", "Necessidade", "Prazo", "Situação"];
+const STEP_LABELS = ["Contato", "Empresa", "Necessidade", "Situação"];
 
 type FormData = LeadData;
 
@@ -388,21 +373,6 @@ export default function FormModal({
                         ))}
                       </div>
                     </Field>
-
-                    <Field label="Qual é o faturamento anual da empresa?">
-                      <select
-                        className={inputClass}
-                        value={data.faturamento}
-                        onChange={(e) => update("faturamento", e.target.value)}
-                      >
-                        <option value="">Selecione</option>
-                        {FATURAMENTOS.map((f) => (
-                          <option key={f} value={f}>
-                            {f}
-                          </option>
-                        ))}
-                      </select>
-                    </Field>
                   </div>
                 )}
 
@@ -442,27 +412,6 @@ export default function FormModal({
                 )}
 
                 {step === 3 && (
-                  <Field label="Qual é a urgência da sua demanda?">
-                    <div className="space-y-2.5">
-                      {URGENCIAS.map((u) => (
-                        <button
-                          type="button"
-                          key={u}
-                          onClick={() => update("urgencia", u)}
-                          className={`block w-full rounded-lg border px-4 py-3 text-left text-sm font-medium transition-colors ${
-                            data.urgencia === u
-                              ? "border-forest-700 bg-forest-50 text-forest-900"
-                              : "border-forest-900/15 bg-white text-ink-soft hover:border-forest-700/40"
-                          }`}
-                        >
-                          {u}
-                        </button>
-                      ))}
-                    </div>
-                  </Field>
-                )}
-
-                {step === 4 && (
                   <div className="space-y-5">
                     <Field label="Você já possui alguma licença ou documentação ambiental relacionada?">
                       <div className="flex flex-wrap gap-2.5">

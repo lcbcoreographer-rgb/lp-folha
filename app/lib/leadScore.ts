@@ -10,13 +10,6 @@ const SERVICO_PONTOS: Record<string, number> = {
 };
 const SERVICO_PONTOS_PADRAO = 10;
 
-const FATURAMENTO_PONTOS: Record<string, number> = {
-  "Até R$ 360 mil/ano (MEI)": 5,
-  "R$ 360 mil a R$ 4,8 milhões/ano (Pequena empresa)": 10,
-  "R$ 4,8 milhões a R$ 300 milhões/ano (Média empresa)": 15,
-  "Acima de R$ 300 milhões/ano (Grande empresa)": 20,
-};
-
 const SEGMENTO_PONTOS: Record<string, number> = {
   "Postos de Combustíveis": 20,
   "Portuário": 20,
@@ -35,16 +28,14 @@ export function calculateScore(data: LeadData): {
     return Math.max(max, pontos);
   }, 0);
 
-  const pontosFaturamento = FATURAMENTO_PONTOS[data.faturamento] ?? 0;
-
   const pontosSegmento = data.segmento
     ? (SEGMENTO_PONTOS[data.segmento] ?? SEGMENTO_PONTOS_PADRAO)
     : 0;
 
-  const score = pontosServico + pontosFaturamento + pontosSegmento;
+  const score = pontosServico + pontosSegmento;
 
   const classificacao: Classificacao =
-    score >= 70 ? "quente" : score >= 40 ? "morno" : "frio";
+    score >= 50 ? "quente" : score >= 30 ? "morno" : "frio";
 
   return { score, classificacao };
 }
