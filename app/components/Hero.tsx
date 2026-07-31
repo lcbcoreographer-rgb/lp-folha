@@ -1,7 +1,7 @@
 import { ShieldCheck, Zap, ChevronDown } from "lucide-react";
 import ParallaxImage from "./ParallaxImage";
 import ScrollReveal from "./ScrollReveal";
-import FormTriggerButton from "./FormTriggerButton";
+import WhatsAppCTAButton from "./WhatsAppCTAButton";
 
 export default function Hero() {
   return (
@@ -39,12 +39,13 @@ export default function Hero() {
 
             <ScrollReveal direction="up" delay={300}>
               <div className="mt-9 flex flex-wrap items-center gap-5">
-                <FormTriggerButton
+                <WhatsAppCTAButton
                   eventLabel="hero_atendimento"
+                  message="Olá, quero solicitar atendimento especializado em licenciamento ambiental"
                   className="inline-flex items-center rounded-full bg-amber-500 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-amber-950/30 transition-all duration-300 hover:bg-amber-600 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-950/40"
                 >
                   Solicitar Atendimento Especializado
-                </FormTriggerButton>
+                </WhatsAppCTAButton>
               </div>
             </ScrollReveal>
 

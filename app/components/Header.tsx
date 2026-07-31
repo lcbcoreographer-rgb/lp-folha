@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
-import FormTriggerButton from "./FormTriggerButton";
+import WhatsAppCTAButton from "./WhatsAppCTAButton";
 
 const NAV_ITEMS = [
   { name: "Diferenciais", href: "#diferenciais" },
@@ -67,12 +67,12 @@ export default function Header() {
           </nav>
 
           <div className="hidden md:block">
-            <FormTriggerButton
+            <WhatsAppCTAButton
               eventLabel="header_orcamento"
               className="inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/25 hover:-translate-y-0.5"
             >
               Solicitar Orçamento
-            </FormTriggerButton>
+            </WhatsAppCTAButton>
           </div>
 
           <button
@@ -101,12 +101,12 @@ export default function Header() {
               {item.name}
             </a>
           ))}
-          <FormTriggerButton
+          <WhatsAppCTAButton
             eventLabel="header_mobile_orcamento"
             className="mt-2 inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white"
           >
             Solicitar Orçamento
-          </FormTriggerButton>
+          </WhatsAppCTAButton>
         </nav>
       </div>
     </header>

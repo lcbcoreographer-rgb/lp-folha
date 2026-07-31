@@ -1,5 +1,5 @@
 import ScrollReveal from "./ScrollReveal";
-import FormTriggerButton from "./FormTriggerButton";
+import WhatsAppCTAButton from "./WhatsAppCTAButton";
 
 export default function CTAFinal() {
   return (
@@ -14,12 +14,12 @@ export default function CTAFinal() {
             primeiro passo para a total conformidade ambiental do seu negócio.
           </p>
           <div className="mt-9">
-            <FormTriggerButton
+            <WhatsAppCTAButton
               eventLabel="cta_final_orcamento"
               className="inline-flex items-center rounded-full bg-amber-500 px-10 py-4 text-base font-semibold text-white shadow-lg shadow-amber-900/10 transition-all duration-300 hover:bg-amber-600 hover:-translate-y-1 hover:shadow-xl"
             >
               Solicitar Orçamento
-            </FormTriggerButton>
+            </WhatsAppCTAButton>
           </div>
         </ScrollReveal>
       </div>
