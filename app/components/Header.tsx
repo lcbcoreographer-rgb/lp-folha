@@ -5,10 +5,11 @@ import { Menu, X } from "lucide-react";
 import WhatsAppCTAButton from "./WhatsAppCTAButton";
 
 const NAV_ITEMS = [
-  { name: "Diferenciais", href: "#diferenciais" },
-  { name: "Segmentos", href: "#segmentos" },
-  { name: "Legislação", href: "#legislacao" },
-  { name: "Depoimentos", href: "#depoimentos" },
+  { name: "Diferenciais", href: "/#diferenciais" },
+  { name: "Segmentos", href: "/#segmentos" },
+  { name: "Legislação", href: "/#legislacao" },
+  { name: "Depoimentos", href: "/#depoimentos" },
+  { name: "Blog", href: "/blog" },
 ];
 
 export default function Header() {
@@ -32,7 +33,7 @@ export default function Header() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <a href="#hero" className="flex items-center gap-3 group">
+          <a href="/" className="flex items-center gap-3 group">
             <span className="relative h-11 w-11 flex-shrink-0 transition-transform duration-300 group-hover:rotate-6">
               <Image
                 src="/logo.png"
