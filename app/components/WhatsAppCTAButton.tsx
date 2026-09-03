@@ -10,7 +10,7 @@ interface WhatsAppCTAButtonProps {
 }
 
 const DEFAULT_MESSAGE =
-  "Olá, quero solicitar um orçamento de licenciamento ambiental";
+  "Olá, vi o site da Folha e preciso saber quais licenças o meu caso exige. Minha operação: ";
 
 export default function WhatsAppCTAButton({
   className = "",

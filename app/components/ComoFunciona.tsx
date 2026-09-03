@@ -15,7 +15,7 @@ const ETAPAS = [
   {
     titulo: "Protocolo no órgão ambiental",
     descricao:
-      "Entrada no IAT, prefeitura ou órgão competente, com acompanhamento de cada exigência e prazo.",
+      "Entrada no IAT (Instituto Água e Terra), prefeitura ou órgão competente, com acompanhamento de cada exigência e prazo.",
   },
   {
     titulo: "Licença emitida",
@@ -33,7 +33,7 @@ export default function ComoFunciona() {
             <SectionHead
               rotulo="Como funciona"
               titulo="Do papel parado à licença na mão."
-              descricao="Licenciamento não é um formulário: é uma sequência de exigências que precisa ser cumprida na ordem certa. Nós percorremos essa sequência por você."
+              descricao="A ordem importa: cada etapa depende da anterior estar fechada. A maioria dos processos trava na documentação — e é ela que a nossa equipe assume por inteiro."
               centralizado={false}
             />
             {/* Aqui havia "12+ anos de atuação" e "4 etapas". O primeiro numero

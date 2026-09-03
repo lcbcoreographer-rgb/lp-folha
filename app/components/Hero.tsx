@@ -36,7 +36,7 @@ export default function Hero() {
 
       <div className="relative z-10 container mx-auto flex min-h-[100svh] flex-col justify-end px-4 pt-32 pb-14 sm:px-6 lg:px-8">
         <ScrollReveal direction="none">
-          <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-white/55 uppercase">
+          <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-white/75 uppercase">
             Licenciamento ambiental · Paraná
           </p>
         </ScrollReveal>
@@ -52,7 +52,7 @@ export default function Hero() {
           <ScrollReveal direction="up" delay={420}>
             <p className="max-w-lg text-corpo leading-[1.7] text-white/85">
               Indústria, agronegócio, portos e pátios. Assumimos o processo inteiro —
-              do diagnóstico ao protocolo no órgão ambiental — para a sua operação
+              do diagnóstico ao protocolo no IAT — para a sua operação
               seguir funcionando enquanto a licença anda.
             </p>
 
@@ -78,7 +78,7 @@ export default function Hero() {
             <dl className="flex flex-wrap gap-x-10 gap-y-4 lg:justify-end">
               {FICHA.map((item) => (
                 <div key={item.chave}>
-                  <dt className="text-[0.65rem] font-semibold tracking-[0.18em] text-white/45 uppercase">
+                  <dt className="text-[0.65rem] font-semibold tracking-[0.18em] text-white/70 uppercase">
                     {item.chave}
                   </dt>
                   <dd className="mt-1 text-sm text-white/90">{item.valor}</dd>

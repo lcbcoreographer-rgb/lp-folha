@@ -62,6 +62,9 @@
 }
 
 html {
+  /* scroll-padding: chegar em /#legislacao por link externo caía embaixo do
+     header fixo. O Lenis só interceptava clique, nunca o carregamento. */
+  scroll-padding-top: 88px;
   scroll-behavior: auto;
 }
 
@@ -69,13 +72,6 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body), system-ui, sans-serif;
-  /* grão de papel: o fundo chapado é o que faz um site parecer template */
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    color-mix(in srgb, var(--color-forest-950) 3%, transparent) 1px,
-    transparent 0
-  );
-  background-size: 26px 26px;
 }
 
 h1,
@@ -108,7 +104,6 @@ h4 {
   border-top: 1px solid color-mix(in srgb, white 22%, transparent);
 }
 
-/* número gigante de seção, atrás do conteúdo */
 /* ---------- Scroll reveal (fallback sem JS de animação) ---------- */
 .reveal {
   opacity: 0;

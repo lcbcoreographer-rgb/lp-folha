@@ -4,7 +4,7 @@ import FocalReveal from "./motion/FocalReveal";
 const LEGISLACAO = [
   {
     norma: "CONAMA nº 237/1997",
-    tipo: "Resolução",
+    tipo: "Licenciamento ambiental",
     texto: "Estabelece os procedimentos e critérios para o licenciamento ambiental.",
   },
   {
@@ -31,7 +31,7 @@ export default function Legislacao() {
         <SectionHead
           rotulo="Segurança jurídica"
           titulo="O que sustenta cada processo."
-          descricao="Conformidade não é opinião: é um conjunto de normas específicas. Estas são as que mais pesam no dia a dia de quem opera no Paraná."
+          descricao="O licenciamento tem duas camadas. A federal define o que é licenciável; a estadual define em que tipologia o seu empreendimento cai — e, com ela, quanto estudo você vai precisar apresentar. Estas são as normas federais que servem de base."
         />
 
         {/* tabela de normas: o formato mais honesto para este conteúdo */}
@@ -44,7 +44,7 @@ export default function Legislacao() {
               >
                 <div>
                   <p className="text-[0.85rem] font-medium text-forest-700 tabular-nums">{item.norma}</p>
-                  <p className="mt-1 text-[0.7rem] font-semibold tracking-[0.14em] text-ink-soft/60 uppercase">{item.tipo}</p>
+                  <p className="mt-1 text-[0.8rem] text-ink-soft">{item.tipo}</p>
                 </div>
                 <p className="max-w-2xl leading-[1.7] text-ink">{item.texto}</p>
               </article>
@@ -52,9 +52,10 @@ export default function Legislacao() {
           </div>
 
           <p className="mx-auto mt-10 max-w-2xl text-center leading-[1.75] text-ink-soft">
-            Interpretamos e aplicamos essas legislações no contexto do seu empreendimento —
-            industrial, portuário ou de agronegócio — para que a licença saia e continue
-            válida.
+            Quem emite a licença aqui é o IAT, e é a norma estadual que decide se o seu caso
+            exige estudo simplificado ou EIA/RIMA. Interpretamos as duas camadas no contexto do
+            seu empreendimento — industrial, portuário ou de agronegócio — para que a licença
+            saia e continue válida.
           </p>
         </FocalReveal>
       </div>

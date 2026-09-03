@@ -60,7 +60,7 @@ export default function ProcessLine({
       <div className="absolute top-2 bottom-2 left-[11px] w-px bg-forest-950/12 sm:left-[19px]" />
       <div
         data-traco
-        className="absolute top-2 bottom-2 left-[11px] w-px origin-top bg-gradient-to-b from-forest-700 to-amber-500 sm:left-[19px]"
+        className="absolute top-2 bottom-2 left-[11px] w-px origin-top bg-forest-700 sm:left-[19px]"
       />
 
       <ol className="space-y-10">

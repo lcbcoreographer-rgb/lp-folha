@@ -37,13 +37,13 @@ export default function Footer() {
           <div>
             <p className="font-semibold text-white text-lg">Contato</p>
             <ul className="mt-4 space-y-3 text-white/70">
-              <li className="flex items-center justify-center md:justify-start gap-3">
+              <li className="flex items-center gap-3">
                 <Phone size={18} className="text-forest-600 flex-shrink-0" />
                 <a href="tel:+554134231690" className="hover:text-amber-400 transition-colors">
                   (41) 3423-1690
                 </a>
               </li>
-              <li className="flex items-center justify-center md:justify-start gap-3">
+              <li className="flex items-center gap-3">
                 <MapPin size={18} className="text-forest-600 flex-shrink-0" />
                 <span>R. Nestor Víctor, 657 - Paranaguá - PR</span>
               </li>

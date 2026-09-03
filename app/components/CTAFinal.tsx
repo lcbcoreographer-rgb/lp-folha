@@ -12,7 +12,7 @@ export default function CTAFinal() {
 
         <RevealWords
           as="h2"
-          text="Pronto para regularizar seu empreendimento?"
+          text="O diagnóstico vem antes da proposta."
           className="text-balance mx-auto mt-5 max-w-[24ch] text-center text-[clamp(1.65rem,3vw,2.5rem)] leading-[1.22] font-normal text-white"
         />
 

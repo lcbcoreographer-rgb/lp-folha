@@ -14,7 +14,7 @@ const SEGMENTS = [
   },
   {
     name: "Armazenagem de fertilizantes",
-    detalhe: "Estudos de risco, licença prévia e adequação de estruturas.",
+    detalhe: "Estudo de análise de risco e licença prévia antes da obra.",
     img: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1200&q=80",
   },
   {
@@ -24,12 +24,12 @@ const SEGMENTS = [
   },
   {
     name: "Portos",
-    detalhe: "Licenciamento de grande porte, monitoramento e condicionantes.",
+    detalhe: "O enquadramento entre IAT e IBAMA é definido caso a caso, e as condicionantes voltam a cada renovação.",
     img: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1200&q=80",
   },
   {
-    name: "Indústrias diversas",
-    detalhe: "Efluentes, emissões atmosféricas e renovação de licença.",
+    name: "Indústria em operação",
+    detalhe: "Efluentes, emissões atmosféricas, resíduos sólidos e renovação da licença de operação.",
     img: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=1200&q=80",
   },
 ];
@@ -117,7 +117,7 @@ export default function Segmentos() {
             ref={trilho}
             className="grid gap-5 sm:grid-cols-2 lg:flex lg:w-max lg:gap-6 lg:pr-[8vw] lg:pl-[max(2rem,calc((100vw-1024px)/2+2rem))]"
           >
-            {SEGMENTS.map((seg, i) => (
+            {SEGMENTS.map((seg) => (
               <article
                 key={seg.name}
                 className="group relative flex h-[360px] flex-col justify-end overflow-hidden rounded-2xl border border-white/10 lg:w-[360px] lg:shrink-0"
@@ -134,10 +134,7 @@ export default function Segmentos() {
                 <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(5,46,22,0.92)_18%,rgba(5,46,22,0.45)_48%,transparent_78%)]" />
 
                 <div className="relative z-10 p-7">
-                  <span className="text-[0.65rem] font-semibold tracking-[0.18em] text-amber-400 uppercase">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="mt-2 text-xl leading-snug font-normal text-white">
+                  <h3 className="text-xl leading-snug font-normal text-white">
                     {seg.name}
                   </h3>
                   <p className="mt-2 text-base leading-[1.6] text-white/85">{seg.detalhe}</p>

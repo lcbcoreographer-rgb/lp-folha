@@ -49,7 +49,7 @@ export default function RevealWords({
       viewport={{ once: true, margin: "-12%" }}
     >
       {palavras.map((p, i) => (
-        <span key={i} className="inline-block overflow-hidden pb-[0.12em] align-bottom">
+        <span key={i} className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom">
           <motion.span variants={palavra} className="inline-block origin-bottom">
             {p}
             {i < palavras.length - 1 && " "}
