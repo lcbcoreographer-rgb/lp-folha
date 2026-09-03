@@ -52,7 +52,11 @@ export default function Segmentos() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      const distancia = () => nodeTrilho.scrollWidth - window.innerWidth + 96;
+      // scrollWidth ja inclui o padding do proprio trilho nas duas pontas, entao
+      // levar o trilho por (scrollWidth - janela) encosta a borda direita do
+      // ultimo card no fim da tela. A versao anterior somava 96 de folga e
+      // ignorava o deslocamento inicial — sobrava card cortado.
+      const distancia = () => Math.max(0, nodeTrilho.scrollWidth - window.innerWidth);
 
       gsap.to(nodeTrilho, {
         x: () => -distancia(),
@@ -75,24 +79,33 @@ export default function Segmentos() {
 
   return (
     <section id="segmentos" className="bg-forest-950 text-white">
-      <div ref={secao} className="overflow-hidden py-20 lg:h-screen lg:py-0">
-        <div className="container mx-auto px-4 pt-4 sm:px-6 lg:flex lg:h-full lg:flex-col lg:justify-center lg:px-8">
+      <div
+        ref={secao}
+        className="overflow-hidden py-20 lg:flex lg:h-screen lg:flex-col lg:justify-center lg:py-0"
+      >
+        <div className="container mx-auto px-4 pt-4 sm:px-6 lg:px-8">
           <SectionHead
             rotulo="Onde atuamos"
             titulo="Cinco frentes,"
             destaque="um mesmo rigor."
             escuro
           />
+        </div>
 
-          <VelocityStrip
-            itens={SEGMENTS.map((s) => s.name)}
-            className="mt-8 mb-10 select-none text-3xl font-semibold tracking-tight text-white/10 md:text-5xl"
-          />
+        <VelocityStrip
+          itens={SEGMENTS.map((s) => s.name)}
+          className="mt-8 mb-10 select-none text-3xl font-normal tracking-tight text-white/10 md:text-5xl"
+        />
 
-          {/* trilho: horizontal no desktop (puxado pelo GSAP), empilhado no resto */}
+        {/* O trilho sangra até a borda em vez de viver dentro do container.
+            Preso ao container de 1024px, o ultimo card ficava 36px cortado para
+            sempre: a conta de distancia usava a largura da janela, mas o trilho
+            comecava deslocado 132px para dentro. Agora ele comeca na margem e a
+            conta bate. */}
+        <div className="px-4 sm:px-6 lg:px-0">
           <div
             ref={trilho}
-            className="grid gap-5 sm:grid-cols-2 lg:flex lg:w-max lg:gap-6"
+            className="grid gap-5 sm:grid-cols-2 lg:flex lg:w-max lg:gap-6 lg:pr-[8vw] lg:pl-[max(2rem,calc((100vw-1024px)/2+2rem))]"
           >
             {SEGMENTS.map((seg, i) => (
               <article
@@ -105,9 +118,10 @@ export default function Segmentos() {
                   fill
                   unoptimized
                   sizes="(max-width: 1024px) 100vw, 380px"
-                  className="object-cover opacity-35 transition-all duration-700 group-hover:scale-105 group-hover:opacity-55"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/60 to-transparent" />
+                {/* véu só no pé do card, onde o texto pousa — o resto da foto fica limpo */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(5,46,22,0.92)_18%,rgba(5,46,22,0.45)_48%,transparent_78%)]" />
 
                 <div className="relative z-10 p-7">
                   <span className="text-[0.65rem] font-semibold tracking-[0.18em] text-amber-400 uppercase">

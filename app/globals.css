@@ -31,7 +31,6 @@
 @theme inline {
   --font-display: var(--font-display);
   --font-body: var(--font-body);
-  --font-mono: var(--font-mono);
 
   --color-forest-950: var(--color-forest-950);
   --color-forest-900: var(--color-forest-900);
@@ -76,18 +75,18 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display), Georgia, serif;
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 20;
-  font-weight: 600;
-  letter-spacing: -0.012em;
+  font-weight: 400;
+  /* Merriweather ja e larga por natureza; tracking negativo aqui so a deixaria
+     apertada e com cara de titulo de template */
+  letter-spacing: -0.005em;
 }
 
 /* ---------- Linguagem de dossiê ---------- */
 
 /* rótulo técnico: "01 / DIFERENCIAIS" */
 .rotulo {
-  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.6875rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -102,13 +101,6 @@ h4 {
 }
 
 /* número gigante de seção, atrás do conteúdo */
-.marca-secao {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 900;
-  line-height: 0.78;
-  letter-spacing: -0.05em;
-}
-
 /* ---------- Scroll reveal (fallback sem JS de animação) ---------- */
 .reveal {
   opacity: 0;

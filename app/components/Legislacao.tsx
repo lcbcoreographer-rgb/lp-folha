@@ -44,7 +44,7 @@ export default function Legislacao() {
                 className="grid gap-1.5 border-b border-rule py-7 md:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] md:gap-10"
               >
                 <div>
-                  <p className="font-mono text-[0.8rem] text-forest-700">{item.norma}</p>
+                  <p className="text-[0.85rem] font-medium text-forest-700 tabular-nums">{item.norma}</p>
                   <p className="mt-1 text-[0.7rem] font-semibold tracking-[0.14em] text-ink-soft/60 uppercase">{item.tipo}</p>
                 </div>
                 <p className="max-w-2xl leading-[1.7] text-ink">{item.texto}</p>

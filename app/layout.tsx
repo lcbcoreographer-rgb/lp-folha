@@ -1,30 +1,28 @@
 import type { Metadata } from "next";
-import { Fraunces, Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Merriweather, Archivo } from "next/font/google";
 import Script from "next/script";
 import { GTAG_ID } from "./lib/gtag";
 import "./globals.css";
 
 /**
- * Fraunces tem eixos ópticos e um "wonk" que dá personalidade ao display sem
- * cair no serif institucional sem graça. Archivo é grotesca de engenharia —
- * combina com laudo técnico. Plex Mono carrega os rótulos e números: é o que
- * transforma a página em dossiê em vez de mais uma landing verde.
+ * Duas famílias, não três.
+ *
+ * Fraunces saiu: os eixos SOFT/WONK são justamente o que faz uma página parecer
+ * gerada — é a display da moda, aparece em todo site de IA. Merriweather foi
+ * desenhada para texto em tela, tem altura de x alta e nenhum modismo; lê como
+ * instituição que existe há vinte anos, que é o que a Folha precisa parecer.
+ *
+ * Archivo cobre corpo, rótulos e os números de lei — o mono decorativo foi
+ * embora junto com a terceira família.
  */
-const fraunces = Fraunces({
+const merriweather = Merriweather({
   variable: "--font-display",
   subsets: ["latin"],
-  // fonte variável: os eixos só existem sem weight fixo
-  axes: ["SOFT", "WONK", "opsz"],
+  weight: ["400", "700"],
 });
 
 const archivo = Archivo({
   variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
@@ -41,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${fraunces.variable} ${archivo.variable} ${plexMono.variable}`}>
+    <html lang="pt-BR" className={`${merriweather.variable} ${archivo.variable}`}>
       <body className="antialiased">
         {children}
         <Script
