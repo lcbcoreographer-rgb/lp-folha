@@ -22,8 +22,9 @@ export default async function BlogPage() {
       <main className="bg-paper pt-32 pb-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <header className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-wider text-amber-600">Blog</p>
-            <h1 className="mt-2 text-4xl sm:text-5xl font-bold text-forest-950 tracking-tight">
+            <div className="fio" />
+            <p className="rotulo mt-4 text-amber-600">Arquivo / Blog</p>
+            <h1 className="mt-4 text-[clamp(2.25rem,5vw,3.75rem)] font-semibold leading-[1.02] text-forest-950">
               Licenciamento sem susto
             </h1>
             <p className="mt-4 text-lg text-ink-soft leading-relaxed">
@@ -40,7 +41,7 @@ export default async function BlogPage() {
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_1px_0_0_rgba(11,61,46,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  className="group flex flex-col overflow-hidden border border-rule bg-paper transition-colors duration-300 hover:border-forest-700/40"
                 >
                   {post.capa_url && (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -51,10 +52,10 @@ export default async function BlogPage() {
                     />
                   )}
                   <div className="flex flex-1 flex-col p-6">
-                    <time className="text-xs font-medium uppercase tracking-wide text-amber-600">
+                    <time className="rotulo text-amber-600">
                       {formatarData(post.publicado_em)}
                     </time>
-                    <h2 className="mt-2 text-xl font-bold text-forest-950 leading-snug">
+                    <h2 className="mt-2 text-xl font-semibold leading-snug text-forest-950">
                       {post.titulo}
                     </h2>
                     {post.resumo && (

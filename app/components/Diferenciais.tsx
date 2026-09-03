@@ -1,65 +1,91 @@
-import { Users, Award, Zap, ShieldCheck } from "lucide-react";
-import ScrollReveal from "./ScrollReveal";
+"use client";
+import { useEffect, useRef } from "react";
+import { animate, stagger } from "animejs";
+import SectionHead from "./motion/SectionHead";
 
 const ITEMS = [
   {
-    icon: Users,
-    title: "Atuação Multissetorial",
+    title: "Atuação multissetorial",
     description:
       "Expertise em diversos segmentos, do agronegócio à indústria, garantindo soluções personalizadas.",
   },
   {
-    icon: Award,
-    title: "Equipe Técnica com ART",
+    title: "Equipe técnica com ART",
     description:
-      "Profissionais qualificados e habilitados, emitindo Anotação de Responsabilidade Técnica para cada projeto.",
+      "Profissionais habilitados, emitindo Anotação de Responsabilidade Técnica para cada projeto.",
   },
   {
-    icon: Zap,
-    title: "Rapidez e Assertividade",
+    title: "Rapidez e assertividade",
     description:
       "Processos otimizados para acelerar a obtenção de licenças, sem comprometer a qualidade e a precisão.",
   },
   {
-    icon: ShieldCheck,
-    title: "Conformidade Legal",
+    title: "Conformidade legal",
     description:
-      "Atuação 100% alinhada às normativas ambientais vigentes, prevenindo multas e sanções.",
+      "Atuação alinhada às normativas ambientais vigentes, prevenindo multas e sanções.",
   },
 ];
 
 export default function Diferenciais() {
-  return (
-    <section id="diferenciais" className="py-24 md:py-28 bg-paper">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-600">
-            Por que a Folha
-          </span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-extrabold text-forest-900">
-            Nossos Diferenciais
-          </h2>
-          <p className="mt-4 text-lg text-ink-soft">
-            Por que escolher a Folha para seu licenciamento?
-          </p>
-        </ScrollReveal>
+  const lista = useRef<HTMLOListElement>(null);
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {ITEMS.map((item, i) => (
-            <ScrollReveal key={item.title} delay={i * 100}>
-              <div className="group h-full rounded-2xl bg-white p-8 text-center ring-1 ring-forest-900/[0.06] shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-forest-900/[0.08]">
-                <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-forest-50 text-amber-600 transition-colors duration-300 group-hover:bg-amber-500 group-hover:text-white">
-                  <item.icon size={26} strokeWidth={1.75} />
+  useEffect(() => {
+    const node = lista.current;
+    if (!node) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // entra uma linha depois da outra, como um documento sendo impresso
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        animate(node.querySelectorAll("[data-linha]"), {
+          opacity: [0, 1],
+          y: [26, 0],
+          duration: 760,
+          delay: stagger(110),
+          ease: "outQuart",
+        });
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section id="diferenciais" className="bg-paper py-24 md:py-32">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
+          <SectionHead
+            numero="01"
+            rotulo="Por que a Folha"
+            titulo="Quatro razões que encurtam o processo"
+            descricao="Licenciamento trava por detalhe técnico. Estes quatro pontos são o que separa um protocolo aceito de um processo devolvido."
+            className="lg:sticky lg:top-32 lg:self-start"
+          />
+
+          <ol ref={lista} className="border-t border-rule">
+            {ITEMS.map((item, i) => (
+              <li
+                key={item.title}
+                data-linha
+                className="group grid grid-cols-[auto_minmax(0,1fr)] gap-6 border-b border-rule py-8 opacity-0 transition-colors duration-300 hover:bg-paper-dim/60 sm:gap-10 sm:py-10"
+              >
+                <span className="rotulo pt-1.5 text-forest-700/50 transition-colors duration-300 group-hover:text-amber-600">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 className="text-2xl leading-tight font-semibold text-forest-950 md:text-3xl">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2.5 max-w-xl leading-relaxed text-ink-soft">
+                    {item.description}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-forest-900 mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-ink-soft leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-            </ScrollReveal>
-          ))}
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

@@ -1,19 +1,32 @@
 import type { Metadata } from "next";
-import { Sora, Manrope } from "next/font/google";
+import { Fraunces, Archivo, IBM_Plex_Mono } from "next/font/google";
 import Script from "next/script";
 import { GTAG_ID } from "./lib/gtag";
 import "./globals.css";
 
-const sora = Sora({
-  variable: "--font-heading",
+/**
+ * Fraunces tem eixos ópticos e um "wonk" que dá personalidade ao display sem
+ * cair no serif institucional sem graça. Archivo é grotesca de engenharia —
+ * combina com laudo técnico. Plex Mono carrega os rótulos e números: é o que
+ * transforma a página em dossiê em vez de mais uma landing verde.
+ */
+const fraunces = Fraunces({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  // fonte variável: os eixos só existem sem weight fixo
+  axes: ["SOFT", "WONK", "opsz"],
 });
 
-const manrope = Manrope({
+const archivo = Archivo({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -28,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${sora.variable} ${manrope.variable}`}>
+    <html lang="pt-BR" className={`${fraunces.variable} ${archivo.variable} ${plexMono.variable}`}>
       <body className="antialiased">
         {children}
         <Script

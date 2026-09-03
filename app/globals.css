@@ -1,30 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --color-forest-950: #003d00;
-  --color-forest-900: #005c00;
-  --color-forest-800: #008500;
-  --color-forest-700: #00b800;
-  --color-forest-600: #33ff33;
-  --color-forest-100: #e0ffe0;
-  --color-forest-50: #f0fff0;
+  /* Verde da marca. O 950 é o fundo institucional; o 600 quase não é usado
+     como área, só como fio e acento sobre escuro. */
+  --color-forest-950: #052e16;
+  --color-forest-900: #0b4022;
+  --color-forest-800: #14532d;
+  --color-forest-700: #1c6b3a;
+  --color-forest-600: #2f9e56;
+  --color-forest-100: #dcf3e4;
+  --color-forest-50: #f0faf3;
 
-  --color-amber-600: #d4611e;
-  --color-amber-500: #e8722c;
-  --color-amber-400: #f08a4b;
+  --color-amber-600: #b8541a;
+  --color-amber-500: #d4611e;
+  --color-amber-400: #e8843f;
 
   --color-ink: #16211c;
-  --color-ink-soft: #4a564f;
-  --color-paper: #fbfaf6;
-  --color-paper-dim: #f2f4ef;
+  --color-ink-soft: #55635b;
+  --color-paper: #f7f5ef;
+  --color-paper-dim: #efece3;
+
+  /* fio de 1px que separa blocos do dossiê */
+  --rule: color-mix(in srgb, var(--color-forest-950) 14%, transparent);
+  --rule-forte: color-mix(in srgb, var(--color-forest-950) 30%, transparent);
 
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @theme inline {
-  --font-heading: var(--font-heading);
+  --font-display: var(--font-display);
   --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
 
   --color-forest-950: var(--color-forest-950);
   --color-forest-900: var(--color-forest-900);
@@ -42,6 +49,9 @@
   --color-ink-soft: var(--color-ink-soft);
   --color-paper: var(--color-paper);
   --color-paper-dim: var(--color-paper-dim);
+
+  --color-rule: var(--rule);
+  --color-rule-forte: var(--rule-forte);
 }
 
 html {
@@ -52,16 +62,53 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body), system-ui, sans-serif;
+  /* grão de papel: o fundo chapado é o que faz um site parecer template */
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    color-mix(in srgb, var(--color-forest-950) 5%, transparent) 1px,
+    transparent 0
+  );
+  background-size: 22px 22px;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-heading), system-ui, sans-serif;
+  font-family: var(--font-display), Georgia, serif;
+  font-variation-settings: "SOFT" 20, "WONK" 1;
+  letter-spacing: -0.022em;
 }
 
-/* ---------- Scroll reveal system ---------- */
+/* ---------- Linguagem de dossiê ---------- */
+
+/* rótulo técnico: "01 / DIFERENCIAIS" */
+.rotulo {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* fio horizontal que abre cada seção */
+.fio {
+  border-top: 1px solid var(--rule);
+}
+
+.fio-claro {
+  border-top: 1px solid color-mix(in srgb, white 22%, transparent);
+}
+
+/* número gigante de seção, atrás do conteúdo */
+.marca-secao {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 900;
+  line-height: 0.78;
+  letter-spacing: -0.05em;
+}
+
+/* ---------- Scroll reveal (fallback sem JS de animação) ---------- */
 .reveal {
   opacity: 0;
   transition:
@@ -102,7 +149,7 @@ h4 {
   }
 }
 
-/* ---------- Modal animations ---------- */
+/* ---------- Animações de modal ---------- */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -123,7 +170,7 @@ h4 {
   }
 }
 
-/* ---------- Misc premium touches ---------- */
+/* ---------- Detalhes ---------- */
 .text-balance {
   text-wrap: balance;
 }

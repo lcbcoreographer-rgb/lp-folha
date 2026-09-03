@@ -1,86 +1,64 @@
-import Image from "next/image";
-import { ScrollText, Trees, Factory, ShieldCheck } from "lucide-react";
-import ScrollReveal from "./ScrollReveal";
+import SectionHead from "./motion/SectionHead";
+import FocalReveal from "./motion/FocalReveal";
 
 const LEGISLACAO = [
   {
-    icon: ScrollText,
-    text: "Resolução CONAMA nº 237/1997: Estabelece os procedimentos para o licenciamento ambiental.",
+    norma: "CONAMA nº 237/1997",
+    tipo: "Resolução",
+    texto: "Estabelece os procedimentos e critérios para o licenciamento ambiental.",
   },
   {
-    icon: Trees,
-    text: "Código Florestal (Lei nº 12.651/2012): Define regras para a proteção da vegetação nativa.",
+    norma: "Lei nº 12.651/2012",
+    tipo: "Código Florestal",
+    texto: "Define as regras de proteção da vegetação nativa e das áreas de reserva.",
   },
   {
-    icon: Factory,
-    text: "Política Nacional de Resíduos Sólidos (Lei nº 12.305/2010): Orienta a gestão integrada de resíduos.",
+    norma: "Lei nº 12.305/2010",
+    tipo: "Resíduos Sólidos",
+    texto: "Orienta a gestão integrada e o plano de gerenciamento de resíduos.",
   },
   {
-    icon: ShieldCheck,
-    text: "Lei de Crimes Ambientais (Lei nº 9.605/1998): Dispõe sobre as sanções penais e administrativas.",
+    norma: "Lei nº 9.605/1998",
+    tipo: "Crimes Ambientais",
+    texto: "Dispõe sobre as sanções penais e administrativas por conduta lesiva.",
   },
 ];
 
 export default function Legislacao() {
   return (
-    <section id="legislacao" className="py-24 md:py-28 bg-paper-dim">
+    <section id="legislacao" className="bg-paper-dim py-24 md:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-14 lg:gap-20 items-center">
-          <ScrollReveal direction="left">
-            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-600">
-              Segurança jurídica
-            </span>
-            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold text-forest-900">
-              Atuação Alinhada às Normas
-            </h2>
-            <p className="mt-5 text-lg text-ink-soft leading-relaxed">
-              A conformidade regulatória é o pilar da sustentabilidade de
-              qualquer negócio. Navegar no complexo sistema de leis ambientais
-              exige conhecimento aprofundado e constante atualização. Nossa
-              equipe garante que seu empreendimento, seja industrial,
-              portuário ou de agronegócio, esteja em total acordo com as
-              normas vigentes.
-            </p>
-            <p className="mt-4 text-lg text-ink-soft leading-relaxed">
-              Interpretamos e aplicamos as principais legislações federais e
-              estaduais, desde o licenciamento até a gestão de resíduos e a
-              proteção de áreas de preservação, assegurando tranquilidade
-              jurídica e operacional para você.
-            </p>
+        <SectionHead
+          numero="04"
+          rotulo="Segurança jurídica"
+          titulo="O que sustenta cada processo"
+          descricao="Conformidade não é opinião: é um conjunto de normas específicas. Estas são as que mais pesam no dia a dia de quem opera no Paraná."
+          className="max-w-3xl"
+        />
 
-            <ul className="mt-8 space-y-4">
-              {LEGISLACAO.map((item, i) => (
-                <ScrollReveal
-                  key={item.text}
-                  as="li"
-                  direction="left"
-                  delay={200 + i * 120}
-                  className="flex items-start gap-3.5"
-                >
-                  <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-forest-100 text-forest-800">
-                    <item.icon size={18} strokeWidth={1.75} />
-                  </span>
-                  <span className="text-ink font-medium leading-snug">
-                    {item.text}
-                  </span>
-                </ScrollReveal>
-              ))}
-            </ul>
-          </ScrollReveal>
+        {/* tabela de normas: o formato mais honesto para este conteúdo */}
+        <FocalReveal className="mt-14">
+          <div className="border-t border-rule-forte">
+            {LEGISLACAO.map((item) => (
+              <article
+                key={item.norma}
+                className="group grid gap-2 border-b border-rule py-7 md:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] md:gap-10"
+              >
+                <div>
+                  <p className="font-mono text-sm font-medium text-forest-800">{item.norma}</p>
+                  <p className="rotulo mt-1 text-ink-soft/70">{item.tipo}</p>
+                </div>
+                <p className="max-w-2xl text-lg leading-relaxed text-ink">{item.texto}</p>
+              </article>
+            ))}
+          </div>
 
-          <ScrollReveal direction="scale" delay={150}>
-            <div className="relative aspect-[4/5] max-h-[550px] w-full overflow-hidden rounded-2xl shadow-2xl shadow-forest-900/15">
-              <Image
-                src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80"
-                alt="Equipe analisando documentação legal e ambiental"
-                fill
-                className="object-cover"
-                sizes="(min-width: 768px) 45vw, 100vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-forest-950/30 to-transparent" />
-            </div>
-          </ScrollReveal>
-        </div>
+          <p className="mt-8 max-w-2xl leading-relaxed text-ink-soft">
+            Interpretamos e aplicamos essas legislações no contexto do seu empreendimento —
+            industrial, portuário ou de agronegócio — para que a licença saia e continue
+            válida.
+          </p>
+        </FocalReveal>
       </div>
     </section>
   );

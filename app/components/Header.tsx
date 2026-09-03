@@ -28,8 +28,8 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-paper/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(11,61,46,0.08)]"
-          : "bg-paper/70 backdrop-blur-sm"
+          ? "border-b border-rule bg-paper/92 backdrop-blur-md"
+          : "border-b border-transparent bg-paper/75 backdrop-blur-sm"
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,10 +47,10 @@ export default function Header() {
               />
             </span>
             <span className="leading-tight">
-              <span className="block font-heading font-bold text-lg text-forest-900">
+              <span className="font-display block text-xl font-semibold text-forest-950">
                 Folha
               </span>
-              <span className="block text-[10px] uppercase tracking-[0.18em] text-ink-soft">
+              <span className="rotulo block text-[9px] text-ink-soft">
                 Soluções Ambientais
               </span>
             </span>
@@ -61,7 +61,7 @@ export default function Header() {
               <a
                 key={item.name}
                 href={item.href}
-                className="underline-swipe text-sm font-medium text-ink-soft hover:text-forest-800 transition-colors"
+                className="rotulo underline-swipe text-ink-soft transition-colors hover:text-forest-900"
               >
                 {item.name}
               </a>
@@ -71,7 +71,7 @@ export default function Header() {
           <div className="hidden md:block">
             <WhatsAppCTAButton
               eventLabel="header_orcamento"
-              className="inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/25 hover:-translate-y-0.5"
+              className="inline-flex items-center border border-amber-500 bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-transparent hover:text-amber-600"
             >
               Solicitar Orçamento
             </WhatsAppCTAButton>
@@ -98,14 +98,14 @@ export default function Header() {
               key={item.name}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className="text-ink-soft font-medium hover:text-forest-800"
+              className="rotulo text-ink-soft hover:text-forest-900"
             >
               {item.name}
             </a>
           ))}
           <WhatsAppCTAButton
             eventLabel="header_mobile_orcamento"
-            className="mt-2 inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white"
+            className="mt-2 inline-flex items-center border border-amber-500 bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white"
           >
             Solicitar Orçamento
           </WhatsAppCTAButton>

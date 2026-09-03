@@ -2,10 +2,11 @@ import Image from "next/image";
 import { Phone, MapPin } from "lucide-react";
 
 const NAV_ITEMS = [
-  { name: "Diferenciais", href: "#diferenciais" },
-  { name: "Segmentos", href: "#segmentos" },
-  { name: "Legislação", href: "#legislacao" },
-  { name: "Depoimentos", href: "#depoimentos" },
+  { name: "Diferenciais", href: "/#diferenciais" },
+  { name: "Como funciona", href: "/#como-funciona" },
+  { name: "Segmentos", href: "/#segmentos" },
+  { name: "Legislação", href: "/#legislacao" },
+  { name: "Blog", href: "/blog" },
 ];
 
 export default function Footer() {
@@ -14,8 +15,8 @@ export default function Footer() {
   return (
     <footer className="bg-forest-950 text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
-          <div className="flex flex-col items-center md:items-start">
+        <div className="grid grid-cols-1 gap-10 border-t border-white/15 pt-12 text-left md:grid-cols-3">
+          <div className="flex flex-col items-start">
             <div className="flex items-center gap-2.5">
               <span className="relative h-11 w-11 flex-shrink-0">
                 <Image
@@ -27,7 +28,7 @@ export default function Footer() {
                   unoptimized
                 />
               </span>
-              <span className="font-heading font-bold text-lg">Folha</span>
+              <span className="font-display text-xl font-semibold">Folha</span>
             </div>
             <p className="mt-4 max-w-xs text-white/60">
               Soluções inteligentes em licenciamento ambiental para um futuro

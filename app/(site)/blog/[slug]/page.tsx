@@ -43,10 +43,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               ← Todos os artigos
             </Link>
 
-            <time className="mt-8 block text-xs font-medium uppercase tracking-wide text-amber-600">
+            <time className="rotulo mt-8 block text-amber-600">
               {formatarData(post.publicado_em)}
             </time>
-            <h1 className="mt-2 text-4xl sm:text-5xl font-bold text-forest-950 tracking-tight leading-tight">
+            <h1 className="mt-3 text-[clamp(2.25rem,5.2vw,4rem)] font-semibold leading-[1.02] text-forest-950">
               {post.titulo}
             </h1>
             {post.resumo && (
@@ -62,7 +62,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             <img
               src={post.capa_url}
               alt=""
-              className="mx-auto mt-10 max-w-4xl w-full rounded-2xl object-cover"
+              className="mx-auto mt-10 w-full max-w-4xl object-cover"
             />
           )}
 
@@ -72,7 +72,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             {post.conteudo.map((bloco, i) => {
               if (bloco.tipo === "titulo") {
                 return (
-                  <h2 key={i} className="pt-4 text-2xl font-bold text-forest-950 leading-snug">
+                  <h2 key={i} className="pt-4 text-2xl font-semibold leading-snug text-forest-950">
                     {bloco.texto}
                   </h2>
                 );
@@ -100,8 +100,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             })}
           </div>
 
-          <div className="mx-auto mt-16 max-w-2xl rounded-2xl bg-forest-950 px-8 py-10 text-center">
-            <p className="text-2xl font-bold text-white leading-snug">
+          <div className="mx-auto mt-16 max-w-2xl bg-forest-950 px-8 py-12 text-center">
+            <p className="text-2xl font-semibold leading-snug text-white">
               Precisa regularizar a sua empresa?
             </p>
             <p className="mt-2 text-forest-100">

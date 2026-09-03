@@ -1,4 +1,4 @@
-import RevealWords from "./motion/RevealWords";
+import SectionHead from "./motion/SectionHead";
 import FocalReveal from "./motion/FocalReveal";
 import ProcessLine from "./motion/ProcessLine";
 import Counter from "./motion/Counter";
@@ -32,20 +32,13 @@ export default function ComoFunciona() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
-            <span className="text-xs font-semibold tracking-[0.16em] text-amber-600 uppercase">
-              Como funciona
-            </span>
-            <RevealWords
-              as="h2"
-              text="Do papel parado à licença na mão"
-              className="text-balance mt-3 text-3xl font-extrabold text-forest-950 md:text-4xl"
+            <SectionHead
+              numero="02"
+              rotulo="Como funciona"
+              titulo="Do papel parado à licença na mão"
+              descricao="Licenciamento não é um formulário: é uma sequência de exigências que precisa ser cumprida na ordem certa. Nós percorremos essa sequência por você."
             />
             <FocalReveal>
-              <p className="mt-5 max-w-md text-lg leading-relaxed text-ink-soft">
-                Licenciamento não é um formulário: é uma sequência de exigências que precisa
-                ser cumprida na ordem certa. Nós percorremos essa sequência por você.
-              </p>
-
               <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-forest-950/10 pt-8">
                 <div>
                   <dt className="text-3xl font-extrabold text-forest-800 md:text-4xl">
