@@ -11,6 +11,9 @@
   --color-forest-100: #dcf3e4;
   --color-forest-50: #f0faf3;
 
+  /* amber-500 com texto branco dava 3,80:1 e reprovava AA. O 600 dá 4,86:1
+     e virou a cor de botão; o 700 existe só para o hover não clarear. */
+  --color-amber-700: #96430d;
   --color-amber-600: #b8541a;
   --color-amber-500: #d4611e;
   --color-amber-400: #e8843f;
@@ -29,6 +32,10 @@
 }
 
 @theme inline {
+  /* Corpo maior. A referência aprovada usa 22px; 19px no topo preserva o degrau
+     até o text-xl (20px) dos cards e não estoura a medida de linha do hero. */
+  --text-corpo: clamp(1.0625rem, 0.9rem + 0.5vw, 1.1875rem);
+
   --font-display: var(--font-display);
   --font-body: var(--font-body);
 
@@ -40,6 +47,7 @@
   --color-forest-100: var(--color-forest-100);
   --color-forest-50: var(--color-forest-50);
 
+  --color-amber-700: var(--color-amber-700);
   --color-amber-600: var(--color-amber-600);
   --color-amber-500: var(--color-amber-500);
   --color-amber-400: var(--color-amber-400);

@@ -1,41 +1,38 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { animate, stagger } from "animejs";
-import { Layers, BadgeCheck, Gauge, Scale } from "lucide-react";
 import SectionHead from "./motion/SectionHead";
 
 /**
- * Grade de quatro atributos.
+ * Quatro atributos, sem ícone.
  *
- * Antes era uma lista numerada — igual à seção seguinte, que também numera de
- * 01 a 04. O problema não era estético: numerar sugere ordem, e aqui não há
- * ordem nenhuma. Isto é um conjunto; a seção 02 é uma sequência. Grade para um,
- * linha para a outra.
+ * Os ícones lucide eram decoração: `Gauge` para "rapidez" e `Scale` para
+ * "conformidade" são pictograma de banco de imagem, e ícone+título+parágrafo em
+ * grade 2x2 é o componente mais reconhecível de página gerada.
+ *
+ * Os títulos mudaram porque dois deles não afirmavam nada que um concorrente
+ * não assinasse. "Conformidade legal" não é diferencial, é obrigação.
  */
 const ITEMS = [
   {
-    icon: Layers,
-    title: "Atuação multissetorial",
+    title: "Agronegócio, indústria, porto e pátio",
     description:
-      "Do agronegócio à indústria pesada. Cada segmento tem exigências próprias, e conhecemos as delas.",
+      "Cada setor cai numa tipologia diferente, e é a tipologia que define quanto estudo o processo vai exigir.",
   },
   {
-    icon: BadgeCheck,
     title: "Equipe técnica com ART",
     description:
       "Profissionais habilitados, com Anotação de Responsabilidade Técnica emitida para cada projeto.",
   },
   {
-    icon: Gauge,
-    title: "Rapidez e assertividade",
+    title: "Protocolo instruído",
     description:
-      "Processos organizados para encurtar o caminho até a licença, sem abrir mão da precisão técnica.",
+      "O processo entra com estudos, plantas e documentação no formato que o órgão exige. Cada pedido de informação complementar suspende a contagem do prazo até a resposta.",
   },
   {
-    icon: Scale,
-    title: "Conformidade legal",
+    title: "Adequação antes da fiscalização",
     description:
-      "Atuação alinhada às normativas vigentes, prevenindo multas, embargos e sanções.",
+      "Multa, embargo e interdição chegam por item que já estava previsto em norma. A adequação entra no projeto, não na resposta ao auto de infração.",
   },
 ];
 
@@ -45,13 +42,21 @@ export default function Diferenciais() {
   useEffect(() => {
     const node = grade.current;
     if (!node) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const itens = node.querySelectorAll<HTMLElement>("[data-item]");
+
+    // Os cards nascem em opacity-0 e só a animação devolvia a opacidade — com
+    // prefers-reduced-motion o efeito saía de cena e a seção inteira ficava em
+    // branco. Agora o caminho sem movimento revela na hora, em vez de desistir.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      itens.forEach((el) => (el.style.opacity = "1"));
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
         observer.disconnect();
-        animate(node.querySelectorAll("[data-item]"), {
+        animate(itens, {
           opacity: [0, 1],
           y: [22, 0],
           duration: 700,
@@ -70,9 +75,8 @@ export default function Diferenciais() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHead
           rotulo="Por que a Folha"
-          titulo="Uma consultoria construída para"
-          destaque="resolver, não para orientar."
-          descricao="Licenciamento trava por detalhe técnico. Estes quatro pontos são o que separa um protocolo aceito de um processo devolvido."
+          titulo="Uma consultoria construída para resolver, não para orientar."
+          descricao="Licenciamento trava por detalhe técnico. Protocolo aceito e processo devolvido costumam diferir por um documento."
         />
 
         <div
@@ -80,14 +84,9 @@ export default function Diferenciais() {
           className="mx-auto mt-16 grid max-w-4xl gap-x-14 gap-y-12 sm:grid-cols-2"
         >
           {ITEMS.map((item) => (
-            <article key={item.title} data-item className="text-center opacity-0 sm:text-left">
-              <item.icon
-                size={26}
-                strokeWidth={1.4}
-                className="mx-auto text-forest-700 sm:mx-0"
-              />
-              <h3 className="mt-4 text-xl font-normal text-forest-950">{item.title}</h3>
-              <p className="mt-2.5 text-[0.95rem] leading-[1.7] text-ink-soft">
+            <article key={item.title} data-item className="opacity-0">
+              <h3 className="text-xl font-normal text-forest-950">{item.title}</h3>
+              <p className="mt-2.5 text-corpo leading-[1.7] text-ink-soft">
                 {item.description}
               </p>
             </article>

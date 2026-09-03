@@ -7,6 +7,9 @@ import { motion, type Variants } from "motion/react";
  * A máscara é o `overflow-hidden` de cada palavra: ela não aparece de baixo da
  * tela, aparece de dentro da própria linha — é o que dá a sensação de texto
  * sendo composto, e não de coisa deslizando.
+ *
+ * Sem rotação 3D: `rotateX` com `perspective` é a assinatura de movimento mais
+ * reconhecível de landing gerada. A máscara sozinha já conta a história.
  */
 export default function RevealWords({
   text,
@@ -27,10 +30,9 @@ export default function RevealWords({
   };
 
   const palavra: Variants = {
-    hidden: { y: "110%", rotateX: -35, opacity: 0 },
+    hidden: { y: "110%", opacity: 0 },
     visible: {
       y: "0%",
-      rotateX: 0,
       opacity: 1,
       transition: { type: "spring", damping: 18, stiffness: 120 },
     },
@@ -45,7 +47,6 @@ export default function RevealWords({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-12%" }}
-      style={{ perspective: 800 }}
     >
       {palavras.map((p, i) => (
         <span key={i} className="inline-block overflow-hidden pb-[0.12em] align-bottom">

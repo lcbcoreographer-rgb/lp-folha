@@ -71,9 +71,9 @@ export default function Header() {
           <div className="hidden md:block">
             <WhatsAppCTAButton
               eventLabel="header_orcamento"
-              className="inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-amber-600"
+              className="inline-flex items-center rounded-full bg-amber-600 px-6 py-2.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-amber-700"
             >
-              Solicitar Orçamento
+              Solicitar diagnóstico
             </WhatsAppCTAButton>
           </div>
 
@@ -105,9 +105,9 @@ export default function Header() {
           ))}
           <WhatsAppCTAButton
             eventLabel="header_mobile_orcamento"
-            className="mt-2 inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-medium text-white"
+            className="mt-2 inline-flex items-center rounded-full bg-amber-600 px-6 py-2.5 text-sm font-medium text-white"
           >
-            Solicitar Orçamento
+            Solicitar diagnóstico
           </WhatsAppCTAButton>
         </nav>
       </div>

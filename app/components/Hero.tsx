@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown } from "lucide-react";
-import RevealWords from "./motion/RevealWords";
 import ScrollReveal from "./ScrollReveal";
 import WhatsAppCTAButton from "./WhatsAppCTAButton";
 
@@ -14,8 +12,8 @@ import WhatsAppCTAButton from "./WhatsAppCTAButton";
  */
 const FICHA = [
   { chave: "Atuação", valor: "Paraná" },
-  { chave: "Registro", valor: "Equipe com ART" },
-  { chave: "Escopo", valor: "Licenciamento completo" },
+  { chave: "Responsável técnico", valor: "Registro no CREA-PR" },
+  { chave: "Escopo", valor: "LP, LI, LO e renovação" },
 ];
 
 export default function Hero() {
@@ -43,16 +41,16 @@ export default function Hero() {
           </p>
         </ScrollReveal>
 
-        <RevealWords
-          as="h1"
-          delay={0.15}
-          text="Licenciamento ambiental completo para quem não pode parar"
-          className="text-balance mt-6 max-w-[22ch] text-[clamp(2rem,4.2vw,3.25rem)] leading-[1.14] font-normal text-white"
-        />
+        {/* Sem revelação: é o LCP da página. Nascer com opacity 0 esperando JS
+            arrisca deixar o título principal invisível — e animar o h1 acima da
+            dobra é o proprio tique de landing gerada. */}
+        <h1 className="text-balance mt-6 max-w-[26ch] text-[clamp(2.15rem,4.9vw,3.8rem)] leading-[1.14] font-normal text-white">
+          Seu processo entra no órgão sem voltar por exigência
+        </h1>
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-end">
           <ScrollReveal direction="up" delay={420}>
-            <p className="max-w-lg text-base leading-relaxed text-white/75">
+            <p className="max-w-lg text-corpo leading-[1.7] text-white/85">
               Indústria, agronegócio, portos e pátios. Assumimos o processo inteiro —
               do diagnóstico ao protocolo no órgão ambiental — para a sua operação
               seguir funcionando enquanto a licença anda.
@@ -62,9 +60,9 @@ export default function Hero() {
               <WhatsAppCTAButton
                 eventLabel="hero_atendimento"
                 message="Olá, quero solicitar atendimento especializado em licenciamento ambiental"
-                className="group inline-flex items-center gap-3 rounded-full bg-amber-500 px-8 py-3.5 text-[0.95rem] font-medium text-white transition-colors duration-300 hover:bg-amber-600"
+                className="group inline-flex items-center gap-3 rounded-full bg-amber-600 px-8 py-3.5 text-base font-medium text-white transition-colors duration-300 hover:bg-amber-700"
               >
-                Falar com um especialista
+                Solicitar diagnóstico
               </WhatsAppCTAButton>
               <Link
                 href="/#como-funciona"
@@ -90,11 +88,13 @@ export default function Hero() {
           </ScrollReveal>
         </div>
 
-        <div className="mt-12 flex items-center gap-2.5 text-white/35">
-          <ArrowDown size={14} className="animate-bounce" />
-          <span className="text-[0.65rem] font-semibold tracking-[0.18em] uppercase">
-            Role para continuar
-          </span>
+        <div className="mt-12">
+          <a
+            href="tel:+554134231690"
+            className="text-[0.65rem] font-semibold tracking-[0.18em] text-white/70 uppercase transition-colors hover:text-white"
+          >
+            (41) 3423-1690
+          </a>
         </div>
       </div>
     </section>

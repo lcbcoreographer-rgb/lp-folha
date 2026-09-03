@@ -1,7 +1,5 @@
 import SectionHead from "./motion/SectionHead";
-import FocalReveal from "./motion/FocalReveal";
 import ProcessLine from "./motion/ProcessLine";
-import Counter from "./motion/Counter";
 
 const ETAPAS = [
   {
@@ -34,27 +32,15 @@ export default function ComoFunciona() {
           <div className="lg:sticky lg:top-32 lg:self-start">
             <SectionHead
               rotulo="Como funciona"
-              titulo="Do papel parado"
-              destaque="à licença na mão."
+              titulo="Do papel parado à licença na mão."
               descricao="Licenciamento não é um formulário: é uma sequência de exigências que precisa ser cumprida na ordem certa. Nós percorremos essa sequência por você."
               centralizado={false}
             />
-            <FocalReveal>
-              <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-forest-950/10 pt-8">
-                <div>
-                  <dt className="font-display text-3xl font-normal text-forest-800">
-                    <Counter para={12} sufixo="+" />
-                  </dt>
-                  <dd className="mt-1 text-sm text-ink-soft">anos de atuação no Paraná</dd>
-                </div>
-                <div>
-                  <dt className="font-display text-3xl font-normal text-forest-800">
-                    <Counter para={4} />
-                  </dt>
-                  <dd className="mt-1 text-sm text-ink-soft">etapas até a licença</dd>
-                </div>
-              </dl>
-            </FocalReveal>
+            {/* Aqui havia "12+ anos de atuação" e "4 etapas". O primeiro numero
+                nao tinha fonte — foi inventado; o segundo so contava os bullets
+                da coluna ao lado. Numero fabricado em site comercial e passivo.
+                O espaco fica reservado para dado real: quantidade de licencas
+                emitidas, ano de fundacao, numero de municipios atendidos. */}
           </div>
 
           <ProcessLine etapas={ETAPAS} />

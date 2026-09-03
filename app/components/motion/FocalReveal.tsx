@@ -1,12 +1,13 @@
 "use client";
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "motion/react";
+import { motion } from "motion/react";
 
 /**
- * Conteúdo que entra desfocado e distante e resolve conforme sobe na tela.
+ * Conteúdo que entra levemente desfocado e resolve uma vez.
  *
- * É a promessa da Folha em forma de movimento: o processo começa opaco e vai
- * ficando claro. Por isso o desfoque é o eixo principal, não a opacidade.
+ * Antes o desfoque era preso ao progresso do scroll, nos dois sentidos: rolar de
+ * volta para reler uma norma reaplicava 14px de blur em cima do texto legal — e
+ * reler citação de lei é exatamente o que o visitante faz nessa página. Agora
+ * resolve uma vez e fica resolvido, e o blur caiu de 14px para 6px.
  */
 export default function FocalReveal({
   children,
@@ -15,23 +16,14 @@ export default function FocalReveal({
   children: React.ReactNode;
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 0.9", "start 0.35"],
-  });
-
-  // mola no progresso: sem ela o desfoque acompanha o dedo e fica nervoso
-  const suave = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.4 });
-
-  const blur = useTransform(suave, [0, 1], [14, 0]);
-  const filter = useTransform(blur, (b) => `blur(${b}px)`);
-  const opacity = useTransform(suave, [0, 0.6], [0, 1]);
-  const y = useTransform(suave, [0, 1], [56, 0]);
-  const scale = useTransform(suave, [0, 1], [0.965, 1]);
-
   return (
-    <motion.div ref={ref} style={{ filter, opacity, y, scale }} className={className}>
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-12%" }}
+      transition={{ duration: 0.75, ease: [0.25, 1, 0.5, 1] }}
+    >
       {children}
     </motion.div>
   );

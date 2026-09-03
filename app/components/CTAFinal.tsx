@@ -17,7 +17,7 @@ export default function CTAFinal() {
         />
 
         <ScrollReveal direction="up" delay={200}>
-          <p className="mx-auto mt-6 max-w-xl text-center text-base leading-[1.75] text-white/65">
+          <p className="mx-auto mt-6 max-w-xl text-center text-corpo leading-[1.7] text-white/80">
             Conte o que a sua operação faz e onde ela está. Devolvemos quais licenças o
             seu caso exige e o caminho mais curto até elas.
           </p>
@@ -26,7 +26,7 @@ export default function CTAFinal() {
             <WhatsAppCTAButton
               eventLabel="cta_final"
               message="Olá, quero regularizar meu empreendimento e gostaria de falar com um especialista"
-              className="inline-flex items-center gap-3 rounded-full bg-amber-500 px-9 py-3.5 text-[0.95rem] font-medium text-white transition-colors duration-300 hover:bg-amber-600"
+              className="inline-flex items-center gap-3 rounded-full bg-amber-600 px-9 py-3.5 text-base font-medium text-white transition-colors duration-300 hover:bg-amber-700"
             >
               Solicitar diagnóstico
             </WhatsAppCTAButton>

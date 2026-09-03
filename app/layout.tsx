@@ -30,7 +30,7 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   title: "Folha Soluções Ambientais | Licenciamento Ambiental no Paraná",
   description:
-    "Licenciamento ambiental completo para diferentes segmentos no Paraná. Equipe técnica com ART, conformidade legal e agilidade para o seu negócio prosperar.",
+    "Licenciamento ambiental no Paraná para indústria, agronegócio, portos e pátios de caminhões: LP, LO, renovação e outorga. Equipe com ART, protocolo no IAT.",
 };
 
 export default function RootLayout({

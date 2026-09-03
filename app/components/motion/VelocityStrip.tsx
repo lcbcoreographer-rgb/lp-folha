@@ -27,6 +27,10 @@ export default function VelocityStrip({
   baseVelocity?: number;
   className?: string;
 }) {
+  // WCAG 2.2.2: movimento automático e infinito precisa parar para quem pede
+  const semMovimento =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
@@ -40,6 +44,7 @@ export default function VelocityStrip({
   const direcao = useRef(1);
 
   useAnimationFrame((_t, delta) => {
+    if (semMovimento) return;
     let move = direcao.current * baseVelocity * (delta / 1000);
     // scroll para cima empurra a faixa para o outro lado: o movimento responde
     // à pessoa em vez de ignorá-la
@@ -52,10 +57,10 @@ export default function VelocityStrip({
   const texto = itens.join("  ·  ");
 
   return (
-    <div className={`overflow-hidden whitespace-nowrap ${className}`}>
+    <div aria-hidden className={`overflow-hidden whitespace-nowrap ${className}`}>
       <motion.div className="inline-flex" style={{ x }}>
         {[0, 1, 2, 3, 4].map((i) => (
-          <span key={i} className="block pr-8" aria-hidden={i > 0}>
+          <span key={i} className="block pr-8">
             {texto}
           </span>
         ))}

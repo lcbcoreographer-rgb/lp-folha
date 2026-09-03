@@ -20,8 +20,7 @@ export default function Depoimentos() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHead
           rotulo="Depoimentos"
-          titulo="Quem já passou"
-          destaque="pelo processo."
+          titulo="Quem já passou pelo processo."
         />
 
         <div className="mx-auto mt-14 grid max-w-5xl gap-6 md:grid-cols-2">

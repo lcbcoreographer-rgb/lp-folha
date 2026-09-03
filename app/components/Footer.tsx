@@ -31,9 +31,7 @@ export default function Footer() {
               <span className="font-display text-xl font-semibold">Folha</span>
             </div>
             <p className="mt-4 max-w-xs text-white/60">
-              Soluções inteligentes em licenciamento ambiental para um futuro
-              sustentável.
-            </p>
+              Consultoria em licenciamento ambiental em Paranaguá. Atendemos portos, pátios de caminhões, armazenagem de fertilizantes, empreendimentos náuticos e indústrias em todo o Paraná.</p>
           </div>
 
           <div>

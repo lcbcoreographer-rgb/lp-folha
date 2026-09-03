@@ -30,8 +30,7 @@ export default function Legislacao() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHead
           rotulo="Segurança jurídica"
-          titulo="O que sustenta"
-          destaque="cada processo."
+          titulo="O que sustenta cada processo."
           descricao="Conformidade não é opinião: é um conjunto de normas específicas. Estas são as que mais pesam no dia a dia de quem opera no Paraná."
         />
 

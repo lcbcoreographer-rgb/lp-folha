@@ -247,7 +247,7 @@ export default function FormModal({
                         i < step
                           ? "bg-forest-700 text-white"
                           : i === step
-                            ? "bg-amber-500 text-white"
+                            ? "bg-amber-600 text-white"
                             : "bg-forest-900/10 text-ink-soft"
                       }`}
                     >
@@ -490,7 +490,7 @@ export default function FormModal({
                   type="button"
                   onClick={handleSubmit}
                   disabled={submitting}
-                  className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-7 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-900/10 transition-all hover:bg-amber-600 hover:-translate-y-0.5 disabled:opacity-70"
+                  className="inline-flex items-center gap-2 rounded-full bg-amber-600 px-7 py-2.5 text-sm font-semibold text-white transition-all hover:bg-amber-700 hover:-translate-y-0.5 disabled:opacity-70"
                 >
                   {submitting && <Loader2 size={16} className="animate-spin" />}
                   Solicitar Atendimento

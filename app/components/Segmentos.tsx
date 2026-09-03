@@ -86,15 +86,25 @@ export default function Segmentos() {
         <div className="container mx-auto px-4 pt-4 sm:px-6 lg:px-8">
           <SectionHead
             rotulo="Onde atuamos"
-            titulo="Cinco frentes,"
-            destaque="um mesmo rigor."
+            titulo="A exigência muda conforme o setor."
             escuro
           />
         </div>
 
+        {/* Listava os mesmos cinco nomes que os cards mostram logo abaixo, a 10%
+            de opacidade. Passa a nomear os instrumentos do rito — informação que
+            não está em outro lugar da página — e sobe para 18% para ser legível. */}
         <VelocityStrip
-          itens={SEGMENTS.map((s) => s.name)}
-          className="mt-8 mb-10 select-none text-3xl font-normal tracking-tight text-white/10 md:text-5xl"
+          itens={[
+            "Licença prévia",
+            "Licença de instalação",
+            "Licença de operação",
+            "Renovação",
+            "Outorga de uso da água",
+            "Estudo de análise de risco",
+            "Plano de gerenciamento de resíduos",
+          ]}
+          className="mt-8 mb-10 select-none text-2xl font-normal tracking-tight text-white/[0.18] md:text-4xl"
         />
 
         {/* O trilho sangra até a borda em vez de viver dentro do container.
@@ -130,7 +140,7 @@ export default function Segmentos() {
                   <h3 className="mt-2 text-xl leading-snug font-normal text-white">
                     {seg.name}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/65">{seg.detalhe}</p>
+                  <p className="mt-2 text-base leading-[1.6] text-white/85">{seg.detalhe}</p>
                 </div>
               </article>
             ))}
