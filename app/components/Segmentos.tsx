@@ -1,6 +1,7 @@
 import { Truck, Warehouse, Sailboat, Ship, Factory } from "lucide-react";
 import ParallaxImage from "./ParallaxImage";
 import ScrollReveal from "./ScrollReveal";
+import VelocityStrip from "./motion/VelocityStrip";
 
 const SEGMENTS = [
   { icon: Truck, name: "Pátio de Caminhões" },
@@ -33,6 +34,11 @@ export default function Segmentos() {
               Temos a solução ideal para a regularização ambiental do seu negócio.
             </p>
           </ScrollReveal>
+
+          <VelocityStrip
+            itens={SEGMENTS.map((s) => s.name)}
+            className="mb-12 select-none text-2xl font-extrabold tracking-tight text-white/15 md:text-4xl"
+          />
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
             {SEGMENTS.map((seg, i) => (

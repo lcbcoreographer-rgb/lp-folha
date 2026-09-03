@@ -1,6 +1,7 @@
 import { ShieldCheck, Zap, ChevronDown } from "lucide-react";
 import ParallaxImage from "./ParallaxImage";
 import ScrollReveal from "./ScrollReveal";
+import RevealWords from "./motion/RevealWords";
 import WhatsAppCTAButton from "./WhatsAppCTAButton";
 
 export default function Hero() {
@@ -24,11 +25,12 @@ export default function Hero() {
               </span>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={100}>
-              <h1 className="text-balance mt-6 text-4xl md:text-6xl font-extrabold leading-[1.08] text-white">
-                Licenciamento Ambiental completo para diferentes segmentos no Paraná
-              </h1>
-            </ScrollReveal>
+            <RevealWords
+              as="h1"
+              delay={0.12}
+              text="Licenciamento Ambiental completo para diferentes segmentos no Paraná"
+              className="text-balance mt-6 text-4xl md:text-6xl font-extrabold leading-[1.08] text-white"
+            />
 
             <ScrollReveal direction="up" delay={200}>
               <p className="mt-6 max-w-xl text-lg text-white/80">

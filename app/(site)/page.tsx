@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Diferenciais from "../components/Diferenciais";
+import ComoFunciona from "../components/ComoFunciona";
 import Segmentos from "../components/Segmentos";
 import Legislacao from "../components/Legislacao";
 import Depoimentos from "../components/Depoimentos";
@@ -15,6 +16,7 @@ export default function Home() {
       <main>
         <Hero />
         <Diferenciais />
+        <ComoFunciona />
         <Segmentos />
         <Legislacao />
         <Depoimentos />

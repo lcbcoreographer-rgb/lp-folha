@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import WhatsAppCTAButton from "./WhatsAppCTAButton";
 
@@ -33,7 +34,7 @@ export default function Header() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <a href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-3 group">
             <span className="relative h-11 w-11 flex-shrink-0 transition-transform duration-300 group-hover:rotate-6">
               <Image
                 src="/logo.png"
@@ -53,7 +54,7 @@ export default function Header() {
                 Soluções Ambientais
               </span>
             </span>
-          </a>
+          </Link>
 
           <nav className="hidden md:flex items-center gap-8">
             {NAV_ITEMS.map((item) => (
