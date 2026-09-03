@@ -38,9 +38,8 @@ export default function Hero() {
 
       <div className="relative z-10 container mx-auto flex min-h-[100svh] flex-col justify-end px-4 pt-32 pb-14 sm:px-6 lg:px-8">
         <ScrollReveal direction="none">
-          <div className="fio-claro" />
-          <p className="rotulo mt-4 text-amber-400">
-            Folha Soluções Ambientais — Dossiê 2026
+          <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-white/55 uppercase">
+            Licenciamento ambiental · Paraná
           </p>
         </ScrollReveal>
 
@@ -48,12 +47,12 @@ export default function Hero() {
           as="h1"
           delay={0.15}
           text="Licenciamento ambiental completo para quem não pode parar"
-          className="text-balance mt-6 max-w-[16ch] text-[clamp(2.75rem,7.5vw,6.5rem)] leading-[0.95] font-semibold text-white"
+          className="text-balance mt-6 max-w-[22ch] text-[clamp(2rem,4.2vw,3.25rem)] leading-[1.14] font-normal text-white"
         />
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-end">
           <ScrollReveal direction="up" delay={420}>
-            <p className="max-w-lg text-lg leading-relaxed text-white/75">
+            <p className="max-w-lg text-base leading-relaxed text-white/75">
               Indústria, agronegócio, portos e pátios. Assumimos o processo inteiro —
               do diagnóstico ao protocolo no órgão ambiental — para a sua operação
               seguir funcionando enquanto a licença anda.
@@ -63,13 +62,13 @@ export default function Hero() {
               <WhatsAppCTAButton
                 eventLabel="hero_atendimento"
                 message="Olá, quero solicitar atendimento especializado em licenciamento ambiental"
-                className="group inline-flex items-center gap-3 rounded-none border border-amber-500 bg-amber-500 px-8 py-4 text-base font-semibold text-white transition-all duration-300 hover:bg-transparent hover:text-amber-400"
+                className="group inline-flex items-center gap-3 rounded-full bg-amber-500 px-8 py-3.5 text-[0.95rem] font-medium text-white transition-colors duration-300 hover:bg-amber-600"
               >
                 Falar com um especialista
               </WhatsAppCTAButton>
               <Link
                 href="/#como-funciona"
-                className="rotulo underline-swipe text-white/70 transition-colors hover:text-white"
+                className="text-sm text-white/70 underline-swipe transition-colors hover:text-white"
               >
                 Ver como funciona
               </Link>
@@ -78,23 +77,24 @@ export default function Hero() {
 
           {/* ficha técnica: o detalhe que faz parecer documento, não anúncio */}
           <ScrollReveal direction="up" delay={560}>
-            <dl className="border-t border-white/20">
+            <dl className="flex flex-wrap gap-x-10 gap-y-4 lg:justify-end">
               {FICHA.map((item) => (
-                <div
-                  key={item.chave}
-                  className="flex items-baseline justify-between gap-6 border-b border-white/10 py-3.5"
-                >
-                  <dt className="rotulo text-white/50">{item.chave}</dt>
-                  <dd className="text-right text-sm font-medium text-white">{item.valor}</dd>
+                <div key={item.chave}>
+                  <dt className="text-[0.65rem] font-semibold tracking-[0.18em] text-white/45 uppercase">
+                    {item.chave}
+                  </dt>
+                  <dd className="mt-1 text-sm text-white/90">{item.valor}</dd>
                 </div>
               ))}
             </dl>
           </ScrollReveal>
         </div>
 
-        <div className="mt-12 flex items-center gap-3 text-white/40">
-          <ArrowDown size={15} className="animate-bounce" />
-          <span className="rotulo">Role para continuar</span>
+        <div className="mt-12 flex items-center gap-2.5 text-white/35">
+          <ArrowDown size={14} className="animate-bounce" />
+          <span className="text-[0.65rem] font-semibold tracking-[0.18em] uppercase">
+            Role para continuar
+          </span>
         </div>
       </div>
     </section>

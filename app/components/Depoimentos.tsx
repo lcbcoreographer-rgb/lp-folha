@@ -19,18 +19,17 @@ export default function Depoimentos() {
     <section id="depoimentos" className="bg-paper py-24 md:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHead
-          numero="05"
           rotulo="Depoimentos"
-          titulo="Quem já passou pelo processo"
-          className="max-w-3xl"
+          titulo="Quem já passou"
+          destaque="pelo processo."
         />
 
-        <div className="mt-14 grid gap-px border border-rule bg-rule md:grid-cols-2">
+        <div className="mx-auto mt-14 grid max-w-5xl gap-6 md:grid-cols-2">
           {TESTIMONIALS.map((t) => (
-            <FocalReveal key={t.name} className="bg-paper p-8 md:p-12">
+            <FocalReveal key={t.name} className="rounded-2xl border border-rule bg-paper-dim/60 p-8 md:p-10">
               <figure className="flex h-full flex-col justify-between">
                 {/* aspas em display grande: a citação é o elemento, não um card */}
-                <blockquote className="text-2xl leading-[1.3] font-semibold text-forest-950 md:text-3xl">
+                <blockquote className="text-xl leading-[1.5] font-normal text-forest-950">
                   <span className="text-amber-500">“</span>
                   {t.text}
                   <span className="text-amber-500">”</span>

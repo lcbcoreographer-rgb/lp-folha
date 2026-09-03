@@ -47,10 +47,10 @@ export default function Header() {
               />
             </span>
             <span className="leading-tight">
-              <span className="font-display block text-xl font-semibold text-forest-950">
+              <span className="font-display block text-xl font-normal text-forest-950">
                 Folha
               </span>
-              <span className="rotulo block text-[9px] text-ink-soft">
+              <span className="block text-[9px] font-semibold tracking-[0.16em] text-ink-soft uppercase">
                 Soluções Ambientais
               </span>
             </span>
@@ -61,7 +61,7 @@ export default function Header() {
               <a
                 key={item.name}
                 href={item.href}
-                className="rotulo underline-swipe text-ink-soft transition-colors hover:text-forest-900"
+                className="text-sm text-ink-soft underline-swipe transition-colors hover:text-forest-900"
               >
                 {item.name}
               </a>
@@ -71,7 +71,7 @@ export default function Header() {
           <div className="hidden md:block">
             <WhatsAppCTAButton
               eventLabel="header_orcamento"
-              className="inline-flex items-center border border-amber-500 bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-transparent hover:text-amber-600"
+              className="inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-amber-600"
             >
               Solicitar Orçamento
             </WhatsAppCTAButton>
@@ -98,14 +98,14 @@ export default function Header() {
               key={item.name}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className="rotulo text-ink-soft hover:text-forest-900"
+              className="text-sm text-ink-soft hover:text-forest-900"
             >
               {item.name}
             </a>
           ))}
           <WhatsAppCTAButton
             eventLabel="header_mobile_orcamento"
-            className="mt-2 inline-flex items-center border border-amber-500 bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white"
+            className="mt-2 inline-flex items-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-medium text-white"
           >
             Solicitar Orçamento
           </WhatsAppCTAButton>

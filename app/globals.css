@@ -6,8 +6,8 @@
   --color-forest-950: #052e16;
   --color-forest-900: #0b4022;
   --color-forest-800: #14532d;
-  --color-forest-700: #1c6b3a;
-  --color-forest-600: #2f9e56;
+  --color-forest-700: #3f6b47;
+  --color-forest-600: #a8c9a0;
   --color-forest-100: #dcf3e4;
   --color-forest-50: #f0faf3;
 
@@ -17,8 +17,8 @@
 
   --color-ink: #16211c;
   --color-ink-soft: #55635b;
-  --color-paper: #f7f5ef;
-  --color-paper-dim: #efece3;
+  --color-paper: #faf9f5;
+  --color-paper-dim: #f1efe8;
 
   /* fio de 1px que separa blocos do dossiê */
   --rule: color-mix(in srgb, var(--color-forest-950) 14%, transparent);
@@ -65,10 +65,10 @@ body {
   /* grão de papel: o fundo chapado é o que faz um site parecer template */
   background-image: radial-gradient(
     circle at 1px 1px,
-    color-mix(in srgb, var(--color-forest-950) 5%, transparent) 1px,
+    color-mix(in srgb, var(--color-forest-950) 3%, transparent) 1px,
     transparent 0
   );
-  background-size: 22px 22px;
+  background-size: 26px 26px;
 }
 
 h1,
@@ -76,8 +76,9 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display), Georgia, serif;
-  font-variation-settings: "SOFT" 20, "WONK" 1;
-  letter-spacing: -0.022em;
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 20;
+  font-weight: 600;
+  letter-spacing: -0.012em;
 }
 
 /* ---------- Linguagem de dossiê ---------- */
@@ -87,7 +88,7 @@ h4 {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.6875rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 

@@ -33,21 +33,22 @@ export default function ComoFunciona() {
         <div className="grid gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <SectionHead
-              numero="02"
               rotulo="Como funciona"
-              titulo="Do papel parado à licença na mão"
+              titulo="Do papel parado"
+              destaque="à licença na mão."
               descricao="Licenciamento não é um formulário: é uma sequência de exigências que precisa ser cumprida na ordem certa. Nós percorremos essa sequência por você."
+              centralizado={false}
             />
             <FocalReveal>
               <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-forest-950/10 pt-8">
                 <div>
-                  <dt className="text-3xl font-extrabold text-forest-800 md:text-4xl">
+                  <dt className="font-display text-3xl font-normal text-forest-800">
                     <Counter para={12} sufixo="+" />
                   </dt>
                   <dd className="mt-1 text-sm text-ink-soft">anos de atuação no Paraná</dd>
                 </div>
                 <div>
-                  <dt className="text-3xl font-extrabold text-forest-800 md:text-4xl">
+                  <dt className="font-display text-3xl font-normal text-forest-800">
                     <Counter para={4} />
                   </dt>
                   <dd className="mt-1 text-sm text-ink-soft">etapas até a licença</dd>

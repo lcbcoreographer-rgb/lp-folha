@@ -66,11 +66,11 @@ export default function ProcessLine({
       <ol className="space-y-10">
         {etapas.map((etapa, i) => (
           <li key={i} data-etapa className="relative">
-            <span className="absolute top-1 -left-10 flex h-6 w-6 items-center justify-center rounded-full border border-forest-700/30 bg-paper text-[11px] font-bold text-forest-800 sm:-left-14 sm:h-10 sm:w-10 sm:text-sm">
+            <span className="absolute top-1 -left-10 flex h-6 w-6 items-center justify-center rounded-full border border-forest-700/30 bg-paper text-[10px] font-semibold text-forest-700 sm:-left-14 sm:h-9 sm:w-9 sm:text-xs">
               {String(i + 1).padStart(2, "0")}
             </span>
-            <h3 className="text-xl font-bold text-forest-950">{etapa.titulo}</h3>
-            <p className="mt-1.5 text-ink-soft leading-relaxed">{etapa.descricao}</p>
+            <h3 className="text-lg font-normal text-forest-950">{etapa.titulo}</h3>
+            <p className="mt-1.5 text-[0.95rem] leading-[1.7] text-ink-soft">{etapa.descricao}</p>
           </li>
         ))}
       </ol>

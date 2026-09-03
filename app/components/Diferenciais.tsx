@@ -1,49 +1,61 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { animate, stagger } from "animejs";
+import { Layers, BadgeCheck, Gauge, Scale } from "lucide-react";
 import SectionHead from "./motion/SectionHead";
 
+/**
+ * Grade de quatro atributos.
+ *
+ * Antes era uma lista numerada — igual à seção seguinte, que também numera de
+ * 01 a 04. O problema não era estético: numerar sugere ordem, e aqui não há
+ * ordem nenhuma. Isto é um conjunto; a seção 02 é uma sequência. Grade para um,
+ * linha para a outra.
+ */
 const ITEMS = [
   {
+    icon: Layers,
     title: "Atuação multissetorial",
     description:
-      "Expertise em diversos segmentos, do agronegócio à indústria, garantindo soluções personalizadas.",
+      "Do agronegócio à indústria pesada. Cada segmento tem exigências próprias, e conhecemos as delas.",
   },
   {
+    icon: BadgeCheck,
     title: "Equipe técnica com ART",
     description:
-      "Profissionais habilitados, emitindo Anotação de Responsabilidade Técnica para cada projeto.",
+      "Profissionais habilitados, com Anotação de Responsabilidade Técnica emitida para cada projeto.",
   },
   {
+    icon: Gauge,
     title: "Rapidez e assertividade",
     description:
-      "Processos otimizados para acelerar a obtenção de licenças, sem comprometer a qualidade e a precisão.",
+      "Processos organizados para encurtar o caminho até a licença, sem abrir mão da precisão técnica.",
   },
   {
+    icon: Scale,
     title: "Conformidade legal",
     description:
-      "Atuação alinhada às normativas ambientais vigentes, prevenindo multas e sanções.",
+      "Atuação alinhada às normativas vigentes, prevenindo multas, embargos e sanções.",
   },
 ];
 
 export default function Diferenciais() {
-  const lista = useRef<HTMLOListElement>(null);
+  const grade = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const node = lista.current;
+    const node = grade.current;
     if (!node) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // entra uma linha depois da outra, como um documento sendo impresso
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
         observer.disconnect();
-        animate(node.querySelectorAll("[data-linha]"), {
+        animate(node.querySelectorAll("[data-item]"), {
           opacity: [0, 1],
-          y: [26, 0],
-          duration: 760,
-          delay: stagger(110),
+          y: [22, 0],
+          duration: 700,
+          delay: stagger(90),
           ease: "outQuart",
         });
       },
@@ -56,36 +68,30 @@ export default function Diferenciais() {
   return (
     <section id="diferenciais" className="bg-paper py-24 md:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
-          <SectionHead
-            numero="01"
-            rotulo="Por que a Folha"
-            titulo="Quatro razões que encurtam o processo"
-            descricao="Licenciamento trava por detalhe técnico. Estes quatro pontos são o que separa um protocolo aceito de um processo devolvido."
-            className="lg:sticky lg:top-32 lg:self-start"
-          />
+        <SectionHead
+          rotulo="Por que a Folha"
+          titulo="Uma consultoria construída para"
+          destaque="resolver, não para orientar."
+          descricao="Licenciamento trava por detalhe técnico. Estes quatro pontos são o que separa um protocolo aceito de um processo devolvido."
+        />
 
-          <ol ref={lista} className="border-t border-rule">
-            {ITEMS.map((item, i) => (
-              <li
-                key={item.title}
-                data-linha
-                className="group grid grid-cols-[auto_minmax(0,1fr)] gap-6 border-b border-rule py-8 opacity-0 transition-colors duration-300 hover:bg-paper-dim/60 sm:gap-10 sm:py-10"
-              >
-                <span className="rotulo pt-1.5 text-forest-700/50 transition-colors duration-300 group-hover:text-amber-600">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <h3 className="text-2xl leading-tight font-semibold text-forest-950 md:text-3xl">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2.5 max-w-xl leading-relaxed text-ink-soft">
-                    {item.description}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
+        <div
+          ref={grade}
+          className="mx-auto mt-16 grid max-w-4xl gap-x-14 gap-y-12 sm:grid-cols-2"
+        >
+          {ITEMS.map((item) => (
+            <article key={item.title} data-item className="text-center opacity-0 sm:text-left">
+              <item.icon
+                size={26}
+                strokeWidth={1.4}
+                className="mx-auto text-forest-700 sm:mx-0"
+              />
+              <h3 className="mt-4 text-xl font-normal text-forest-950">{item.title}</h3>
+              <p className="mt-2.5 text-[0.95rem] leading-[1.7] text-ink-soft">
+                {item.description}
+              </p>
+            </article>
+          ))}
         </div>
       </div>
     </section>

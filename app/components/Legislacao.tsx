@@ -29,31 +29,30 @@ export default function Legislacao() {
     <section id="legislacao" className="bg-paper-dim py-24 md:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHead
-          numero="04"
           rotulo="Segurança jurídica"
-          titulo="O que sustenta cada processo"
+          titulo="O que sustenta"
+          destaque="cada processo."
           descricao="Conformidade não é opinião: é um conjunto de normas específicas. Estas são as que mais pesam no dia a dia de quem opera no Paraná."
-          className="max-w-3xl"
         />
 
         {/* tabela de normas: o formato mais honesto para este conteúdo */}
         <FocalReveal className="mt-14">
-          <div className="border-t border-rule-forte">
+          <div className="mx-auto max-w-3xl">
             {LEGISLACAO.map((item) => (
               <article
                 key={item.norma}
-                className="group grid gap-2 border-b border-rule py-7 md:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] md:gap-10"
+                className="grid gap-1.5 border-b border-rule py-7 md:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] md:gap-10"
               >
                 <div>
-                  <p className="font-mono text-sm font-medium text-forest-800">{item.norma}</p>
-                  <p className="rotulo mt-1 text-ink-soft/70">{item.tipo}</p>
+                  <p className="font-mono text-[0.8rem] text-forest-700">{item.norma}</p>
+                  <p className="mt-1 text-[0.7rem] font-semibold tracking-[0.14em] text-ink-soft/60 uppercase">{item.tipo}</p>
                 </div>
-                <p className="max-w-2xl text-lg leading-relaxed text-ink">{item.texto}</p>
+                <p className="max-w-2xl leading-[1.7] text-ink">{item.texto}</p>
               </article>
             ))}
           </div>
 
-          <p className="mt-8 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mx-auto mt-10 max-w-2xl text-center leading-[1.75] text-ink-soft">
             Interpretamos e aplicamos essas legislações no contexto do seu empreendimento —
             industrial, portuário ou de agronegócio — para que a licença saia e continue
             válida.

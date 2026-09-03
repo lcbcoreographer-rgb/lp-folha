@@ -5,35 +5,28 @@ import WhatsAppCTAButton from "./WhatsAppCTAButton";
 export default function CTAFinal() {
   return (
     <section id="cta-final" className="relative overflow-hidden bg-forest-950 py-28 md:py-36">
-      {/* número de seção gigante, cortado pela borda: fecha o dossiê */}
-      <span
-        aria-hidden
-        className="marca-secao pointer-events-none absolute -right-6 -bottom-14 text-[26vw] text-white/[0.04] select-none"
-      >
-        06
-      </span>
-
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="fio-claro max-w-4xl" />
-        <p className="rotulo mt-4 text-amber-400">06 / Próximo passo</p>
+        <p className="text-center text-[0.7rem] font-semibold tracking-[0.2em] text-white/45 uppercase">
+          Próximo passo
+        </p>
 
         <RevealWords
           as="h2"
           text="Pronto para regularizar seu empreendimento?"
-          className="text-balance mt-5 max-w-[18ch] text-[clamp(2.25rem,6vw,4.75rem)] leading-[0.98] font-semibold text-white"
+          className="text-balance mx-auto mt-5 max-w-[24ch] text-center text-[clamp(1.65rem,3vw,2.5rem)] leading-[1.22] font-normal text-white"
         />
 
         <ScrollReveal direction="up" delay={200}>
-          <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/70">
+          <p className="mx-auto mt-6 max-w-xl text-center text-base leading-[1.75] text-white/65">
             Conte o que a sua operação faz e onde ela está. Devolvemos quais licenças o
             seu caso exige e o caminho mais curto até elas.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-6">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
             <WhatsAppCTAButton
               eventLabel="cta_final"
               message="Olá, quero regularizar meu empreendimento e gostaria de falar com um especialista"
-              className="inline-flex items-center gap-3 border border-amber-500 bg-amber-500 px-9 py-4 text-base font-semibold text-white transition-all duration-300 hover:bg-transparent hover:text-amber-400"
+              className="inline-flex items-center gap-3 rounded-full bg-amber-500 px-9 py-3.5 text-[0.95rem] font-medium text-white transition-colors duration-300 hover:bg-amber-600"
             >
               Solicitar diagnóstico
             </WhatsAppCTAButton>

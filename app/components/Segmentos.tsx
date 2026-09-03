@@ -78,11 +78,10 @@ export default function Segmentos() {
       <div ref={secao} className="overflow-hidden py-20 lg:h-screen lg:py-0">
         <div className="container mx-auto px-4 pt-4 sm:px-6 lg:flex lg:h-full lg:flex-col lg:justify-center lg:px-8">
           <SectionHead
-            numero="03"
             rotulo="Onde atuamos"
-            titulo="Cinco frentes, um mesmo rigor"
+            titulo="Cinco frentes,"
+            destaque="um mesmo rigor."
             escuro
-            className="max-w-3xl"
           />
 
           <VelocityStrip
@@ -98,7 +97,7 @@ export default function Segmentos() {
             {SEGMENTS.map((seg, i) => (
               <article
                 key={seg.name}
-                className="group relative flex h-[380px] flex-col justify-end overflow-hidden border border-white/12 lg:w-[380px] lg:shrink-0"
+                className="group relative flex h-[360px] flex-col justify-end overflow-hidden rounded-2xl border border-white/10 lg:w-[360px] lg:shrink-0"
               >
                 <Image
                   src={seg.img}
@@ -111,10 +110,10 @@ export default function Segmentos() {
                 <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/60 to-transparent" />
 
                 <div className="relative z-10 p-7">
-                  <span className="rotulo text-amber-400">
+                  <span className="text-[0.65rem] font-semibold tracking-[0.18em] text-amber-400 uppercase">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-2 text-2xl leading-tight font-semibold text-white">
+                  <h3 className="mt-2 text-xl leading-snug font-normal text-white">
                     {seg.name}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-white/65">{seg.detalhe}</p>
