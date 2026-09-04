@@ -34,26 +34,17 @@ export default function Header() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link href="/" className="flex items-center gap-3 group">
-            <span className="relative h-11 w-11 flex-shrink-0 transition-transform duration-300 group-hover:rotate-6">
-              <Image
-                src="/logo.png"
-                alt="Folha Soluções Ambientais"
-                fill
-                sizes="44px"
-                className="object-contain"
-                priority
-                unoptimized
-              />
-            </span>
-            <span className="leading-tight">
-              <span className="font-display block text-xl font-normal text-forest-950">
-                Folha
-              </span>
-              <span className="block text-[9px] font-semibold tracking-[0.16em] text-ink-soft uppercase">
-                Soluções Ambientais
-              </span>
-            </span>
+          {/* Logotipo oficial, em SVG. Antes o símbolo vinha em PNG e o nome era
+              remontado em HTML com outra fonte — duas versões da marca brigando. */}
+          <Link href="/" className="group flex items-center" aria-label="Folha Soluções Ambientais">
+            <Image
+              src="/marca/horizontal-escuro.svg"
+              alt="Folha Soluções Ambientais"
+              width={190}
+              height={52}
+              priority
+              className="h-12 w-auto sm:h-14"
+            />
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">

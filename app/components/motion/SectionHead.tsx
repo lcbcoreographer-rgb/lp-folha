@@ -35,14 +35,14 @@ export default function SectionHead({
   return (
     <div className={`${centralizado ? "mx-auto text-center" : ""} ${className}`}>
       <ScrollReveal direction="up">
-        <p className={`text-[0.7rem] font-semibold tracking-[0.2em] uppercase ${corRotulo}`}>
+        <p className={`rotulo ${corRotulo}`}>
           {rotulo}
         </p>
       </ScrollReveal>
 
       <ScrollReveal direction="up" delay={90}>
         <h2
-          className={`text-balance mt-5 text-[clamp(1.65rem,3vw,2.5rem)] leading-[1.22] font-normal ${corTitulo} ${
+          className={`text-balance mt-5 text-[clamp(1.65rem,3vw,2.5rem)] leading-[1.25] font-light ${corTitulo} ${
             centralizado ? "mx-auto max-w-3xl" : "max-w-2xl"
           }`}
         >

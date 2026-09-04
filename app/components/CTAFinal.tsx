@@ -6,14 +6,12 @@ export default function CTAFinal() {
   return (
     <section id="cta-final" className="relative overflow-hidden bg-forest-950 py-28 md:py-36">
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-center text-[0.7rem] font-semibold tracking-[0.2em] text-white/45 uppercase">
-          Próximo passo
-        </p>
+        <p className="rotulo text-center text-white/70">Próximo passo</p>
 
         <RevealWords
           as="h2"
           text="O diagnóstico vem antes da proposta."
-          className="text-balance mx-auto mt-5 max-w-[24ch] text-center text-[clamp(1.65rem,3vw,2.5rem)] leading-[1.22] font-normal text-white"
+          className="text-balance mx-auto mt-5 max-w-[24ch] text-center text-[clamp(1.65rem,3vw,2.5rem)] leading-[1.25] font-light text-white"
         />
 
         <ScrollReveal direction="up" delay={200}>
@@ -30,7 +28,7 @@ export default function CTAFinal() {
             >
               Solicitar diagnóstico
             </WhatsAppCTAButton>
-            <span className="rotulo text-white/45">Resposta no mesmo dia útil</span>
+            <span className="rotulo text-white/70">Resposta no mesmo dia útil</span>
           </div>
         </ScrollReveal>
       </div>

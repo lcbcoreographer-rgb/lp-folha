@@ -1,31 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  /* Verde da marca. O 950 é o fundo institucional; o 600 quase não é usado
-     como área, só como fio e acento sobre escuro. */
-  --color-forest-950: #052e16;
-  --color-forest-900: #0b4022;
-  --color-forest-800: #14532d;
-  --color-forest-700: #3f6b47;
-  --color-forest-600: #a8c9a0;
-  --color-forest-100: #dcf3e4;
-  --color-forest-50: #f0faf3;
+  /* ---------------------------------------------------------------
+     Identidade visual da Folha (setembro/2026).
+     As tres cores vem direto dos SVGs da marca; o resto e escala
+     derivada delas, nao cor nova.
+     --------------------------------------------------------------- */
 
-  /* amber-500 com texto branco dava 3,80:1 e reprovava AA. O 600 dá 4,86:1
-     e virou a cor de botão; o 700 existe só para o hover não clarear. */
-  --color-amber-700: #96430d;
-  --color-amber-600: #b8541a;
-  --color-amber-500: #d4611e;
-  --color-amber-400: #e8843f;
+  /* Verde-oliva da marca. E o institucional: fundo escuro e texto. */
+  --color-forest-950: #1e2c15;
+  --color-forest-900: #2c411f; /* cor exata do simbolo */
+  --color-forest-800: #3a5429;
+  --color-forest-700: #4a5a3c; /* texto suave sobre creme — 6,23:1 */
+  --color-forest-600: #7d9a6b;
+  --color-forest-100: #dde5d4;
+  --color-forest-50: #eef2e9;
 
-  --color-ink: #16211c;
-  --color-ink-soft: #55635b;
-  --color-paper: #faf9f5;
-  --color-paper-dim: #f1efe8;
+  /* Terracota da marca. Com branco da 5,11:1 e passa AA sem escurecer;
+     sobre creme da 4,28:1, entao so entra em texto grande e botao. */
+  --color-amber-700: #9c3014;
+  --color-amber-600: #b23718;
+  --color-amber-500: #c63e1d; /* cor exata da marca */
+  --color-amber-400: #d9633f;
 
-  /* fio de 1px que separa blocos do dossiê */
-  --rule: color-mix(in srgb, var(--color-forest-950) 14%, transparent);
-  --rule-forte: color-mix(in srgb, var(--color-forest-950) 30%, transparent);
+  --color-ink: #1e2c15;
+  --color-ink-soft: #4a5a3c;
+  --color-paper: #f1eade; /* creme exato da marca */
+  --color-paper-dim: #e7dfd0;
+
+  --rule: color-mix(in srgb, var(--color-forest-900) 16%, transparent);
+  --rule-forte: color-mix(in srgb, var(--color-forest-900) 32%, transparent);
 
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -78,20 +82,22 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
-  /* Merriweather ja e larga por natureza; tracking negativo aqui so a deixaria
-     apertada e com cara de titulo de template */
-  letter-spacing: -0.005em;
+  font-family: var(--font-display), system-ui, sans-serif;
+  /* O logotipo e Nexa Light. Peso 300 no display e o que faz a pagina falar a
+     mesma lingua da marca — serif nao tinha relacao nenhuma com ela. */
+  font-weight: 300;
+  letter-spacing: -0.015em;
 }
 
 /* ---------- Linguagem de dossiê ---------- */
 
 /* rótulo técnico: "01 / DIFERENCIAIS" */
+/* Mesmo tratamento de "SOLUCOES AMBIENTAIS" no logotipo: caixa alta, peso
+   leve e entreletra generosa. E a assinatura tipografica da marca. */
 .rotulo {
   font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 

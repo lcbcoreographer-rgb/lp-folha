@@ -131,7 +131,7 @@ export default function Segmentos() {
                   className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />
                 {/* véu só no pé do card, onde o texto pousa — o resto da foto fica limpo */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(5,46,22,0.92)_18%,rgba(5,46,22,0.45)_48%,transparent_78%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(30,44,21,0.93)_18%,rgba(30,44,21,0.45)_48%,transparent_78%)]" />
 
                 <div className="relative z-10 p-7">
                   <h3 className="text-xl leading-snug font-normal text-white">

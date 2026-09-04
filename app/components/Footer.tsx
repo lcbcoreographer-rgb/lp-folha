@@ -17,25 +17,19 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 gap-10 border-t border-white/15 pt-12 text-left md:grid-cols-3">
           <div className="flex flex-col items-start">
-            <div className="flex items-center gap-2.5">
-              <span className="relative h-11 w-11 flex-shrink-0">
-                <Image
-                  src="/logo.png"
-                  alt="Folha Soluções Ambientais"
-                  fill
-                  sizes="44px"
-                  className="object-contain"
-                  unoptimized
-                />
-              </span>
-              <span className="font-display text-xl font-semibold">Folha</span>
-            </div>
+            <Image
+              src="/marca/horizontal-claro.svg"
+              alt="Folha Soluções Ambientais"
+              width={200}
+              height={55}
+              className="h-12 w-auto"
+            />
             <p className="mt-4 max-w-xs text-white/60">
               Consultoria em licenciamento ambiental em Paranaguá. Atendemos portos, pátios de caminhões, armazenagem de fertilizantes, empreendimentos náuticos e indústrias em todo o Paraná.</p>
           </div>
 
           <div>
-            <p className="font-semibold text-white text-lg">Contato</p>
+            <p className="text-lg font-normal text-white">Contato</p>
             <ul className="mt-4 space-y-3 text-white/70">
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-forest-600 flex-shrink-0" />
@@ -51,7 +45,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-semibold text-white text-lg">Navegação</p>
+            <p className="text-lg font-normal text-white">Navegação</p>
             <ul className="mt-4 space-y-2 text-white/70">
               {NAV_ITEMS.map((item) => (
                 <li key={item.name}>

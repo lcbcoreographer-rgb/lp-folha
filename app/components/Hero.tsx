@@ -31,20 +31,21 @@ export default function Hero() {
       {/* Véu só onde o texto pousa. A versão anterior somava um degradê forte a
           uma camada chapada e apagava a floresta inteira — o verde virava fundo
           liso e a foto não servia para nada. */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(5,46,22,0.94),rgba(5,46,22,0.55)_45%,rgba(5,46,22,0.05))]" />
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(to_top,rgba(5,46,22,0.85),transparent)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(30,44,21,0.93),rgba(30,44,21,0.5)_45%,rgba(30,44,21,0.05))]" />
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(to_top,rgba(30,44,21,0.88),transparent)]" />
 
       <div className="relative z-10 container mx-auto flex min-h-[100svh] flex-col justify-end px-4 pt-32 pb-14 sm:px-6 lg:px-8">
         <ScrollReveal direction="none">
-          <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-white/75 uppercase">
-            Licenciamento ambiental · Paraná
+          {/* Frase de impacto da identidade, não copy inventada aqui. */}
+          <p className="rotulo text-white/75">
+            Crescimento seguro para operar, expandir e conservar
           </p>
         </ScrollReveal>
 
         {/* Sem revelação: é o LCP da página. Nascer com opacity 0 esperando JS
             arrisca deixar o título principal invisível — e animar o h1 acima da
             dobra é o proprio tique de landing gerada. */}
-        <h1 className="text-balance mt-6 max-w-[26ch] text-[clamp(2.15rem,4.9vw,3.8rem)] leading-[1.14] font-normal text-white">
+        <h1 className="text-balance mt-6 max-w-[26ch] text-[clamp(2.15rem,4.9vw,3.8rem)] leading-[1.16] font-light text-white">
           Seu processo entra no órgão sem voltar por exigência
         </h1>
 
@@ -78,7 +79,7 @@ export default function Hero() {
             <dl className="flex flex-wrap gap-x-10 gap-y-4 lg:justify-end">
               {FICHA.map((item) => (
                 <div key={item.chave}>
-                  <dt className="text-[0.65rem] font-semibold tracking-[0.18em] text-white/70 uppercase">
+                  <dt className="rotulo text-white/70">
                     {item.chave}
                   </dt>
                   <dd className="mt-1 text-sm text-white/90">{item.valor}</dd>
@@ -91,7 +92,7 @@ export default function Hero() {
         <div className="mt-12">
           <a
             href="tel:+554134231690"
-            className="text-[0.65rem] font-semibold tracking-[0.18em] text-white/70 uppercase transition-colors hover:text-white"
+            className="rotulo text-white/70 transition-colors hover:text-white"
           >
             (41) 3423-1690
           </a>

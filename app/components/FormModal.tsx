@@ -232,7 +232,7 @@ export default function FormModal({
               <span className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-600">
                 Folha Soluções Ambientais
               </span>
-              <h2 className="mt-1 text-2xl font-extrabold text-forest-900">
+              <h2 className="mt-1 text-2xl font-light text-forest-900">
                 Formulário de Atendimento
               </h2>
             </div>
@@ -503,7 +503,7 @@ export default function FormModal({
             <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-forest-50 text-forest-700">
               <CheckCircle2 size={34} />
             </div>
-            <h2 className="text-2xl font-extrabold text-forest-900">
+            <h2 className="text-2xl font-light text-forest-900">
               Recebemos sua solicitação com sucesso!
             </h2>
             <p className="mt-3 text-ink-soft">
