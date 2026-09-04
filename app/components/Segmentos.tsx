@@ -30,7 +30,7 @@ const SEGMENTS = [
   {
     name: "Indústria em operação",
     detalhe: "Efluentes, emissões atmosféricas, resíduos sólidos e renovação da licença de operação.",
-    img: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=1200&q=80",
+    img: "https://images.unsplash.com/photo-1567789884554-0b844b597180?w=1200&q=80",
   },
 ];
 
