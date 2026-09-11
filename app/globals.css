@@ -197,3 +197,24 @@ h4 {
   transform: scaleX(1);
   transform-origin: left;
 }
+
+/* ---------- Faixa de logos ---------- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  /* a lista vem duplicada: andar metade é chegar ao início da segunda cópia */
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-trilho {
+  animation: marquee 40s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-trilho {
+    animation: none;
+  }
+}

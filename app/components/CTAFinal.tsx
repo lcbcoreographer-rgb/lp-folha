@@ -1,34 +1,29 @@
-import RevealWords from "./motion/RevealWords";
 import ScrollReveal from "./ScrollReveal";
 import WhatsAppCTAButton from "./WhatsAppCTAButton";
 
 export default function CTAFinal() {
   return (
     <section id="cta-final" className="relative overflow-hidden bg-forest-950 py-28 md:py-36">
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="rotulo text-center text-white/70">Próximo passo</p>
+      <div className="relative z-10 container mx-auto px-4 text-center sm:px-6 lg:px-8">
+        <ScrollReveal direction="up">
+          <h2 className="text-balance mx-auto max-w-[22ch] text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.15] font-light text-white">
+            Pronto para crescer com segurança?
+          </h2>
+        </ScrollReveal>
 
-        <RevealWords
-          as="h2"
-          text="O diagnóstico vem antes da proposta."
-          className="text-balance mx-auto mt-5 max-w-[24ch] text-center text-[clamp(1.65rem,3vw,2.5rem)] leading-[1.25] font-light text-white"
-        />
-
-        <ScrollReveal direction="up" delay={200}>
-          <p className="mx-auto mt-6 max-w-xl text-center text-corpo leading-[1.7] text-white/80">
-            Conte o que a sua operação faz e onde ela está. Devolvemos quais licenças o
-            seu caso exige e o caminho mais curto até elas.
+        <ScrollReveal direction="up" delay={150}>
+          <p className="mx-auto mt-6 max-w-xl text-corpo leading-[1.7] text-white/80">
+            Quanto antes a regularização entra no planejamento, menos ela custa. Fale com a Folha
+            e descubra o caminho mais direto para a continuidade da sua operação.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
+          <div className="mt-10">
             <WhatsAppCTAButton
               eventLabel="cta_final"
-              message="Olá, quero regularizar meu empreendimento e gostaria de falar com um especialista"
-              className="inline-flex items-center gap-3 rounded-full bg-amber-600 px-9 py-3.5 text-base font-medium text-white transition-colors duration-300 hover:bg-amber-700"
+              className="inline-flex items-center rounded-full bg-amber-600 px-9 py-3.5 text-base font-medium text-white transition-colors duration-300 hover:bg-amber-700"
             >
-              Solicitar diagnóstico
+              Falar com um especialista
             </WhatsAppCTAButton>
-            <span className="rotulo text-white/70">Resposta no mesmo dia útil</span>
           </div>
         </ScrollReveal>
       </div>

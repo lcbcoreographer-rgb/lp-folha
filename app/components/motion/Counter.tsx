@@ -22,19 +22,21 @@ export default function Counter({
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  // quem pede menos movimento ja comeca no numero final — decidir isso aqui, e
-  // nao dentro do efeito, evita o render extra so para corrigir o valor
-  const [valor, setValor] = useState(() =>
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      ? para
-      : 0
-  );
+  // Começa no número REAL, em servidor e cliente igual. Antes começava em 0 no
+  // servidor (lá não existe window), e o HTML saía com "0 anos de atuação": era
+  // o que o Google indexava e o que via quem estava sem JS.
+  const [valor, setValor] = useState(para);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Só zera se o número ainda estiver fora da tela — aí ninguém vê o 0 antes
+    // da contagem. Se já estiver visível ao montar, fica o valor real, sem piscar.
+    const r = node.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) return;
+    setValor(0);
 
     const observer = new IntersectionObserver(
       ([entry]) => {

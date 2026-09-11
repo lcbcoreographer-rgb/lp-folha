@@ -6,10 +6,10 @@ import { Menu, X } from "lucide-react";
 import WhatsAppCTAButton from "./WhatsAppCTAButton";
 
 const NAV_ITEMS = [
-  { name: "Diferenciais", href: "/#diferenciais" },
+  { name: "Serviços", href: "/#servicos" },
+  { name: "Como atuamos", href: "/#como-funciona" },
   { name: "Segmentos", href: "/#segmentos" },
   { name: "Legislação", href: "/#legislacao" },
-  { name: "Depoimentos", href: "/#depoimentos" },
   { name: "Blog", href: "/blog" },
 ];
 
@@ -64,7 +64,7 @@ export default function Header() {
               eventLabel="header_orcamento"
               className="inline-flex items-center rounded-full bg-amber-600 px-6 py-2.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-amber-700"
             >
-              Solicitar diagnóstico
+              Falar com especialista
             </WhatsAppCTAButton>
           </div>
 
@@ -98,7 +98,7 @@ export default function Header() {
             eventLabel="header_mobile_orcamento"
             className="mt-2 inline-flex items-center rounded-full bg-amber-600 px-6 py-2.5 text-sm font-medium text-white"
           >
-            Solicitar diagnóstico
+            Falar com especialista
           </WhatsAppCTAButton>
         </nav>
       </div>

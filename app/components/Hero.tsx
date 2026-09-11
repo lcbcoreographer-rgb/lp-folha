@@ -1,20 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import ScrollReveal from "./ScrollReveal";
 import WhatsAppCTAButton from "./WhatsAppCTAButton";
-
-/**
- * Capa do dossiê: a foto ocupa a página inteira, escurecida, e por cima vem
- * uma ficha técnica — rótulos em mono, fios de 1px e o título em display.
- *
- * A ideia é o oposto do hero de agência: nada centralizado, nada de card
- * flutuante. O texto se apoia na margem esquerda como um documento.
- */
-const FICHA = [
-  { chave: "Atuação", valor: "Paraná" },
-  { chave: "Responsável técnico", valor: "Registro no CREA-PR" },
-  { chave: "Escopo", valor: "LP, LI, LO e renovação" },
-];
+import LogoMarquee from "./motion/LogoMarquee";
+import { LOGOS_CLIENTES } from "../lib/clientes";
 
 export default function Hero() {
   return (
@@ -28,75 +16,42 @@ export default function Hero() {
         sizes="100vw"
         className="object-cover"
       />
-      {/* Véu só onde o texto pousa. A versão anterior somava um degradê forte a
-          uma camada chapada e apagava a floresta inteira — o verde virava fundo
-          liso e a foto não servia para nada. */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(30,44,21,0.93),rgba(30,44,21,0.5)_45%,rgba(30,44,21,0.05))]" />
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(to_top,rgba(30,44,21,0.88),transparent)]" />
 
       <div className="relative z-10 container mx-auto flex min-h-[100svh] flex-col justify-end px-4 pt-32 pb-14 sm:px-6 lg:px-8">
         <ScrollReveal direction="none">
-          {/* Frase de impacto da identidade, não copy inventada aqui. */}
-          <p className="rotulo text-white/75">
-            Crescimento seguro para operar, expandir e conservar
-          </p>
+          <p className="rotulo text-white/75">Licenciamento ambiental estratégico</p>
         </ScrollReveal>
 
-        {/* Sem revelação: é o LCP da página. Nascer com opacity 0 esperando JS
-            arrisca deixar o título principal invisível — e animar o h1 acima da
-            dobra é o proprio tique de landing gerada. */}
-        <h1 className="text-balance mt-6 max-w-[26ch] text-[clamp(2.15rem,4.9vw,3.8rem)] leading-[1.16] font-light text-white">
-          Seu processo entra no órgão sem voltar por exigência
+        {/* Sem revelação: é o LCP. Nascer com opacity 0 esperando JS arrisca
+            deixar o título principal invisível. */}
+        <h1 className="text-balance mt-6 max-w-[24ch] text-[clamp(2.1rem,4.6vw,3.6rem)] leading-[1.14] font-light text-white">
+          Regularização ambiental acompanhando sua operação, do licenciamento à renovação.
         </h1>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-end">
-          <ScrollReveal direction="up" delay={420}>
-            <p className="max-w-lg text-corpo leading-[1.7] text-white/85">
-              Indústria, agronegócio, portos e pátios. Assumimos o processo inteiro —
-              do diagnóstico ao protocolo no IAT — para a sua operação
-              seguir funcionando enquanto a licença anda.
-            </p>
+        <ScrollReveal direction="up" delay={300}>
+          <p className="mt-7 max-w-xl text-corpo leading-[1.7] text-white/85">
+            Há 13 anos, a Folha atua junto aos órgãos ambientais para sua empresa operar,
+            expandir e crescer sem depender de sorte com prazos.
+          </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-5">
-              <WhatsAppCTAButton
-                eventLabel="hero_atendimento"
-                message="Olá, quero solicitar atendimento especializado em licenciamento ambiental"
-                className="group inline-flex items-center gap-3 rounded-full bg-amber-600 px-8 py-3.5 text-base font-medium text-white transition-colors duration-300 hover:bg-amber-700"
-              >
-                Solicitar diagnóstico
-              </WhatsAppCTAButton>
-              <Link
-                href="/#como-funciona"
-                className="text-sm text-white/70 underline-swipe transition-colors hover:text-white"
-              >
-                Ver como funciona
-              </Link>
-            </div>
-          </ScrollReveal>
+          <div className="mt-9">
+            <WhatsAppCTAButton
+              eventLabel="hero_atendimento"
+              className="inline-flex items-center rounded-full bg-amber-600 px-8 py-3.5 text-base font-medium text-white transition-colors duration-300 hover:bg-amber-700"
+            >
+              Falar com especialista
+            </WhatsAppCTAButton>
+          </div>
+        </ScrollReveal>
 
-          {/* ficha técnica: o detalhe que faz parecer documento, não anúncio */}
-          <ScrollReveal direction="up" delay={560}>
-            <dl className="flex flex-wrap gap-x-10 gap-y-4 lg:justify-end">
-              {FICHA.map((item) => (
-                <div key={item.chave}>
-                  <dt className="rotulo text-white/70">
-                    {item.chave}
-                  </dt>
-                  <dd className="mt-1 text-sm text-white/90">{item.valor}</dd>
-                </div>
-              ))}
-            </dl>
-          </ScrollReveal>
-        </div>
-
-        <div className="mt-12">
-          <a
-            href="tel:+554134231690"
-            className="rotulo text-white/70 transition-colors hover:text-white"
-          >
-            (41) 3423-1690
-          </a>
-        </div>
+        {/* não renderiza enquanto não houver logo autorizado em lib/clientes.ts */}
+        {LOGOS_CLIENTES.length > 0 && (
+          <div className="mt-14 border-t border-white/15 pt-8">
+            <LogoMarquee logos={LOGOS_CLIENTES} escuro />
+          </div>
+        )}
       </div>
     </section>
   );

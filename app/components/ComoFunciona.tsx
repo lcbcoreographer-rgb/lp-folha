@@ -3,24 +3,24 @@ import ProcessLine from "./motion/ProcessLine";
 
 const ETAPAS = [
   {
-    titulo: "Diagnóstico do empreendimento",
+    titulo: "Diagnóstico técnico",
     descricao:
-      "Levantamos a atividade, o porte e a localização para saber exatamente quais licenças o seu caso exige — e quais não exige.",
+      "Levantamento completo da situação ambiental do empreendimento: o que está regular, o que precisa de atenção e qual o caminho mais rápido para a conformidade.",
   },
   {
-    titulo: "Documentação e estudos",
+    titulo: "Mediação com o órgão ambiental",
     descricao:
-      "Reunimos plantas, memoriais e estudos ambientais. É aqui que a maioria dos processos trava, e é aqui que a nossa equipe assume.",
+      "Atuação direta junto ao IAT e demais órgãos competentes, com relacionamento construído ao longo de anos de presença local — não um processo genérico à distância.",
   },
   {
-    titulo: "Protocolo no órgão ambiental",
+    titulo: "Execução com responsabilidade técnica",
     descricao:
-      "Entrada no IAT (Instituto Água e Terra), prefeitura ou órgão competente, com acompanhamento de cada exigência e prazo.",
+      "Cada projeto é assinado com ART, por profissionais habilitados, do licenciamento à recuperação de área degradada.",
   },
   {
-    titulo: "Licença emitida",
+    titulo: "Acompanhamento contínuo",
     descricao:
-      "Você recebe a licença e o calendário de renovação. Avisamos antes de vencer, para a regularidade não depender de memória.",
+      "Prazos, condicionantes e renovações são monitorados proativamente — a regularização não termina na entrega do documento, ela é sustentada no tempo.",
   },
 ];
 
@@ -31,16 +31,9 @@ export default function ComoFunciona() {
         <div className="grid gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <SectionHead
-              rotulo="Como funciona"
-              titulo="Do papel parado à licença na mão."
-              descricao="A ordem importa: cada etapa depende da anterior estar fechada. A maioria dos processos trava na documentação — e é ela que a nossa equipe assume por inteiro."
+              titulo="Como a Folha protege a continuidade da sua operação"
               centralizado={false}
             />
-            {/* Aqui havia "12+ anos de atuação" e "4 etapas". O primeiro numero
-                nao tinha fonte — foi inventado; o segundo so contava os bullets
-                da coluna ao lado. Numero fabricado em site comercial e passivo.
-                O espaco fica reservado para dado real: quantidade de licencas
-                emitidas, ano de fundacao, numero de municipios atendidos. */}
           </div>
 
           <ProcessLine etapas={ETAPAS} />

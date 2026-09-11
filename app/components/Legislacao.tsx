@@ -1,63 +1,26 @@
 import SectionHead from "./motion/SectionHead";
-import FocalReveal from "./motion/FocalReveal";
+import ScrollReveal from "./ScrollReveal";
 
-const LEGISLACAO = [
-  {
-    norma: "CONAMA nº 237/1997",
-    tipo: "Licenciamento ambiental",
-    texto: "Estabelece os procedimentos e critérios para o licenciamento ambiental.",
-  },
-  {
-    norma: "Lei nº 12.651/2012",
-    tipo: "Código Florestal",
-    texto: "Define as regras de proteção da vegetação nativa e das áreas de reserva.",
-  },
-  {
-    norma: "Lei nº 12.305/2010",
-    tipo: "Resíduos Sólidos",
-    texto: "Orienta a gestão integrada e o plano de gerenciamento de resíduos.",
-  },
-  {
-    norma: "Lei nº 9.605/1998",
-    tipo: "Crimes Ambientais",
-    texto: "Dispõe sobre as sanções penais e administrativas por conduta lesiva.",
-  },
-];
+const NORMAS = ["CONAMA 237/1997", "Código Florestal", "PNRS", "Lei de Crimes Ambientais"];
 
 export default function Legislacao() {
   return (
     <section id="legislacao" className="bg-paper-dim py-24 md:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHead
-          rotulo="Segurança jurídica"
-          titulo="O que sustenta cada processo."
-          descricao="O licenciamento tem duas camadas. A federal define o que é licenciável; a estadual define em que tipologia o seu empreendimento cai — e, com ela, quanto estudo você vai precisar apresentar. Estas são as normas federais que servem de base."
+          titulo="Conhecimento técnico que vira segurança jurídica para o seu negócio"
+          descricao="Navegar o sistema de leis ambientais exige conhecimento aprofundado e atualização constante. A Folha interpreta e aplica as principais legislações federais e estaduais para que sua empresa opere com tranquilidade jurídica e operacional."
         />
 
-        {/* tabela de normas: o formato mais honesto para este conteúdo */}
-        <FocalReveal className="mt-14">
-          <div className="mx-auto max-w-3xl">
-            {LEGISLACAO.map((item) => (
-              <article
-                key={item.norma}
-                className="grid gap-1.5 border-b border-rule py-7 md:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] md:gap-10"
-              >
-                <div>
-                  <p className="text-[0.85rem] font-medium text-forest-700 tabular-nums">{item.norma}</p>
-                  <p className="mt-1 text-[0.8rem] text-ink-soft">{item.tipo}</p>
-                </div>
-                <p className="max-w-2xl leading-[1.7] text-ink">{item.texto}</p>
-              </article>
-            ))}
-          </div>
-
-          <p className="mx-auto mt-10 max-w-2xl text-center leading-[1.75] text-ink-soft">
-            Quem emite a licença aqui é o IAT, e é a norma estadual que decide se o seu caso
-            exige estudo simplificado ou EIA/RIMA. Interpretamos as duas camadas no contexto do
-            seu empreendimento — industrial, portuário ou de agronegócio — para que a licença
-            saia e continue válida.
-          </p>
-        </FocalReveal>
+        <ul className="mx-auto mt-14 flex max-w-3xl flex-wrap justify-center gap-3">
+          {NORMAS.map((norma, i) => (
+            <ScrollReveal as="li" key={norma} direction="up" delay={i * 80}>
+              <span className="inline-block rounded-full border border-forest-900/25 px-5 py-2.5 text-[0.95rem] font-medium text-forest-900">
+                {norma}
+              </span>
+            </ScrollReveal>
+          ))}
+        </ul>
       </div>
     </section>
   );

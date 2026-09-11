@@ -20,7 +20,8 @@ export default function SectionHead({
   centralizado = true,
   className = "",
 }: {
-  rotulo: string;
+  /** só quando a copy traz um eyebrow — não inventar a partir do nome da seção */
+  rotulo?: string;
   titulo: string;
   descricao?: string;
   escuro?: boolean;
@@ -34,15 +35,16 @@ export default function SectionHead({
 
   return (
     <div className={`${centralizado ? "mx-auto text-center" : ""} ${className}`}>
-      <ScrollReveal direction="up">
-        <p className={`rotulo ${corRotulo}`}>
-          {rotulo}
-        </p>
-      </ScrollReveal>
+      {/* sem rótulo na copy, sem <p> vazio ocupando espaço */}
+      {rotulo && (
+        <ScrollReveal direction="up">
+          <p className={`rotulo ${corRotulo}`}>{rotulo}</p>
+        </ScrollReveal>
+      )}
 
       <ScrollReveal direction="up" delay={90}>
         <h2
-          className={`text-balance mt-5 text-[clamp(1.65rem,3vw,2.5rem)] leading-[1.25] font-light ${corTitulo} ${
+          className={`text-balance ${rotulo ? "mt-5" : ""} text-[clamp(1.65rem,3vw,2.5rem)] leading-[1.25] font-light ${corTitulo} ${
             centralizado ? "mx-auto max-w-3xl" : "max-w-2xl"
           }`}
         >

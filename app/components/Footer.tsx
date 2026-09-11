@@ -2,8 +2,8 @@ import Image from "next/image";
 import { Phone, MapPin } from "lucide-react";
 
 const NAV_ITEMS = [
-  { name: "Diferenciais", href: "/#diferenciais" },
-  { name: "Como funciona", href: "/#como-funciona" },
+  { name: "Serviços", href: "/#servicos" },
+  { name: "Como atuamos", href: "/#como-funciona" },
   { name: "Segmentos", href: "/#segmentos" },
   { name: "Legislação", href: "/#legislacao" },
   { name: "Blog", href: "/blog" },

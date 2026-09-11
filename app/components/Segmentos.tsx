@@ -4,33 +4,51 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionHead from "./motion/SectionHead";
-import VelocityStrip from "./motion/VelocityStrip";
 
 const SEGMENTS = [
   {
-    name: "Pátio de caminhões",
-    detalhe: "Licença de operação, outorga e plano de gerenciamento de resíduos.",
-    img: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1200&q=80",
-  },
-  {
-    name: "Armazenagem de fertilizantes",
-    detalhe: "Estudo de análise de risco e licença prévia antes da obra.",
+    name: "Agronegócio",
+    detalhe:
+      "Licenciamento alinhado ao calendário da safra, para o prazo ambiental nunca virar gargalo da produção.",
     img: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1200&q=80",
   },
   {
-    name: "Empreendimentos náuticos",
-    detalhe: "Autorização ambiental, área de influência e supressão vegetal.",
-    img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&q=80",
-  },
-  {
-    name: "Portos",
-    detalhe: "O enquadramento entre IAT e IBAMA é definido caso a caso, e as condicionantes voltam a cada renovação.",
+    name: "Operação Portuária",
+    detalhe:
+      "Conformidade técnica para a maior complexidade regulatória do litoral, com equipe que acompanha de perto cada vistoria.",
     img: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1200&q=80",
   },
   {
-    name: "Indústria em operação",
-    detalhe: "Efluentes, emissões atmosféricas, resíduos sólidos e renovação da licença de operação.",
+    name: "Transporte/Logística",
+    detalhe:
+      "Regularização de pátios e terminais para operações que dependem de área e fluxo constantes.",
+    img: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1200&q=80",
+  },
+  {
+    name: "Construção Civil",
+    detalhe:
+      "Licenciamento ambiental em cada fase do empreendimento - terreno, obra e entrega — sem pendência travando o cronograma.",
+    img: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80",
+  },
+  {
+    name: "Indústria/Comércio",
+    detalhe:
+      "Conformidade contínua para operações de qualquer porte, do licenciamento à gestão de resíduos.",
     img: "https://images.unsplash.com/photo-1567789884554-0b844b597180?w=1200&q=80",
+  },
+  {
+    name: "Postos de Combustível",
+    detalhe:
+      "Licenciamento e monitoramento técnico para um dos segmentos mais fiscalizados do país.",
+    // foto de banco com a marca de uma distribuidora pequena no topo das bombas,
+    // ilegível no tamanho do card — trocar por foto de posto cliente da Folha
+    img: "https://images.unsplash.com/photo-1527018601619-a508a2be00cd?w=1200&q=80",
+  },
+  {
+    name: "Marina/Náutico",
+    detalhe:
+      "Regularização de empreendimentos náuticos com domínio técnico da complexidade ambiental costeira.",
+    img: "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=1200&q=80",
   },
 ];
 
@@ -85,34 +103,17 @@ export default function Segmentos() {
       >
         <div className="container mx-auto px-4 pt-4 sm:px-6 lg:px-8">
           <SectionHead
-            rotulo="Onde atuamos"
-            titulo="A exigência muda conforme o setor."
+            titulo="Segurança ambiental para diferentes segmentos"
             escuro
           />
         </div>
-
-        {/* Listava os mesmos cinco nomes que os cards mostram logo abaixo, a 10%
-            de opacidade. Passa a nomear os instrumentos do rito — informação que
-            não está em outro lugar da página — e sobe para 18% para ser legível. */}
-        <VelocityStrip
-          itens={[
-            "Licença prévia",
-            "Licença de instalação",
-            "Licença de operação",
-            "Renovação",
-            "Outorga de uso da água",
-            "Estudo de análise de risco",
-            "Plano de gerenciamento de resíduos",
-          ]}
-          className="mt-8 mb-10 select-none text-2xl font-normal tracking-tight text-white/[0.18] md:text-4xl"
-        />
 
         {/* O trilho sangra até a borda em vez de viver dentro do container.
             Preso ao container de 1024px, o ultimo card ficava 36px cortado para
             sempre: a conta de distancia usava a largura da janela, mas o trilho
             comecava deslocado 132px para dentro. Agora ele comeca na margem e a
             conta bate. */}
-        <div className="px-4 sm:px-6 lg:px-0">
+        <div className="mt-12 px-4 sm:px-6 lg:mt-14 lg:px-0">
           <div
             ref={trilho}
             className="grid gap-5 sm:grid-cols-2 lg:flex lg:w-max lg:gap-6 lg:pr-[8vw] lg:pl-[max(2rem,calc((100vw-1024px)/2+2rem))]"
