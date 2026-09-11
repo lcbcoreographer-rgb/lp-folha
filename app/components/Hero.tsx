@@ -6,7 +6,7 @@ import { LOGOS_CLIENTES } from "../lib/clientes";
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative min-h-[100svh] overflow-hidden bg-forest-950">
+    <section id="hero" className="relative overflow-hidden bg-forest-950">
       <Image
         src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80"
         alt="Trilha em floresta nativa preservada"
@@ -19,7 +19,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(30,44,21,0.93),rgba(30,44,21,0.5)_45%,rgba(30,44,21,0.05))]" />
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(to_top,rgba(30,44,21,0.88),transparent)]" />
 
-      <div className="relative z-10 container mx-auto flex min-h-[100svh] flex-col justify-end px-4 pt-32 pb-14 sm:px-6 lg:px-8">
+      <div className="relative z-10 container mx-auto flex min-h-[calc(100svh-6.5rem)] flex-col justify-end px-4 pt-32 pb-14 sm:px-6 lg:px-8">
         <ScrollReveal direction="none">
           <p className="rotulo text-white/75">Licenciamento ambiental estratégico</p>
         </ScrollReveal>
@@ -46,13 +46,15 @@ export default function Hero() {
           </div>
         </ScrollReveal>
 
-        {/* não renderiza enquanto não houver logo autorizado em lib/clientes.ts */}
-        {LOGOS_CLIENTES.length > 0 && (
-          <div className="mt-14 border-t border-white/15 pt-8">
-            <LogoMarquee logos={LOGOS_CLIENTES} escuro />
-          </div>
-        )}
       </div>
+
+      {/* Faixa clara no pé da seção Home: os logos precisam de fundo claro para
+          manter o contraste interno (ver LogoMarquee). */}
+      {LOGOS_CLIENTES.length > 0 && (
+        <div className="relative z-10 bg-paper py-8">
+          <LogoMarquee logos={LOGOS_CLIENTES} />
+        </div>
+      )}
     </section>
   );
 }

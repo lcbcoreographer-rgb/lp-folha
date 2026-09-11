@@ -14,17 +14,23 @@ export default function ProvaSocial() {
   return (
     <section id="clientes" className="bg-paper py-24 md:py-28">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHead rotulo="Prova social" titulo="Quem confia na Folha" />
+        <SectionHead titulo="Quem confia na Folha" />
 
-        <ul className="mx-auto mt-14 grid max-w-5xl grid-cols-2 items-center gap-x-10 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+        {/* Flex centralizado em vez de grade: são 17 logos, número primo, e a
+            grade de 4 colunas deixava o último sozinho encostado à esquerda.
+            Assim a linha que sobra fica centrada. */}
+        <ul className="mx-auto mt-14 flex max-w-5xl flex-wrap items-center justify-center gap-y-12">
           {LOGOS_CLIENTES.map((logo) => (
-            <li key={logo.arquivo} className="flex justify-center">
+            <li
+              key={logo.arquivo}
+              className="flex basis-1/2 justify-center sm:basis-1/3 lg:basis-1/4"
+            >
               <Image
                 src={logo.arquivo}
                 alt={logo.nome}
-                width={160}
-                height={56}
-                className="h-12 w-auto object-contain opacity-75 grayscale transition hover:opacity-100 hover:grayscale-0"
+                width={logo.largura}
+                height={logo.altura}
+                className="opacity-75 mix-blend-multiply grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
               />
             </li>
           ))}
