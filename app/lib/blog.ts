@@ -109,7 +109,9 @@ export function lerBlocos(post: PostPublico): BlocoPost[] {
       case "imagem": {
         const url = linkSeguro(texto(b.url), false);
         if (url) {
-          blocos.push({ tipo: "imagem", url, alt: texto(b.alt), legenda: texto(b.legenda), largura: b.largura === "media" ? "media" : "total" });
+          // formato antigo não tinha descrição: a legenda era o texto alternativo
+          const alt = typeof b.alt === "string" ? texto(b.alt) : texto(b.legenda);
+          blocos.push({ tipo: "imagem", url, alt, legenda: texto(b.legenda), largura: b.largura === "media" ? "media" : "total" });
         }
         break;
       }
