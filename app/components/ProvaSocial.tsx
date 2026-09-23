@@ -16,9 +16,9 @@ export default function ProvaSocial() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHead titulo="Quem confia na Folha" />
 
-        {/* Flex centralizado em vez de grade: são 17 logos, número primo, e a
-            grade de 4 colunas deixava o último sozinho encostado à esquerda.
-            Assim a linha que sobra fica centrada. */}
+        {/* Flex centralizado em vez de grade: quando o número de logos não
+            fecha a última linha, a que sobra fica centrada em vez de
+            encostada à esquerda. */}
         <ul className="mx-auto mt-14 flex max-w-5xl flex-wrap items-center justify-center gap-y-12">
           {LOGOS_CLIENTES.map((logo) => (
             <li

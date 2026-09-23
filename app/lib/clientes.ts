@@ -28,7 +28,6 @@ export const LOGOS_CLIENTES: LogoCliente[] = [
   { nome: "Fertipar", arquivo: "/clientes/fertipar.png", largura: 73, altura: 52 },
   { nome: "G10 Transportes", arquivo: "/clientes/g10-transportes.png", largura: 129, altura: 36 },
   { nome: "Gen Fertilizantes", arquivo: "/clientes/gen-fertilizantes.png", largura: 117, altura: 40 },
-  { nome: "Harbor Operações Portuárias", arquivo: "/clientes/harbor.png", largura: 114, altura: 41 },
   { nome: "JCM Participações", arquivo: "/clientes/jcm.png", largura: 107, altura: 43 },
   { nome: "JRL", arquivo: "/clientes/jrl.png", largura: 110, altura: 42 },
   { nome: "Luzzi Construtora", arquivo: "/clientes/luzzi.png", largura: 89, altura: 52 },
@@ -36,6 +35,5 @@ export const LOGOS_CLIENTES: LogoCliente[] = [
   { nome: "Panvel", arquivo: "/clientes/panvel.png", largura: 148, altura: 31 },
   { nome: "Pasa", arquivo: "/clientes/pasa.png", largura: 66, altura: 52 },
   { nome: "Rodofrota", arquivo: "/clientes/rodofrota.png", largura: 144, altura: 32 },
-  { nome: "TCP", arquivo: "/clientes/tcp.png", largura: 106, altura: 44 },
   { nome: "Terin", arquivo: "/clientes/terin.png", largura: 128, altura: 36 },
 ];
