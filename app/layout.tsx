@@ -31,6 +31,8 @@ const firaSans = Fira_Sans({
 });
 
 export const metadata: Metadata = {
+  // sem isso og:image relativo vira localhost no build — a prévia do link no WhatsApp sai sem foto
+  metadataBase: new URL("https://folhasolucoesambientais.com"),
   title: "Folha Soluções Ambientais | Licenciamento Ambiental no Paraná",
   description:
     "Licenciamento ambiental no Paraná para indústria, agronegócio, portos e pátios de caminhões: LP, LO, renovação e outorga. Equipe com ART, protocolo no IAT.",
