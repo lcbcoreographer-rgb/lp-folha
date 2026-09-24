@@ -21,7 +21,7 @@ export const MENSAGEM_WHATSAPP =
 const FORMULARIO = "estudo-de-caso-zona-de-raizes";
 const PDF = "/materiais/case-zona-de-raizes.pdf";
 const CHAVE = "folha:estudo-zona-de-raizes"; // guarda só o primeiro nome
-const ORDEM: (keyof Campos)[] = ["nome", "email", "telefone", "cargo", "segmento"];
+const ORDEM: (keyof Campos)[] = ["nome", "email", "telefone", "empresa", "cargo", "segmento"];
 const GENERICA = "Não conseguimos enviar agora. Confira sua conexão e tente de novo.";
 
 // ---------- quem já preencheu (localStorage, sempre com try/catch) ----------
@@ -278,6 +278,25 @@ export default function FormularioEstudo() {
                 onBlur={() => sair("telefone")}
                 aria-invalid={!!erros.telefone}
                 aria-describedby={erros.telefone ? "estudo-telefone-erro" : undefined}
+                required
+                className={CAMPO}
+              />
+            </Campo>
+
+            <Campo id="estudo-empresa" rotulo="Nome da empresa" erro={erros.empresa}>
+              <input
+                id="estudo-empresa"
+                name="empresa"
+                type="text"
+                autoComplete="organization"
+                enterKeyHint="next"
+                placeholder="Nome da sua empresa"
+                maxLength={150}
+                value={dados.empresa}
+                onChange={(e) => mudar("empresa", e.target.value)}
+                onBlur={() => sair("empresa")}
+                aria-invalid={!!erros.empresa}
+                aria-describedby={erros.empresa ? "estudo-empresa-erro" : undefined}
                 required
                 className={CAMPO}
               />

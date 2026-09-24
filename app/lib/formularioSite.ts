@@ -39,11 +39,12 @@ export type Campos = {
   nome: string;
   email: string;
   telefone: string;
+  empresa: string;
   cargo: string;
   segmento: string;
 };
 
-export const CAMPOS_VAZIOS: Campos = { nome: "", email: "", telefone: "", cargo: "", segmento: "" };
+export const CAMPOS_VAZIOS: Campos = { nome: "", email: "", telefone: "", empresa: "", cargo: "", segmento: "" };
 
 function digitos(valor: string) {
   let d = valor.replace(/\D/g, "");
@@ -78,6 +79,10 @@ export function validar(c: Campos): Partial<Record<keyof Campos, string>> {
   else if (d.length < 10 || d[0] === "0" || (d.length === 11 && d[2] !== "9"))
     erros.telefone = "Confira o número com DDD, como (41) 99999-9999.";
 
+  const empresa = c.empresa.trim();
+  if (!empresa) erros.empresa = "Escreva o nome da empresa.";
+  else if (empresa.length > 150) erros.empresa = "Nome da empresa muito longo.";
+
   if (!c.cargo) erros.cargo = "Escolha o seu cargo.";
   if (!c.segmento) erros.segmento = "Escolha o segmento da sua empresa.";
   return erros;
@@ -93,6 +98,7 @@ export function corpoDoEnvio(
     nome: c.nome.trim().replace(/\s+/g, " "),
     email: c.email.trim(),
     telefone: c.telefone,
+    empresa: c.empresa.trim().replace(/\s+/g, " "),
     cargo: c.cargo,
     segmento: c.segmento,
     aceite: true,
