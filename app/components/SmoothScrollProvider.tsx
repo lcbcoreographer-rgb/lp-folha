@@ -43,6 +43,8 @@ export default function SmoothScrollProvider({
     gsap.ticker.lagSmoothing(0);
 
     function onAnchorClick(e: MouseEvent) {
+      // quem já tratou o clique (ex.: botões do estudo de caso) manda
+      if (e.defaultPrevented) return;
       const target = (e.target as HTMLElement)?.closest('a[href^="#"], a[href^="/#"]');
       if (!target) return;
       const href = target.getAttribute("href");

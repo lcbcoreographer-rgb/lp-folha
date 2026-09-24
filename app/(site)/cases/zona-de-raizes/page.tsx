@@ -1,659 +1,389 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import {
-  AtSign,
-  Building2,
-  CloudSun,
-  Coins,
-  Eye,
-  Globe,
-  Mail,
-  Phone,
-  Puzzle,
-  Ruler,
-  Ship,
-  Sprout,
-  Store,
-  Warehouse,
-} from "lucide-react";
+import { AtSign, Mail, Phone } from "lucide-react";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
-import ScrollReveal from "../../../components/ScrollReveal";
 import WhatsAppCTAButton from "../../../components/WhatsAppCTAButton";
 import WhatsAppFloat from "../../../components/WhatsAppFloat";
-import { LOGOS_CLIENTES, type LogoCliente } from "../../../lib/clientes";
+import Counter from "../../../components/motion/Counter";
+import Revela from "./Revela";
+import FormularioEstudo, { IrParaFormulario, MENSAGEM_WHATSAPP } from "./FormularioEstudo";
 
 /**
- * Case "Zona de raízes" — versão em página do PDF de 12 slides que a Folha usa
- * na prospecção. O conteúdo segue o PDF slide a slide; só a diagramação muda,
- * porque slide 16:9 não é página rolável.
+ * Página de download do estudo de caso Zona de Raízes. Até setembro/2026 este
+ * endereço contava o case inteiro (commit 33d1726); agora ele só se baixa em
+ * PDF depois do formulário, que cai direto no CRM. Mesmo endereço para não
+ * quebrar os links que já circularam.
  *
- * Três erros de digitação do PDF foram corrigidos aqui ("paranaese", "outros
- * matérias inertes", "Porque a Folha"). O resto é o texto original, inclusive
- * "IAP", o nome do órgão na época do projeto.
+ * Texto: copy aprovada do cliente, na ordem dela (blocos 1, 2, 3, 4, formulário
+ * e 7). Correções: "compromter" e os travessões, trocados por vírgula.
+ *
+ * Desenho: no computador o formulário é uma coluna fixa à direita que
+ * acompanha a leitura do topo até os números; no celular ele vem depois dos
+ * números, na ordem da copy, e todo "Baixar o case completo" leva até ele.
  */
 
 export const metadata: Metadata = {
-  title: "Case: tratamento de efluentes com zona de raízes | Folha Soluções Ambientais",
+  title: "Baixe o case: tratamento de efluentes sem parar a operação | Folha Soluções Ambientais",
   description:
-    "Como a Folha estruturou uma solução técnica de baixo custo para o tratamento de efluentes de uma indústria de fertilizantes no litoral do Paraná.",
+    "Baixe o estudo de caso da Folha: tratamento de efluentes de baixo custo para uma indústria no litoral do Paraná, sem energia elétrica, sem parar a operação e sem comprometer o licenciamento no IAT.",
+  alternates: { canonical: "/cases/zona-de-raizes" },
   openGraph: {
-    title: "Implantação de tratamento de efluentes com zona de raízes",
+    title: "Baixe o case técnico: tratamento de efluentes sem parar a operação",
     description:
-      "Solução biológica, sem energia elétrica nem produtos químicos, para uma indústria de fertilizantes no litoral do Paraná.",
-    images: ["/cases/zona-de-raizes/bananeiras.webp"],
+      "Como a Folha estruturou uma solução de baixo custo para uma indústria no litoral do Paraná. Baixe o case completo em PDF.",
+    images: [
+      {
+        url: "/cases/zona-de-raizes/og-estudo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Páginas do case Zona de Raízes em dois tablets",
+      },
+    ],
     type: "article",
   },
 };
 
 const IMG = "/cases/zona-de-raizes";
-const MENSAGEM =
-  "Olá! Vi o case de tratamento de efluentes com zona de raízes da Folha e quero conversar sobre o meu projeto.";
 
-const BOTAO =
-  "inline-flex items-center justify-center rounded-full bg-amber-600 px-8 py-3.5 text-base font-medium text-white transition-colors duration-300 hover:bg-amber-700";
+// Um acento por tela: no computador o botão terracota é o do formulário, que
+// está sempre à vista; estes viram contorno. No celular o formulário está
+// longe, então eles voltam a ser o botão cheio.
+const CTA_BASE =
+  "inline-flex min-h-13 items-center justify-center rounded-full px-8 py-3.5 text-[0.95rem] font-medium tracking-[0.06em] uppercase transition-colors duration-300 bg-amber-600 text-white hover:bg-amber-700 lg:bg-transparent lg:border";
+const CTA_ESCURO = `${CTA_BASE} lg:border-paper/50 lg:text-paper lg:hover:border-paper lg:hover:bg-paper lg:hover:text-forest-950`;
+const CTA_CLARO = `${CTA_BASE} lg:border-forest-900/35 lg:text-forest-900 lg:hover:border-forest-900 lg:hover:bg-forest-900 lg:hover:text-paper`;
 
-// ---------- peças do slide ----------
+/** Coluna de leitura: no computador deixa livre a faixa do formulário. */
+const LEITURA = "lg:pr-[calc(var(--rail)+3.5rem)]";
 
-/** A etiqueta vermelha que abre cada slide do PDF. */
-function Etiqueta({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-block bg-amber-600 px-3.5 py-1.5 text-[0.7rem] font-semibold tracking-[0.12em] text-white uppercase">
-      {children}
-    </span>
-  );
-}
-
-function Titulo({
-  children,
-  claro = false,
-  className = "",
-}: {
-  children: React.ReactNode;
-  claro?: boolean;
-  className?: string;
-}) {
-  return (
-    <h2
-      className={`text-balance mt-5 text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.15] font-normal ${
-        claro ? "text-paper" : "text-forest-900"
-      } ${className}`}
-    >
-      {children}
-    </h2>
-  );
-}
-
-/**
- * Foto recortada no formato do símbolo da Folha, como nos slides 4 e 11. A
- * máscara é o símbolo da marca recortado no contorno (mascara-simbolo.svg).
- */
-function FotoNoSimbolo({ src, alt }: { src: string; alt: string }) {
-  return (
-    <div
-      className="relative aspect-[1000/902] w-full"
-      style={{
-        maskImage: "url(/cases/zona-de-raizes/mascara-simbolo.svg)",
-        WebkitMaskImage: "url(/cases/zona-de-raizes/mascara-simbolo.svg)",
-        maskSize: "contain",
-        WebkitMaskSize: "contain",
-        maskRepeat: "no-repeat",
-        WebkitMaskRepeat: "no-repeat",
-        maskPosition: "center",
-        WebkitMaskPosition: "center",
-      }}
-    >
-      <Image src={src} alt={alt} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
-    </div>
-  );
-}
-
-function logo(nome: string): LogoCliente {
-  if (nome === "BWSP") return { nome, arquivo: "/clientes/bwsp.png", largura: 156, altura: 30 };
-  const l = LOGOS_CLIENTES.find((x) => x.nome === nome);
-  if (!l) throw new Error(`logo ausente: ${nome}`);
-  return l;
-}
-
-// ---------- conteúdo (slides) ----------
+const ENCONTRAR: React.ReactNode[] = [
+  <>
+    Como estruturar um <strong>sistema de tratamento de efluentes de baixo custo</strong>, sem energia
+    elétrica, produtos químicos ou geração de lodo
+  </>,
+  <>
+    Como dimensionar o sistema para o <strong>clima do litoral paranaense</strong>, com médias acima de{" "}
+    <strong>1.900 mm/ano de chuva</strong>
+  </>,
+  <>
+    Como a zona de raízes viabilizou o <strong>caminho técnico para a solicitação de licenciamento</strong>{" "}
+    junto ao IAT, <strong>sem paralisar a operação</strong>
+  </>,
+  <>
+    Que resultados uma solução técnica bem estruturada pode gerar em{" "}
+    <strong>custo, prazo e conformidade ambiental</strong>
+  </>,
+];
 
 const NUMEROS = [
-  { valor: "13 anos", texto: "de atuação no litoral do Paraná" },
-  { valor: "+10 segmentos", texto: "atendidos, de porto a agronegócio" },
-  { valor: "+60 clientes", texto: "atendidos com excelência" },
-  { valor: "Presença local", texto: "no litoral paranaense" },
+  { para: 13, prefixo: "", unidade: "anos", texto: "de atuação no litoral do Paraná" },
+  { para: 10, prefixo: "+", unidade: "segmentos", texto: "atendidos, de porto a agronegócio" },
+  { para: 60, prefixo: "+", unidade: "clientes", texto: "atendidos com excelência" },
+  { para: null, prefixo: "", unidade: "Presença local", texto: "no litoral paranaense" },
 ];
 
-const FRENTES = [
-  { nome: "Operação Portuária", icone: Ship, logos: ["BR Fértil", "Cargill", "Terin"] },
-  { nome: "Imobiliário", icone: Building2, logos: ["JRL", "Luzzi Construtora", "Camboa Hotéis"] },
-  { nome: "Transporte / Logística", icone: Warehouse, logos: ["G10 Transportes", "Miramar Transportes", "Rodofrota"] },
-  { nome: "Indústria / Comércio", icone: Store, logos: ["Panvel", "BWSP"] },
-];
-
-const DESAFIOS = [
-  {
-    icone: Coins,
-    titulo: "Custo x eficácia",
-    texto:
-      "Entregar um sistema de tratamento eficiente, com investimento muito abaixo do de uma ETE convencional.",
-  },
-  {
-    icone: CloudSun,
-    titulo: "Clima do litoral",
-    texto:
-      "Dimensionar o sistema para chuvas intensas — média histórica acima de 1.900 mm/ano, com picos de mais de 40 mm em uma hora.",
-  },
-  {
-    icone: Puzzle,
-    titulo: "Conformidade técnica",
-    texto:
-      "Atender aos parâmetros da Resolução CONAMA n° 430/2011 para viabilizar a dispensa de licenciamento junto ao IAP.",
-  },
-];
-
-const INDICADORES_SOLUCAO = [
-  { valor: "50 m³/dia", texto: "de efluente tratado, em dois sistemas de 2,50 × 10,00 × 1,00 m" },
-  { valor: "0 consumo", texto: "de energia elétrica, produtos químicos ou lodo gerado" },
-  { valor: "60 dias", texto: "intervalo de coleta de amostras em laboratório independente no 1º ano" },
-];
-
-const ETAPAS = [
-  {
-    grupo: "Abertura, impermeabilização e leito filtrante",
-    itens: [
-      { n: "01", texto: ["Abertura de duas valas com 2,50 X 10,00 X 1,00m"], foto: "etapa-01.webp", alt: "Escavadeira abrindo as valas do sistema" },
-      {
-        n: "02",
-        texto: [
-          "Forração das valas com lona plástica (dupla face)",
-          "Ao fundo serão construídos drenos de entrada e saída feitos de tubo de PVC",
-        ],
-        foto: "etapa-02.webp",
-        alt: "Valas forradas com lona plástica",
-      },
-      {
-        n: "03",
-        texto: [
-          "Cobertura do tubo de PVC com brita do tipo rachão, cascalhos, restos de construção e outros materiais inertes.",
-        ],
-        foto: "etapa-03.webp",
-        alt: "Vala recebendo camada de brita e cascalho",
-      },
-    ],
-  },
-  {
-    grupo: "Camada filtrante, plantio e sistema em operação",
-    itens: [
-      { n: "04", texto: ["Colocação de manta bidin"], foto: "etapa-04.webp", alt: "Manta bidin sobre o leito filtrante" },
-      { n: "05", texto: ["Cobertura de terra e plantio de mudas de bananeiras"], foto: "etapa-05.webp", alt: "Equipe plantando mudas de bananeira" },
-      { n: "06", texto: ["Saída para as caixas separadoras"], foto: "etapa-06.webp", alt: "Caixa de passagem da saída para as caixas separadoras" },
-    ],
-  },
-];
-
-const METODOLOGIA = [
-  {
-    icone: Sprout,
-    titulo: "Seleção de vegetação",
-    texto:
-      "Adaptação do Método de Quadrantes (Point-Centered Quarter Method) para dimensionar a densidade de bananeiras por m² no leito filtrante.",
-  },
-  {
-    icone: Ruler,
-    titulo: "Dimensionamento técnico",
-    texto:
-      "Cálculo realizado a partir do período seco — sem depender da vazão de chuva — para tratar o volume real de efluente gerado pela operação.",
-  },
-  {
-    icone: Eye,
-    titulo: "Monitoramento contínuo",
-    texto:
-      "Coleta de amostras a cada 60 dias no primeiro ano, em laboratório independente, avaliando DBO, DQO, fósforo total, nitrogênio, óleos e graxas e sólidos sedimentáveis.",
-  },
-];
-
-/** Na ordem do slide 10, da esquerda para a direita. */
-const RESULTADOS: { destaque: string; resto: string; destaqueNoFim?: boolean }[] = [
-  {
-    resto: "Caminho técnico estruturado para a dispensa de licenciamento junto ao IAP, ",
-    destaque: "sem paralisar a operação.",
-    destaqueNoFim: true,
-  },
-  { destaque: "Investimento muito inferior", resto: " ao de uma ETE convencional" },
-  {
-    destaque: "Sistema autossustentável.",
-    resto: " Sem consumo de energia, produtos químicos, geração de lodo ou odor",
-  },
-  { destaque: "Efluente tratado", resto: " dentro dos parâmetros da Resolução CONAMA n° 430/2011" },
-  { destaque: "Contribuição direta para a conservação", resto: " dos recursos hídricos da região" },
-];
-
-const DIFERENCIAIS = [
-  {
-    titulo: "Experiência local",
-    texto: "Vivência técnica no litoral do Paraná: conhecemos o solo, o clima e a rotina de cada operação.",
-  },
-  {
-    titulo: "Soluções sob medida",
-    texto: "Cada sistema é dimensionado para a realidade técnica e orçamentária do cliente — sem fórmulas prontas.",
-  },
-  {
-    titulo: "Intermediação qualificada",
-    texto: "Atuamos como ponte entre a empresa e o órgão ambiental, tratando-o como parceiro no processo.",
-  },
-  {
-    titulo: "Acompanhamento contínuo",
-    texto: "Monitoramento, laudos e suporte técnico do início da obra até a operação do sistema.",
-  },
-];
-
-// ---------- página ----------
-
-export default function CaseZonaDeRaizes() {
+export default function EstudoZonaDeRaizes() {
   return (
     <>
       <Header />
       <main>
-        {/* Slide 1 — capa */}
-        <section className="relative overflow-hidden bg-forest-950 pt-32 pb-20 md:pt-40 md:pb-28">
-          <Image src={`${IMG}/textura-folhagem.webp`} alt="" fill priority className="object-cover opacity-70" />
-          <div className="relative z-10 container mx-auto grid items-center gap-14 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:px-8">
-            <div>
-              <Etiqueta>Case de sucesso — Folha Soluções Ambientais</Etiqueta>
-              <h1 className="text-balance mt-7 text-[clamp(2.2rem,4.8vw,3.75rem)] leading-[1.1] font-light text-paper">
-                Implantação de tratamento de efluentes com zona de raízes
-              </h1>
-              <p className="mt-6 max-w-xl text-corpo leading-[1.7] text-paper/85">
-                Como a Folha estruturou uma solução técnica de baixo custo para o tratamento de
-                efluentes de uma indústria de fertilizantes no litoral do Paraná
-              </p>
-              <div className="mt-9">
-                <WhatsAppCTAButton eventLabel="case_zona_raizes_topo" message={MENSAGEM} className={BOTAO}>
-                  Falar com especialista
-                </WhatsAppCTAButton>
-              </div>
-              <div className="mt-14 max-w-xs border-t border-paper/40 pt-4">
-                <p className="text-sm text-paper/80 italic">
-                  Crescimento seguro para operar, expandir e conservar.
-                </p>
-              </div>
+        {/* palco: topo + blocos 2 a 4, com a coluna do formulário por cima */}
+        <div className="relative [--rail:23rem] xl:[--rail:25rem]">
+          {/* Bloco 1: topo */}
+          {/* flow-root: sem ele a margem negativa dos tablets vaza para a seção e
+              o bloco 2 sobe por baixo do topo, em vez dos tablets descerem sobre ele */}
+          <section className="relative z-10 flow-root bg-forest-950 pt-28 sm:pt-32 lg:pt-36">
+            <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden">
+              <Image
+                src={`${IMG}/textura-folhagem.webp`}
+                alt=""
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover opacity-45"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(30,44,21,0.92)_20%,rgba(30,44,21,0.35))]" />
             </div>
-            <ScrollReveal direction="up" delay={150}>
-              <FotoNoSimbolo src={`${IMG}/bananeiras.webp`} alt="Bananeiras crescidas sobre o leito filtrante do sistema" />
-            </ScrollReveal>
-          </div>
-        </section>
 
-        {/* Slide 2 — a Folha em números */}
-        <section className="bg-forest-900 py-20 md:py-24">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <Etiqueta>A Folha em números</Etiqueta>
-            <Titulo claro className="max-w-2xl">
-              Treze anos acompanhando de perto o litoral do Paraná
-            </Titulo>
-            <dl className="mt-14 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-              {NUMEROS.map((n, i) => (
-                <ScrollReveal key={n.valor} direction="up" delay={i * 90}>
-                  <dt className="font-display text-[clamp(1.9rem,3.2vw,2.6rem)] leading-none font-medium text-paper">
-                    {n.valor}
-                  </dt>
-                  <dd className="mt-3 text-[0.95rem] text-paper/75">{n.texto}</dd>
-                </ScrollReveal>
-              ))}
-            </dl>
-          </div>
-        </section>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <div className={LEITURA}>
+                <p className="rotulo estudo-sobe text-paper/75">Case técnico, Folha Soluções Ambientais</p>
 
-        {/* Slide 3 — atuação */}
-        <section className="bg-paper py-20 md:py-28">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <Etiqueta>Atuação</Etiqueta>
-            <Titulo className="max-w-2xl">Presença em diferentes frentes da economia paranaense</Titulo>
-            <div className="mt-14 grid gap-6 md:grid-cols-2">
-              {FRENTES.map((f, i) => (
-                <ScrollReveal key={f.nome} direction="up" delay={i * 80}>
-                  <div className="rounded-2xl border border-rule bg-paper-dim/50 p-6">
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-600 text-white">
-                        <f.icone size={20} strokeWidth={1.6} />
-                      </span>
-                      <h3 className="text-lg font-medium text-forest-900">{f.nome}</h3>
-                    </div>
-                    <ul className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-5">
-                      {f.logos.map((nome) => {
-                        const l = logo(nome);
-                        return (
-                          <li key={nome}>
-                            <Image
-                              src={l.arquivo}
-                              alt={l.nome}
-                              width={l.largura}
-                              height={l.altura}
-                              className="mix-blend-multiply"
-                            />
-                          </li>
-                        );
-                      })}
-                    </ul>
+                {/* Sem animação: é o LCP (mesma regra do Hero da home). */}
+                <h1 className="text-balance mt-6 max-w-[17ch] text-[clamp(2.35rem,5.2vw,4rem)] leading-[1.06] font-light tracking-[-0.02em] text-paper">
+                  Tratamento de efluentes sem parar a operação
+                </h1>
+
+                <p
+                  className="estudo-sobe mt-7 max-w-[58ch] text-corpo leading-[1.7] text-paper/80 [&_strong]:font-medium [&_strong]:text-paper"
+                  style={{ "--atraso": "120ms" } as React.CSSProperties}
+                >
+                  Como a Folha estruturou uma <strong>solução técnica de baixo custo</strong> para o
+                  tratamento de efluentes de uma indústria no litoral do Paraná. Com{" "}
+                  <strong>investimento inferior ao de uma ETE convencional</strong> e{" "}
+                  <strong>sem comprometer o licenciamento ambiental</strong>.
+                </p>
+
+                <div className="estudo-sobe mt-9" style={{ "--atraso": "220ms" } as React.CSSProperties}>
+                  <IrParaFormulario rotulo="estudo_topo" className={CTA_ESCURO}>
+                    Baixar o case completo
+                  </IrParaFormulario>
+                </div>
+
+                {/* os tablets atravessam para o bloco seguinte, flutuando */}
+                <div className="estudo-tablet relative z-10 mx-auto mt-10 -mb-24 max-w-[42rem] sm:-mb-32 lg:mt-2 lg:mr-0 lg:-mb-40">
+                  <div>
+                    <Image
+                      src={`${IMG}/tablets-case.webp`}
+                      alt="Duas páginas do case Zona de Raízes abertas em tablets: as etapas em campo e a solução técnica"
+                      width={1400}
+                      height={1145}
+                      priority
+                      sizes="(min-width: 1024px) 672px, 92vw"
+                      className="h-auto w-full"
+                    />
                   </div>
-                </ScrollReveal>
-              ))}
-            </div>
-            <p className="mt-8 text-right text-ink-soft">+60 clientes em diversos segmentos</p>
-          </div>
-        </section>
-
-        {/* Slide 4 — o ponto de partida */}
-        <section className="bg-paper-dim py-20 md:py-28">
-          <div className="container mx-auto grid items-center gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-            <div>
-              <Etiqueta>O ponto de partida</Etiqueta>
-              <Titulo>Uma operação industrial que não podia parar</Titulo>
-              <div className="mt-8 rounded-2xl border border-forest-900/40 bg-paper p-6">
-                <p className="text-sm font-semibold tracking-[0.08em] text-forest-900 uppercase">O cliente</p>
-                <p className="mt-2 text-corpo leading-[1.65] text-ink">
-                  Uma indústria de fertilizantes com unidade operacional no litoral do Paraná. Um
-                  negócio que já lidava com a rotina da operação industrial e portuária e precisava
-                  avançar em regularização ambiental sem comprometer prazos.
-                </p>
-              </div>
-              <dl className="mt-8 space-y-6">
-                <div>
-                  <dt className="text-sm font-semibold tracking-[0.08em] text-amber-600 uppercase">Problema 01</dt>
-                  <dd className="mt-1.5 leading-[1.65] text-ink">
-                    Uma estação de tratamento de esgoto convencional (ETE) tinha custo de implantação
-                    incompatível com o cronograma e o orçamento do projeto.
-                  </dd>
                 </div>
-                <div>
-                  <dt className="text-sm font-semibold tracking-[0.08em] text-amber-600 uppercase">Problema 02</dt>
-                  <dd className="mt-1.5 leading-[1.65] text-ink">
-                    Sem uma solução técnica validada, a continuidade do licenciamento ambiental junto
-                    ao IAP ficava em risco.
-                  </dd>
-                </div>
-              </dl>
-            </div>
-            <ScrollReveal direction="up">
-              <FotoNoSimbolo src={`${IMG}/ponto-de-partida.webp`} alt="Mudas de bananeira no início do sistema, junto ao muro da unidade" />
-            </ScrollReveal>
-          </div>
-        </section>
-
-        {/* Slide 5 — o desafio */}
-        <section className="bg-paper py-20 md:py-28">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <Etiqueta>O desafio</Etiqueta>
-            <Titulo className="max-w-xl">Os 3 desafios centrais do projeto</Titulo>
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {DESAFIOS.map((d, i) => (
-                <ScrollReveal key={d.titulo} direction="up" delay={i * 90}>
-                  <article className="h-full rounded-2xl bg-forest-900 p-7 shadow-lg">
-                    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-amber-600 text-white">
-                      <d.icone size={24} strokeWidth={1.6} />
-                    </span>
-                    <h3 className="mt-6 text-xl font-medium text-paper">{d.titulo}</h3>
-                    <p className="mt-3 leading-[1.65] text-paper/85">{d.texto}</p>
-                  </article>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Slide 6 — a solução */}
-        <section className="bg-paper-dim py-20 md:py-28">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
-              <div>
-                <Etiqueta>A solução Folha</Etiqueta>
-                <Titulo>Zona de raízes: tratamento biológico movido pela natureza</Titulo>
               </div>
-              <p className="text-corpo leading-[1.7] text-ink lg:pt-14">
-                O efluente passa por caixas de sedimentação e filtros de retenção de sólidos e gordura,
-                e em seguida é conduzido para dois módulos de zona de raízes, plantados com bananeiras
-                (Musa spp.), que funcionam como um filtro biológico vivo. Não há necessidade de energia
-                elétrica, produtos químicos ou equipamentos mecânicos.
-              </p>
             </div>
+          </section>
 
-            <div className="mt-14 grid items-center gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-              <figure className="rounded-2xl bg-white p-5 shadow-sm">
-                <Image
-                  src={`${IMG}/projeto-tecnico.webp`}
-                  alt="Projeto técnico dos módulos de zona de raízes, em corte e em planta"
-                  width={1600}
-                  height={1083}
-                  className="w-full"
-                />
-                <figcaption className="mt-4 leading-[1.6] text-ink-soft">
-                  <span className="mb-1 block text-sm font-semibold text-forest-900">
-                    Corte e planta do sistema de zona de raízes — projeto técnico Folha
-                  </span>
-                  Vegetação selecionada por meio de adaptação do Método de Quadrantes (Point-Centered
-                  Quarter Method), garantindo densidade adequada de bananeiras por m².
-                </figcaption>
-              </figure>
-              <dl className="space-y-4">
-                {INDICADORES_SOLUCAO.map((ind, i) => (
-                  <ScrollReveal
-                    key={ind.valor}
-                    direction="up"
-                    delay={i * 90}
-                    className="grid grid-cols-[minmax(0,0.9fr)_minmax(0,1.4fr)] items-center gap-5 rounded-xl bg-forest-900 px-6 py-5"
-                  >
-                    <dt className="font-display text-[1.6rem] leading-tight font-medium text-paper">{ind.valor}</dt>
-                    <dd className="text-[0.95rem] leading-snug text-paper/85">{ind.texto}</dd>
-                  </ScrollReveal>
-                ))}
-              </dl>
+          {/* Bloco 2: a tensão */}
+          <section className="bg-paper pt-44 pb-20 sm:pt-56 lg:pt-68 lg:pb-28">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <div className={LEITURA}>
+                <Revela
+                  as="h2"
+                  efeito="palavras"
+                  className="text-balance max-w-[24ch] text-[clamp(1.75rem,3.3vw,2.65rem)] leading-[1.2] font-light tracking-[-0.015em] text-forest-950"
+                >
+                  E quando o custo de uma estação de tratamento convencional não cabe no cronograma do licenciamento?
+                </Revela>
+
+                <Revela atraso={100} className="mt-8 max-w-[62ch] space-y-5 text-corpo leading-[1.75] text-ink-soft">
+                  <p>
+                    Uma indústria com unidade operacional no litoral do Paraná precisava avançar em
+                    regularização ambiental sem comprometer prazos, mas a estação de tratamento de esgoto
+                    convencional (ETE) tinha um custo de implantação incompatível com o orçamento e o
+                    cronograma do projeto.
+                  </p>
+                  <p>
+                    Sem uma solução técnica validada, a continuidade do licenciamento junto ao IAT ficava
+                    em risco. A Folha foi acionada para estruturar um caminho técnico que resolvesse os
+                    três desafios do projeto ao mesmo tempo: custo, clima do litoral e conformidade com a
+                    Resolução CONAMA nº 430/2011.
+                  </p>
+                </Revela>
+
+                <Revela atraso={150} className="mt-9">
+                  <IrParaFormulario rotulo="estudo_tensao" className={CTA_CLARO}>
+                    Baixar o case completo
+                  </IrParaFormulario>
+                </Revela>
+
+                <Revela efeito="imagem" className="relative mt-14 aspect-[16/9] overflow-hidden rounded-3xl">
+                  <Image
+                    src={`${IMG}/etapa-01.webp`}
+                    alt="Escavadeira abrindo as valas do sistema, já forradas com lona, ao lado da unidade industrial"
+                    fill
+                    sizes="(min-width: 1280px) 760px, (min-width: 1024px) 540px, 92vw"
+                    className="object-cover"
+                  />
+                </Revela>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Slides 7 e 8 — em campo */}
-        <section className="bg-paper py-20 md:py-28">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            {ETAPAS.map((g, gi) => (
-              <div key={g.grupo} className={gi > 0 ? "mt-20" : ""}>
-                <Etiqueta>Em campo</Etiqueta>
-                <p className="mt-5 text-lg font-medium text-forest-900">
-                  Etapas da implantação:
-                </p>
-                <h2 className="text-balance mt-1 text-[clamp(1.6rem,3vw,2.4rem)] leading-[1.2] font-normal text-forest-900">
-                  {g.grupo}
-                </h2>
-                <ol className="mt-10 grid gap-6 md:grid-cols-3">
-                  {g.itens.map((e, i) => (
-                    <ScrollReveal as="li" key={e.n} direction="up" delay={i * 90}>
-                      <article className="flex h-full flex-col rounded-3xl bg-forest-900 p-6 shadow-lg">
-                        <h3 className="text-lg font-semibold text-paper">ETAPA {e.n}</h3>
-                        <div className="mt-2 space-y-3">
-                          {e.texto.map((t) => (
-                            <p key={t} className="leading-[1.5] text-paper/85">
-                              {t}
-                            </p>
-                          ))}
-                        </div>
-                        <div className="relative mt-6 aspect-[4/3] w-full overflow-hidden rounded-3xl">
-                          <Image
-                            src={`${IMG}/${e.foto}`}
-                            alt={e.alt}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 33vw"
-                            className="object-cover"
-                          />
-                        </div>
-                      </article>
-                    </ScrollReveal>
+          {/* Bloco 3: o que você vai encontrar no case */}
+          <section className="bg-paper-dim py-20 lg:py-28">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <div className={LEITURA}>
+                <Revela
+                  as="h2"
+                  efeito="palavras"
+                  className="text-balance text-[clamp(1.75rem,3.3vw,2.65rem)] leading-[1.2] font-light tracking-[-0.015em] text-forest-950"
+                >
+                  O que você vai encontrar no case
+                </Revela>
+
+                <Revela atraso={100} className="mt-10">
+                  <Image
+                    src={`${IMG}/tablet-metodologia.webp`}
+                    alt="Página de metodologia do case, com a seleção das bananeiras e o dimensionamento, aberta num tablet"
+                    width={1400}
+                    height={926}
+                    sizes="(min-width: 1280px) 700px, (min-width: 1024px) 540px, 92vw"
+                    className="mx-auto h-auto w-full max-w-[44rem]"
+                  />
+                </Revela>
+
+                <ol className="mt-10 grid gap-x-10 xl:grid-cols-2">
+                  {ENCONTRAR.map((item, i) => (
+                    <Revela
+                      as="li"
+                      key={i}
+                      atraso={i * 120}
+                      className="grid grid-cols-[2.75rem_minmax(0,1fr)] gap-3 border-t border-rule-forte py-5"
+                    >
+                      <span className="font-display text-[1.35rem] leading-[1.35] font-light text-forest-700">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <p className="text-corpo leading-[1.6] text-ink-soft [&_strong]:font-medium [&_strong]:text-forest-950">
+                        {item}
+                      </p>
+                    </Revela>
                   ))}
                 </ol>
-              </div>
-            ))}
-          </div>
-        </section>
 
-        {/* Slide 9 — metodologia */}
-        <section className="relative overflow-hidden bg-forest-900 py-20 md:py-28">
-          <Image src={`${IMG}/textura-nervuras.webp`} alt="" fill className="object-cover opacity-60" />
-          <div className="relative z-10 container mx-auto grid gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-            <div>
-              <Etiqueta>Metodologia</Etiqueta>
-              <Titulo claro>Ciência aplicada ao dia a dia da operação</Titulo>
-              <ul className="mt-10 space-y-8">
-                {METODOLOGIA.map((m) => (
-                  <li key={m.titulo} className="grid grid-cols-[auto_minmax(0,1fr)] gap-5">
-                    <m.icone size={36} strokeWidth={1.4} className="text-amber-400" />
-                    <div>
-                      <h3 className="text-xl font-medium text-paper">{m.titulo}</h3>
-                      <p className="mt-1.5 leading-[1.65] text-paper/80">{m.texto}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="grid content-center gap-6">
-              <div className="relative aspect-[16/9] overflow-hidden rounded-3xl">
-                <Image src={`${IMG}/bananeiras.webp`} alt="Leito de zona de raízes com bananeiras adultas" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
-              </div>
-              <div className="relative aspect-[16/9] overflow-hidden rounded-3xl">
-                <Image src={`${IMG}/leito-filtrante.webp`} alt="Vala impermeabilizada com o dreno de PVC" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+                <Revela className="mt-10">
+                  <IrParaFormulario rotulo="estudo_encontrar" className={CTA_CLARO}>
+                    Baixar o case completo
+                  </IrParaFormulario>
+                </Revela>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Slide 10 — o resultado */}
-        <section className="relative overflow-hidden bg-forest-950 py-20 md:py-28">
-          <Image src={`${IMG}/textura-nervuras.webp`} alt="" fill className="object-cover opacity-50" />
-          <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid items-center gap-10 lg:grid-cols-2">
-              <div>
-                <Etiqueta>O resultado</Etiqueta>
-                <Titulo claro>Uma solução que acompanha o crescimento da operação</Titulo>
-              </div>
-              <div className="relative aspect-[16/7] overflow-hidden rounded-3xl">
-                <Image src={`${IMG}/resultado.webp`} alt="Equipe finalizando a camada de brita do sistema" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-[50%_35%]" />
-              </div>
-            </div>
-
-            {/* linha do tempo: horizontal no desktop, vertical no celular */}
-            <ol className="relative mt-16 grid gap-8 border-l border-amber-500 pl-8 xl:grid-cols-5 xl:gap-6 xl:border-l-0 xl:pl-0 xl:before:absolute xl:before:inset-x-0 xl:before:top-1/2 xl:before:h-px xl:before:bg-amber-500">
-              {RESULTADOS.map((r, i) => (
-                <li
-                  key={r.destaque}
-                  className={`relative xl:flex xl:min-h-[17rem] xl:flex-col xl:items-center xl:text-center ${
-                    i % 2 === 0 ? "xl:justify-end" : "xl:justify-start"
-                  }`}
+          {/* Bloco 4: a Folha em números */}
+          <section aria-label="A Folha em números" className="relative isolate overflow-hidden bg-forest-900 py-20 lg:py-28">
+            <Image
+              src={`${IMG}/textura-nervuras.webp`}
+              alt=""
+              fill
+              sizes="100vw"
+              className="-z-10 object-cover opacity-50"
+            />
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <div className={LEITURA}>
+                <Revela
+                  as="h2"
+                  efeito="palavras"
+                  className="text-balance max-w-[22ch] text-[clamp(1.75rem,3.3vw,2.65rem)] leading-[1.2] font-light tracking-[-0.015em] text-paper"
                 >
-                  <span
-                    aria-hidden
-                    className="absolute top-1.5 -left-[2.45rem] h-4 w-4 rounded-full bg-paper xl:top-1/2 xl:left-1/2 xl:h-6 xl:w-6 xl:-translate-x-1/2 xl:-translate-y-1/2"
-                  />
-                  <p className={`leading-[1.5] text-paper/85 xl:max-w-[14rem] ${i % 2 === 0 ? "xl:pt-12" : "xl:pb-12"}`}>
-                    {r.destaqueNoFim ? (
-                      <>
-                        {r.resto}
-                        <strong className="font-semibold text-paper">{r.destaque}</strong>
-                      </>
-                    ) : (
-                      <>
-                        <strong className="font-semibold text-paper">{r.destaque}</strong>
-                        {r.resto}
-                      </>
-                    )}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
+                  Treze anos acompanhando de perto o litoral do Paraná
+                </Revela>
 
-        {/* Slide 11 — por que a Folha */}
-        <section className="bg-paper py-20 md:py-28">
-          <div className="container mx-auto grid items-center gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-            <div>
-              <Etiqueta>Por que a Folha</Etiqueta>
-              <Titulo>Somos parceiros técnicos de cada etapa da operação</Titulo>
-              <dl className="mt-10 space-y-7">
-                {DIFERENCIAIS.map((d) => (
-                  <div key={d.titulo}>
-                    <dt className="text-xl font-medium text-amber-600">{d.titulo}</dt>
-                    <dd className="mt-1.5 max-w-md leading-[1.6] text-ink-soft">{d.texto}</dd>
-                  </div>
-                ))}
-              </dl>
+                <dl className="mt-12 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2">
+                  {NUMEROS.map((n, i) => (
+                    <Revela key={n.unidade} atraso={i * 100} className="border-l-2 border-forest-600 pl-5">
+                      <dt className="font-display leading-none font-light text-paper">
+                        {n.para === null ? (
+                          <span className="text-[clamp(1.9rem,3.2vw,2.6rem)]">{n.unidade}</span>
+                        ) : (
+                          <>
+                            <span className="text-[clamp(2.8rem,5vw,4rem)] tracking-[-0.02em]">
+                              <Counter para={n.para} prefixo={n.prefixo} />
+                            </span>
+                            <span className="ml-2 text-[clamp(1.2rem,1.8vw,1.5rem)]">{n.unidade}</span>
+                          </>
+                        )}
+                      </dt>
+                      <dd className="mt-3 text-[0.98rem] leading-snug text-paper/75">{n.texto}</dd>
+                    </Revela>
+                  ))}
+                </dl>
+              </div>
             </div>
-            <ScrollReveal direction="up">
-              <FotoNoSimbolo src={`${IMG}/equipe-em-campo.webp`} alt="Equipe da Folha em vistoria de campo, com capacete e colete" />
-            </ScrollReveal>
-          </div>
-        </section>
+          </section>
 
-        {/* Slide 12 — contato */}
-        <section className="relative overflow-hidden bg-forest-950 py-20 md:py-28">
-          <Image src={`${IMG}/textura-nervuras.webp`} alt="" fill className="object-cover opacity-60" />
-          <div className="relative z-10 container mx-auto grid items-center gap-14 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:px-8">
+          {/* Formulário: coluna fixa por cima do palco no computador; no celular, depois dos números */}
+          <aside
+            aria-label="Baixar o case"
+            className="bg-paper-dim py-16 sm:py-20 lg:pointer-events-none lg:absolute lg:inset-0 lg:z-20 lg:bg-transparent lg:py-0"
+          >
+            <div className="container mx-auto px-4 sm:px-6 lg:flex lg:h-full lg:justify-end lg:px-8">
+              <div className="mx-auto max-w-lg lg:mx-0 lg:w-[var(--rail)] lg:max-w-none lg:pt-36 lg:pb-16">
+                <div className="lg:pointer-events-auto lg:sticky lg:top-24">
+                  <FormularioEstudo />
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        {/* Bloco 7: contato direto */}
+        <section className="relative isolate overflow-hidden bg-forest-950 py-20 lg:py-28">
+          <Image
+            src={`${IMG}/textura-nervuras.webp`}
+            alt=""
+            fill
+            sizes="100vw"
+            className="-z-10 object-cover opacity-60"
+          />
+          <div className="container mx-auto grid items-center gap-14 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:px-8">
             <div>
-              <h2 className="text-balance text-[clamp(1.9rem,3.8vw,3rem)] leading-[1.15] font-normal text-paper">
+              <Revela
+                as="h2"
+                efeito="palavras"
+                className="text-balance max-w-[20ch] text-[clamp(1.9rem,3.8vw,3rem)] leading-[1.15] font-light tracking-[-0.015em] text-paper"
+              >
                 Seu próximo projeto merece crescer com segurança.
-              </h2>
-              <div className="mt-9">
-                <WhatsAppCTAButton eventLabel="case_zona_raizes_final" message={MENSAGEM} className={BOTAO}>
+              </Revela>
+
+              <Revela atraso={120} className="mt-9">
+                <WhatsAppCTAButton
+                  eventLabel="estudo_contato"
+                  message={MENSAGEM_WHATSAPP}
+                  className="inline-flex min-h-13 items-center justify-center rounded-full bg-amber-600 px-8 py-3.5 text-base font-medium text-white transition-colors duration-300 hover:bg-amber-700"
+                >
                   Fale com o time comercial da Folha
                 </WhatsAppCTAButton>
-              </div>
-              <ul className="mt-9 space-y-3 text-paper/85">
-                <li>
-                  <a
-                    href="mailto:consultoria@folhasolucoesambientais.com.br"
-                    className="inline-flex max-w-full items-center gap-2.5 underline-offset-4 hover:underline"
-                  >
-                    <Mail size={17} className="shrink-0" />
-                    <span className="min-w-0 [overflow-wrap:anywhere]">consultoria@folhasolucoesambientais.com.br</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="tel:+5541984236033" className="inline-flex items-center gap-2.5 underline-offset-4 hover:underline">
-                    <Phone size={17} /> (41) 98423-6033
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.instagram.com/folhasolucoesambientais"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2.5 underline-offset-4 hover:underline"
-                  >
-                    <AtSign size={17} /> @folhasolucoesambientais
-                  </a>
-                </li>
-                <li>
-                  <Link href="/" className="inline-flex items-center gap-2.5 underline-offset-4 hover:underline">
-                    <Globe size={17} /> www.folhasolucoesambientais.com
-                  </Link>
-                </li>
-              </ul>
-              <p className="mt-12 text-sm text-paper/70 italic">
+
+                <ul className="mt-9 space-y-1 text-paper/85">
+                  <li>
+                    <a
+                      href="mailto:comercial@folhasolucoesambientais.com.br"
+                      className="inline-flex min-h-11 max-w-full items-center gap-3 underline-offset-4 hover:underline"
+                    >
+                      <Mail size={18} className="shrink-0 text-forest-600" aria-hidden />
+                      <span className="min-w-0 [overflow-wrap:anywhere]">comercial@folhasolucoesambientais.com.br</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="tel:+5541996199622" className="inline-flex min-h-11 items-center gap-3 underline-offset-4 hover:underline">
+                      <Phone size={18} className="shrink-0 text-forest-600" aria-hidden />
+                      (41) 99619-9622
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.instagram.com/folhasolucoesambientais"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-11 items-center gap-3 underline-offset-4 hover:underline"
+                    >
+                      <AtSign size={18} className="shrink-0 text-forest-600" aria-hidden />
+                      @folhasolucoesambientais
+                    </a>
+                  </li>
+                </ul>
+              </Revela>
+
+              <p className="fio-claro mt-12 max-w-sm pt-5 font-display text-lg font-light text-paper/80">
                 Crescimento seguro para operar, expandir e conservar.
               </p>
             </div>
-            <figure className="mx-auto w-full max-w-sm text-center">
-              <div className="relative aspect-square overflow-hidden rounded-full border border-paper/20">
-                <Image src={`${IMG}/denise.webp`} alt="Denise Folha, diretora comercial da Folha" fill sizes="384px" className="object-cover" />
-              </div>
-              <figcaption className="mt-5">
-                <p className="text-xl font-medium text-paper">Denise Folha</p>
-                <p className="text-paper/75">Diretora Comercial</p>
-              </figcaption>
-            </figure>
+
+            <Revela atraso={100}>
+              <Image
+                src={`${IMG}/equipe-simbolo.webp`}
+                alt="Equipe da Folha em vistoria de campo, com capacete e colete, numa foto recortada no formato do símbolo da marca"
+                width={960}
+                height={960}
+                sizes="(min-width: 1024px) 440px, 80vw"
+                className="mx-auto h-auto w-full max-w-[28rem]"
+              />
+            </Revela>
           </div>
         </section>
       </main>
       <Footer />
-      <WhatsAppFloat />
+      {/* No celular o botão flutuante cobria o "Baixar o case" do formulário; lá o
+          WhatsApp fica no bloco de contato e no painel de sucesso. */}
+      <div className="hidden lg:block">
+        <WhatsAppFloat />
+      </div>
     </>
   );
 }
