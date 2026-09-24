@@ -10,15 +10,17 @@
 export const CRM_URL = process.env.NEXT_PUBLIC_CRM_URL || "https://crm.folhasolucoesambientais.com";
 export const ROTA_FORMULARIOS = `${CRM_URL}/api/publico/formularios`;
 
-export type Canal = "A" | "B" | "M" | "E" | "O" | "S";
+import { codigoDaVisita, type Canal } from "./origem";
 
-/**
- * Canal da visita (letra do contrato 1). Por enquanto não sabe: o CRM grava
- * "Site" quando vem vazio.
- */
+export type { Canal };
+
+/** Canal da visita (letra do contrato 1), o mesmo que vai no código dos botões de WhatsApp. */
 export function canalDaVisita(): Canal | undefined {
-  // ligado na integração com a origem das visitas
-  return undefined;
+  try {
+    return codigoDaVisita().match(/\(c[oó]d\. ([ABMEOS])-/)?.[1] as Canal | undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 export const CARGOS = ["Sócio(a)", "Diretor(a)", "Gerente", "Coordenador(a)", "Analista", "Outro"];
