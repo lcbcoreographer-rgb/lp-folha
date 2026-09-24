@@ -2,12 +2,11 @@
 import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
 import { trackEvent, trackConversion } from "../lib/gtag";
-import { buildWhatsAppUrl } from "../lib/whatsapp";
-
-const WHATSAPP_URL = buildWhatsAppUrl("Olá, vim pelo site, quero mais informações");
+import { useLinkWhatsApp } from "./WhatsAppCTAButton";
 
 export default function WhatsAppFloat() {
   const [visible, setVisible] = useState(false);
+  const href = useLinkWhatsApp("Olá, vim pelo site, quero mais informações");
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.6);
@@ -18,7 +17,7 @@ export default function WhatsAppFloat() {
 
   return (
     <a
-      href={WHATSAPP_URL}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar no WhatsApp"
