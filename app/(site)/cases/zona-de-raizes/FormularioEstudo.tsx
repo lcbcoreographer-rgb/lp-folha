@@ -364,7 +364,11 @@ export default function FormularioEstudo() {
             )}
           </button>
           <p id="estudo-legal" className="mt-3 text-center text-xs leading-relaxed text-ink-soft">
-            Ao clicar no botão, você concorda com nossa Política de Privacidade.
+            Ao clicar no botão, você concorda com nossa{" "}
+            <a href="/politica-de-privacidade" target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-forest-800">
+              Política de Privacidade
+            </a>
+            .
           </p>
         </form>
       )}

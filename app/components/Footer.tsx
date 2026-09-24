@@ -60,6 +60,9 @@ export default function Footer() {
 
         <div className="mt-12 border-t border-white/10 pt-6 text-center text-white/40 text-sm">
           <p>© {year} Folha Soluções Ambientais. Todos os direitos reservados.</p>
+          <p className="mt-2">
+            <a href="/politica-de-privacidade" className="hover:text-amber-400 transition-colors">Política de Privacidade</a>
+          </p>
         </div>
       </div>
     </footer>
