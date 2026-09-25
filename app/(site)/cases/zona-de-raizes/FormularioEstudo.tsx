@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ChevronDown, Download, Loader2 } from "lucide-react";
 import WhatsAppCTAButton from "../../../components/WhatsAppCTAButton";
-import { trackEvent } from "../../../lib/gtag";
+import { trackConversion, trackEvent } from "../../../lib/gtag";
 import {
   CAMPOS_VAZIOS,
   CARGOS,
@@ -182,6 +182,7 @@ export default function FormularioEstudo() {
         setPrimeiroNome(nome);
         setFase("sucesso");
         trackEvent("generate_lead", { form_name: FORMULARIO });
+        trackConversion("formulario_estudo_de_caso");
         return;
       }
 

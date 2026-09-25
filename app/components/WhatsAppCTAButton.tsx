@@ -40,7 +40,7 @@ export default function WhatsAppCTAButton({
       rel="noopener noreferrer"
       onClick={() => {
         trackEvent("click_button", { button_label: eventLabel });
-        trackConversion();
+        trackConversion(eventLabel);
       }}
       className={className}
     >
