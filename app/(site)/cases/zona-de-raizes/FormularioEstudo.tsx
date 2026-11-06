@@ -10,6 +10,7 @@ import {
   SEGMENTOS,
   corpoDoEnvio,
   mascaraTelefone,
+  utmDaVisita,
   validar,
   type Campos,
 } from "../../../lib/formularioSite";
@@ -170,6 +171,7 @@ export default function FormularioEstudo() {
             pagina: window.location.pathname,
             iniciadoEm: iniciadoEm.current,
             site: armadilha.current?.value ?? "",
+            utm: utmDaVisita(),
           })
         ),
         // rede presa não pode deixar a pessoa girando para sempre (Safari < 16 não tem timeout)

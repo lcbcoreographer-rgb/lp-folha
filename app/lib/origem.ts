@@ -13,10 +13,32 @@
 
 export type Canal = "A" | "B" | "M" | "E" | "O" | "S";
 
+/**
+ * Parâmetros da visita, para o CRM mostrar de onde veio (ex.: post orgânico do
+ * LinkedIn). Só chaves com valor; texto simples de até 100 caracteres.
+ * gclid/fbclid só entram se vieram na URL; referencia é só o domínio de fora.
+ */
+export interface Visita {
+  source?: string;
+  medium?: string;
+  campaign?: string;
+  content?: string;
+  term?: string;
+  gclid?: string;
+  fbclid?: string;
+  /** caminho da página de chegada, sem query */
+  chegada?: string;
+  /** domínio do site de onde a pessoa veio, sem www */
+  referencia?: string;
+}
+
 export interface OrigemGuardada {
   canal: Canal;
   em: number;
+  utm?: Visita;
 }
+
+const CHAVES_VISITA = ["source", "medium", "campaign", "content", "term", "gclid", "fbclid", "chegada", "referencia"] as const;
 
 const NOVENTA_DIAS = 90 * 24 * 60 * 60 * 1000;
 const CANAIS = ["A", "B", "M", "E", "O", "S"];
@@ -55,20 +77,68 @@ export function classificarCanal(search: string, referrer: string, hostDoSite: s
   return "S";
 }
 
+/** Texto simples: sem caracteres de controle, espaços aparados, no máximo 100. */
+function limpar(v: unknown): string {
+  return typeof v === "string" ? v.replace(/[\u0000-\u001f\u007f]/g, "").trim().slice(0, 100) : "";
+}
+
+/** Só as chaves conhecidas, só com valor. Serve para o que vem da URL e para o que volta do localStorage. */
+export function limparVisita(o: unknown): Visita {
+  const saida: Visita = {};
+  if (!o || typeof o !== "object") return saida;
+  for (const k of CHAVES_VISITA) {
+    const v = limpar((o as Record<string, unknown>)[k]);
+    if (v) saida[k] = v;
+  }
+  return saida;
+}
+
+/** Parâmetros da visita atual: UTM, gclid/fbclid, página de chegada e referrer de fora. */
+export function lerVisita(search: string, referrer: string, hostDoSite: string, pathname: string): Visita {
+  const p = new URLSearchParams(search);
+  const ref = hostDe(referrer);
+  const externo = ref !== "" && ref !== hostDoSite.toLowerCase().replace(/^www\./, "");
+  return limparVisita({
+    source: p.get("utm_source"),
+    medium: p.get("utm_medium"),
+    campaign: p.get("utm_campaign"),
+    content: p.get("utm_content"),
+    term: p.get("utm_term"),
+    gclid: p.get("gclid"),
+    fbclid: p.get("fbclid"),
+    chegada: pathname.startsWith("/") ? pathname.split(/[?#]/)[0] : "",
+    referencia: externo ? ref : "",
+  });
+}
+
+/** Visita marcada: veio de algum lugar identificável (canal diferente de direto, ou UTM/clique de anúncio). */
+function marcada(o: { canal: Canal; utm?: Visita }): boolean {
+  const u = o.utm ?? {};
+  return o.canal !== "S" || Boolean(u.source || u.medium || u.campaign || u.content || u.term || u.gclid || u.fbclid || u.referencia);
+}
+
 /** Lê o que ficou guardado. Vencido (90 dias), estragado ou de outro formato = nada. */
 export function lerGuardada(json: string | null, agora: number): OrigemGuardada | null {
   try {
     const o = JSON.parse(json ?? "null");
     if (!o || !CANAIS.includes(o.canal) || typeof o.em !== "number") return null;
-    return Math.abs(agora - o.em) < NOVENTA_DIAS ? { canal: o.canal, em: o.em } : null;
+    if (Math.abs(agora - o.em) >= NOVENTA_DIAS) return null;
+    const utm = limparVisita(o.utm);
+    return Object.keys(utm).length ? { canal: o.canal, em: o.em, utm } : { canal: o.canal, em: o.em };
   } catch {
     return null;
   }
 }
 
-/** Anúncio sempre vence (como no Google Ads); fora isso, fica a primeira origem. */
-export function escolherOrigem(guardada: OrigemGuardada | null, atual: Canal, agora: number): OrigemGuardada {
-  if (atual === "A" || !guardada) return { canal: atual, em: agora };
+/**
+ * Anúncio sempre vence (como no Google Ads); fora isso, fica a primeira visita
+ * marcada. Visita sem nada (direto) nunca apaga uma marcada, mas uma marcada
+ * toma o lugar de uma guardada sem nada. O canal e os parâmetros andam juntos.
+ */
+export function escolherOrigem(guardada: OrigemGuardada | null, atual: Canal, agora: number, utm?: Visita): OrigemGuardada {
+  const nova: OrigemGuardada = utm && Object.keys(utm).length ? { canal: atual, em: agora, utm } : { canal: atual, em: agora };
+  if (atual === "A" || !guardada) return nova;
+  if (!marcada(guardada) && marcada(nova)) return nova;
   return guardada;
 }
 
@@ -82,26 +152,33 @@ export function mensagemComCodigo(mensagem: string, codigo: string | null): stri
 }
 
 const CHAVE = "folha_origem";
+let daOrigem: OrigemGuardada | null = null;
 let daVisita: string | null = null;
 
 /**
- * Código desta visita, igual para todos os botões. Só no navegador: a primeira
- * chamada (o primeiro botão montado, e o Header está em toda página) lê a URL
- * de chegada. Navegar dentro do site não muda o código.
+ * Origem desta visita (canal + parâmetros). Só no navegador: a primeira chamada
+ * (o primeiro botão montado, e o Header está em toda página) lê a URL de
+ * chegada. Navegar dentro do site não muda nada.
  */
-export function codigoDaVisita(): string {
-  if (daVisita) return daVisita;
+export function origemDaVisita(): OrigemGuardada {
+  if (daOrigem) return daOrigem;
   const agora = Date.now();
-  let origem: OrigemGuardada = {
-    canal: classificarCanal(location.search, document.referrer, location.hostname),
-    em: agora,
-  };
+  const canal = classificarCanal(location.search, document.referrer, location.hostname);
+  const utm = lerVisita(location.search, document.referrer, location.hostname, location.pathname);
+  let origem = escolherOrigem(null, canal, agora, utm);
   try {
-    origem = escolherOrigem(lerGuardada(localStorage.getItem(CHAVE), agora), origem.canal, agora);
+    origem = escolherOrigem(lerGuardada(localStorage.getItem(CHAVE), agora), canal, agora, utm);
     localStorage.setItem(CHAVE, JSON.stringify(origem));
   } catch {
     // armazenamento bloqueado (aba anônima, navegador restrito): vale só esta visita
   }
-  daVisita = codigoOrigem(origem.canal, Math.random() * 10000);
+  daOrigem = origem;
+  return origem;
+}
+
+/** Código desta visita, igual para todos os botões. */
+export function codigoDaVisita(): string {
+  if (daVisita) return daVisita;
+  daVisita = codigoOrigem(origemDaVisita().canal, Math.random() * 10000);
   return daVisita;
 }

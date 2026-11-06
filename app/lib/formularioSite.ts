@@ -10,7 +10,7 @@
 export const CRM_URL = process.env.NEXT_PUBLIC_CRM_URL || "https://crm.folhasolucoesambientais.com";
 export const ROTA_FORMULARIOS = `${CRM_URL}/api/publico/formularios`;
 
-import { codigoDaVisita, type Canal } from "./origem";
+import { codigoDaVisita, origemDaVisita, type Canal, type Visita } from "./origem";
 
 export type { Canal };
 
@@ -18,6 +18,16 @@ export type { Canal };
 export function canalDaVisita(): Canal | undefined {
   try {
     return codigoDaVisita().match(/\(c[oó]d\. ([ABMEOS])-/)?.[1] as Canal | undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/** Parâmetros da visita (UTM, gclid/fbclid, chegada, referência) para o CRM. Vazio some do JSON. */
+export function utmDaVisita(): Visita | undefined {
+  try {
+    const u = origemDaVisita().utm;
+    return u && Object.keys(u).length ? u : undefined;
   } catch {
     return undefined;
   }
@@ -90,7 +100,7 @@ export function validar(c: Campos): Partial<Record<keyof Campos, string>> {
 
 export function corpoDoEnvio(
   c: Campos,
-  extra: { formulario: string; formularioNome: string; pagina: string; iniciadoEm: number; site: string }
+  extra: { formulario: string; formularioNome: string; pagina: string; iniciadoEm: number; site: string; utm?: Visita }
 ) {
   return {
     formulario: extra.formulario,
@@ -103,6 +113,7 @@ export function corpoDoEnvio(
     segmento: c.segmento,
     aceite: true,
     canal: canalDaVisita(), // undefined some do JSON
+    utm: extra.utm,
     pagina: extra.pagina,
     iniciado_em: extra.iniciadoEm,
     site: extra.site,

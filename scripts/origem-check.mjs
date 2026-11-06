@@ -8,6 +8,8 @@ import {
   codigoOrigem,
   escolherOrigem,
   lerGuardada,
+  lerVisita,
+  limparVisita,
   mensagemComCodigo,
 } from "../app/lib/origem.ts";
 import { buildWhatsAppUrl } from "../app/lib/whatsapp.ts";
@@ -65,6 +67,53 @@ assert.equal(lerGuardada(JSON.stringify({ canal: "B", em: agora - 91 * dia }), a
 assert.equal(lerGuardada(JSON.stringify({ canal: "Z", em: agora }), agora), null);
 assert.equal(lerGuardada("{quebrado", agora), null);
 assert.equal(lerGuardada(null, agora), null);
+
+
+// parâmetros da visita (UTM, cliques de anúncio, chegada, referência)
+const LINK = "?utm_source=organico&utm_medium=linkedin&utm_campaign=post&utm_content=perfil-denise";
+assert.deepEqual(lerVisita(LINK, "", SITE, "/cases/zona-de-raizes"), {
+  source: "organico",
+  medium: "linkedin",
+  campaign: "post",
+  content: "perfil-denise",
+  chegada: "/cases/zona-de-raizes",
+});
+assert.deepEqual(
+  lerVisita("?utm_term=licenca+ambiental&gclid=ABC&fbclid=XYZ&q=1", "https://l.instagram.com/x?y=1", SITE, "/"),
+  { term: "licenca ambiental", gclid: "ABC", fbclid: "XYZ", chegada: "/", referencia: "l.instagram.com" },
+  "só o domínio do referrer; query que não é marcação fica de fora"
+);
+assert.deepEqual(lerVisita("", "https://www.folhasolucoesambientais.com/blog", SITE, "/x"), { chegada: "/x" }, "referrer do próprio site não conta");
+assert.deepEqual(lerVisita("", "https://www.bing.com/search?q=a", SITE, "/x"), { chegada: "/x", referencia: "bing.com" });
+assert.deepEqual(lerVisita("?utm_source=%20%20", "", SITE, "/x?a=1#b"), { chegada: "/x" }, "vazio some; caminho sem query");
+assert.equal(lerVisita("?utm_source=" + "a".repeat(300) + "&gclid=" + "g".repeat(150), "", SITE, "/").source.length, 100, "corta em 100");
+assert.equal(lerVisita("?gclid=" + "g".repeat(150), "", SITE, "/").gclid.length, 100);
+assert.equal(lerVisita("?utm_source=a%00b%0Ac%07d", "", SITE, "/").source, "abcd", "tira caracteres de controle");
+assert.deepEqual(limparVisita({ source: 5, medium: "x", extra: "y", term: null }), { medium: "x" }, "só chaves conhecidas, só texto");
+assert.deepEqual(limparVisita("lixo"), {});
+
+// a visita acompanha o canal: anúncio sobrescreve; senão fica a primeira visita marcada
+const li = lerVisita(LINK, "", SITE, "/cases/zona-de-raizes");
+const g1 = { canal: "O", em: agora - dia, utm: li };
+assert.deepEqual(escolherOrigem(null, "O", agora, li), { canal: "O", em: agora, utm: li });
+assert.deepEqual(escolherOrigem(g1, "S", agora, { chegada: "/" }), g1, "visita sem nada não apaga uma marcada");
+assert.deepEqual(escolherOrigem(g1, "M", agora, { source: "instagram" }), g1, "primeira marcada fica");
+assert.deepEqual(
+  escolherOrigem(g1, "A", agora, { gclid: "ABC", chegada: "/" }),
+  { canal: "A", em: agora, utm: { gclid: "ABC", chegada: "/" } },
+  "anúncio sobrescreve, com a UTM dele"
+);
+const direta = { canal: "S", em: agora - dia, utm: { chegada: "/" } };
+assert.deepEqual(escolherOrigem(direta, "O", agora, li), { canal: "O", em: agora, utm: li }, "marcada toma o lugar de uma visita direta");
+assert.deepEqual(escolherOrigem(direta, "S", agora, { chegada: "/blog" }), direta, "direta não troca direta");
+assert.deepEqual(lerGuardada(JSON.stringify(g1), agora), g1, "volta do localStorage com a UTM");
+assert.deepEqual(lerGuardada(JSON.stringify({ canal: "B", em: agora }), agora), { canal: "B", em: agora }, "guardada antiga, sem UTM, continua valendo");
+assert.deepEqual(
+  lerGuardada(JSON.stringify({ canal: "O", em: agora, utm: { source: "x".repeat(300), lixo: 1 } }), agora),
+  { canal: "O", em: agora, utm: { source: "x".repeat(100) } },
+  "UTM guardada é limpa de novo na leitura"
+);
+assert.equal(lerGuardada(JSON.stringify({ canal: "O", em: agora - 91 * dia, utm: li }), agora), null, "UTM vence junto, em 90 dias");
 
 // código e mensagem (contrato com o CRM: /\(\s*c[oó]d\.?\s*([ABMEOS])-(\d{4})\s*\)/i)
 const CONTRATO = /\(\s*c[oó]d\.?\s*([ABMEOS])-(\d{4})\s*\)/i;
