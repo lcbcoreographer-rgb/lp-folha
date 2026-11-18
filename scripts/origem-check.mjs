@@ -132,7 +132,8 @@ assert.deepEqual(visita("?utm_source=ig"), guardada);
 assert.deepEqual(visita("", "https://l.instagram.com/"), guardada, "só o referrer não sobrescreve");
 assert.deepEqual(visita("?utm_source=bing&utm_medium=cpc"), guardada, "anúncio de outro lugar não sobrescreve");
 assert.deepEqual(visita("?utm_source=newsletter&utm_medium=paid"), guardada, "pago sem fonte da Meta não sobrescreve");
-assert.equal(escolherOrigem({ canal: "A", em: agora - dia }, "M", agora, { fbclid: "XYZ" }).canal, "M", "Meta sobrescreve Google Ads guardado");
+assert.equal(escolherOrigem({ canal: "A", em: agora - dia }, "M", agora, { fbclid: "XYZ" }).canal, "A", "só fbclid (pode ser orgânico) não apaga Google Ads guardado");
+assert.equal(escolherOrigem({ canal: "A", em: agora - dia }, "M", agora, { medium: "cpc", source: "facebook", fbclid: "XYZ" }).canal, "M", "anúncio pago da Meta sobrescreve Google Ads guardado");
 assert.equal(escolherOrigem({ canal: "M", em: agora - dia, utm: { fbclid: "XYZ" } }, "A", agora, { gclid: "ABC" }).canal, "A", "e Google Ads sobrescreve Meta guardado");
 assert.equal(escolherOrigem(guardada, "O", agora, { fbclid: "XYZ" }).canal, "B", "fbclid sem canal M não sobrescreve");
 

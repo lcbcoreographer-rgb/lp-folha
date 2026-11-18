@@ -136,10 +136,11 @@ export function lerGuardada(json: string | null, agora: number): OrigemGuardada 
  * Anúncio da Meta: canal M com fbclid na URL, ou com utm_medium pago e
  * utm_source da Meta. Post orgânico com UTM, sem fbclid, não conta.
  */
-function anuncioDaMeta(canal: Canal, utm: Visita = {}): boolean {
-  if (canal !== "M") return false;
-  if (utm.fbclid) return true;
-  return /^(cpc|ppc|paid|paid_social|ads)$/.test((utm.medium ?? "").toLowerCase()) && DA_META.test((utm.source ?? "").toLowerCase());
+/** "pago": UTM de mídia paga da Meta. "talvez": só fbclid, que a Meta põe também em clique orgânico. */
+function anuncioDaMeta(canal: Canal, utm: Visita = {}): "pago" | "talvez" | null {
+  if (canal !== "M") return null;
+  if (/^(cpc|ppc|paid|paid_social|ads)$/.test((utm.medium ?? "").toLowerCase()) && DA_META.test((utm.source ?? "").toLowerCase())) return "pago";
+  return utm.fbclid ? "talvez" : null;
 }
 
 /**
@@ -149,7 +150,10 @@ function anuncioDaMeta(canal: Canal, utm: Visita = {}): boolean {
  */
 export function escolherOrigem(guardada: OrigemGuardada | null, atual: Canal, agora: number, utm?: Visita): OrigemGuardada {
   const nova: OrigemGuardada = utm && Object.keys(utm).length ? { canal: atual, em: agora, utm } : { canal: atual, em: agora };
-  if (atual === "A" || anuncioDaMeta(atual, utm) || !guardada) return nova;
+  const meta = anuncioDaMeta(atual, utm);
+  if (atual === "A" || meta === "pago" || !guardada) return nova;
+  // ponytail: fbclid sozinho pode ser clique orgânico, então não apaga um Google Ads guardado
+  if (meta === "talvez" && guardada.canal !== "A") return nova;
   if (!marcada(guardada) && marcada(nova)) return nova;
   return guardada;
 }
