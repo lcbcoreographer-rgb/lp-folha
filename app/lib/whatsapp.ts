@@ -1,8 +1,7 @@
 /**
  * Número do comercial da Folha — o único lugar do site onde ele existe.
  *
- * Já esteve duplicado no FormModal, que é como um dos dois fica para trás na
- * próxima troca. Formato do WhatsApp: DDI + DDD + número, só dígitos.
+ * Formato do WhatsApp: DDI + DDD + número, só dígitos.
  */
 export const WHATSAPP_PHONE = "554184236033";
 

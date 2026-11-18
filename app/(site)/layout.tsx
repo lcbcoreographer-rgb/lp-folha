@@ -1,6 +1,5 @@
 import SmoothScrollProvider from "../components/SmoothScrollProvider";
 import ScrollProgressBar from "../components/ScrollProgressBar";
-import { FormModalProvider } from "../components/FormModalContext";
 
 export default function SiteLayout({
   children,
@@ -10,7 +9,7 @@ export default function SiteLayout({
   return (
     <SmoothScrollProvider>
       <ScrollProgressBar />
-      <FormModalProvider>{children}</FormModalProvider>
+      {children}
     </SmoothScrollProvider>
   );
 }
