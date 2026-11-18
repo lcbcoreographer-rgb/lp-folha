@@ -30,6 +30,9 @@ assert.equal(canal("?utm_source=ig", "", SITE), "M");
 assert.equal(canal("?utm_source=facebook&utm_medium=cpc", "", SITE), "M", "anúncio da Meta não é Google Ads");
 assert.equal(canal("?utm_medium=fb", "", SITE), "M");
 assert.equal(canal("?fbclid=xyz", "", SITE), "M");
+assert.equal(canal("?utm_source=meta&utm_medium=paid_social", "", SITE), "M", "fonte meta é Meta");
+assert.equal(canal("?utm_source=Meta&utm_medium=cpc", "", SITE), "M");
+assert.equal(canal("?utm_source=metacritic", "", SITE), "O", "só meta exato");
 for (const ref of ["https://instagram.com/", "https://l.instagram.com/", "https://www.facebook.com/", "https://m.facebook.com/", "https://lm.facebook.com/l.php", "android-app://com.instagram.android/"]) {
   assert.equal(canal("", ref, SITE), "M", ref);
 }
@@ -114,6 +117,24 @@ assert.deepEqual(
   "UTM guardada é limpa de novo na leitura"
 );
 assert.equal(lerGuardada(JSON.stringify({ canal: "O", em: agora - 91 * dia, utm: li }), agora), null, "UTM vence junto, em 90 dias");
+
+// anúncio da Meta também sobrescreve: canal M com fbclid, ou mídia paga com fonte da Meta
+const visita = (search, ref = "") => escolherOrigem(guardada, canal(search, ref, SITE), agora, lerVisita(search, ref, SITE, "/"));
+assert.equal(visita("?fbclid=XYZ").canal, "M", "fbclid sobrescreve");
+assert.deepEqual(visita("?fbclid=XYZ"), { canal: "M", em: agora, utm: { fbclid: "XYZ", chegada: "/" } }, "leva a UTM do anúncio");
+for (const meio of ["cpc", "ppc", "paid", "paid_social", "ads", "CPC", "Paid_Social"]) {
+  for (const fonte of ["facebook", "instagram", "fb", "ig", "meta", "Facebook"]) {
+    assert.equal(visita(`?utm_source=${fonte}&utm_medium=${meio}`).canal, "M", `${fonte}/${meio} sobrescreve`);
+  }
+}
+assert.deepEqual(visita("?utm_source=instagram&utm_medium=social"), guardada, "post orgânico da Meta não sobrescreve");
+assert.deepEqual(visita("?utm_source=ig"), guardada);
+assert.deepEqual(visita("", "https://l.instagram.com/"), guardada, "só o referrer não sobrescreve");
+assert.deepEqual(visita("?utm_source=bing&utm_medium=cpc"), guardada, "anúncio de outro lugar não sobrescreve");
+assert.deepEqual(visita("?utm_source=newsletter&utm_medium=paid"), guardada, "pago sem fonte da Meta não sobrescreve");
+assert.equal(escolherOrigem({ canal: "A", em: agora - dia }, "M", agora, { fbclid: "XYZ" }).canal, "M", "Meta sobrescreve Google Ads guardado");
+assert.equal(escolherOrigem({ canal: "M", em: agora - dia, utm: { fbclid: "XYZ" } }, "A", agora, { gclid: "ABC" }).canal, "A", "e Google Ads sobrescreve Meta guardado");
+assert.equal(escolherOrigem(guardada, "O", agora, { fbclid: "XYZ" }).canal, "B", "fbclid sem canal M não sobrescreve");
 
 // código e mensagem (contrato com o CRM: /\(\s*c[oó]d\.?\s*([ABMEOS])-(\d{4})\s*\)/i)
 const CONTRATO = /\(\s*c[oó]d\.?\s*([ABMEOS])-(\d{4})\s*\)/i;

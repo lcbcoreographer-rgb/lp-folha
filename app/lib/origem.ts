@@ -42,6 +42,8 @@ const CHAVES_VISITA = ["source", "medium", "campaign", "content", "term", "gclid
 
 const NOVENTA_DIAS = 90 * 24 * 60 * 60 * 1000;
 const CANAIS = ["A", "B", "M", "E", "O", "S"];
+/** utm_source ou utm_medium que é da Meta. */
+const DA_META = /instagram|facebook|^(ig|fb|meta)$/;
 
 function hostDe(url: string): string {
   try {
@@ -65,7 +67,7 @@ export function classificarCanal(search: string, referrer: string, hostDoSite: s
   if (/^(cpc|ppc|paid)$/.test(meio) && (fonte === "" || fonte.includes("google"))) return "A";
   if (
     v("fbclid") ||
-    [fonte, meio].some((x) => /instagram|facebook|^(ig|fb)$/.test(x)) ||
+    [fonte, meio].some((x) => DA_META.test(x)) ||
     /(^|\.)(instagram|facebook)\.com$/.test(ref) ||
     /^com\.(instagram|facebook)\./.test(ref) // app do Android
   ) {
@@ -131,13 +133,23 @@ export function lerGuardada(json: string | null, agora: number): OrigemGuardada 
 }
 
 /**
- * Anúncio sempre vence (como no Google Ads); fora isso, fica a primeira visita
+ * Anúncio da Meta: canal M com fbclid na URL, ou com utm_medium pago e
+ * utm_source da Meta. Post orgânico com UTM, sem fbclid, não conta.
+ */
+function anuncioDaMeta(canal: Canal, utm: Visita = {}): boolean {
+  if (canal !== "M") return false;
+  if (utm.fbclid) return true;
+  return /^(cpc|ppc|paid|paid_social|ads)$/.test((utm.medium ?? "").toLowerCase()) && DA_META.test((utm.source ?? "").toLowerCase());
+}
+
+/**
+ * Anúncio sempre vence (Google Ads ou Meta); fora isso, fica a primeira visita
  * marcada. Visita sem nada (direto) nunca apaga uma marcada, mas uma marcada
  * toma o lugar de uma guardada sem nada. O canal e os parâmetros andam juntos.
  */
 export function escolherOrigem(guardada: OrigemGuardada | null, atual: Canal, agora: number, utm?: Visita): OrigemGuardada {
   const nova: OrigemGuardada = utm && Object.keys(utm).length ? { canal: atual, em: agora, utm } : { canal: atual, em: agora };
-  if (atual === "A" || !guardada) return nova;
+  if (atual === "A" || anuncioDaMeta(atual, utm) || !guardada) return nova;
   if (!marcada(guardada) && marcada(nova)) return nova;
   return guardada;
 }
